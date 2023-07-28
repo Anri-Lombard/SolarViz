@@ -1,0 +1,2 @@
+# SolarViz
+Visualize energy consumption
