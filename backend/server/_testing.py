@@ -1,26 +1,27 @@
 import requests
 import json
 
-# Open the JSON file
-with open('api.json') as f:
-    api_data = json.load(f)
+def get_data(api_url, api_key):
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {api_key}'
+    }
+    response = requests.get(api_url, headers=headers)
+    
+    print(f'Status code: {response.status_code}')
+    print(f'Response text: {response.text}')
+    
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return None
 
-# Extract the API key and other data from the JSON file
-api_key = api_data['siteDataCollection']['C36EM']['apiKey']
-site_key = api_data['siteDataCollection']['C36EM']['siteKey']
-dashboard_url = api_data['siteDataCollection']['C36EM']['dashboardUrl']
+api_url = 'http://public.solarmonitoring.net/dashboard/system/C36EM/gpbgpSav1s' # replace with your actual API URL
+api_key = 'gpbgpSav1s' # replace with your actual API key
 
-# Replace with the actual API endpoint
-url = dashboard_url + "/siteDataCollection/" + site_key
+data = get_data(api_url, api_key)
 
-headers = {
-    "apiKey": api_key
-}
-
-response = requests.get(url, headers=headers)
-
-if response.status_code == 200:
-    data = response.json()
+if data is not None:
     print(json.dumps(data, indent=4))
 else:
-    print(f"Request failed with status code {response.status_code}")
+    print('Failed to retrieve data')
