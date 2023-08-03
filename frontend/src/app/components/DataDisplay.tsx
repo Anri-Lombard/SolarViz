@@ -1,16 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import React, { useEffect, useState, useMemo } from 'react';
+import '../styles/DataDisplay.css';
+
+// Custom components
+import LoadingSpinner from './LoadingSpinner';
+import { PieChartComponent } from './PieChart';
+import { StackedAreaChart } from './StackedAreaChart';
 
 interface DataType {
   Timestamp: string;
-  'Load Power [W]': string;
-  'Solar [W]': string;
-  'Incomer Power [W]': string;
+  'UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD': string;
+  'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': string;
+  'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': string;
 }
 
 export default function DataDisplay() {
   const [data, setData] = useState<DataType[] | null>(null);
-  const [showSingleChart, setShowSingleChart] = useState(true);
+  const [showPieChart, setShowPieChart] = useState(true);
+  const [transformedData, setTransformedData] = useState<
+    {
+      Timestamp: string;
+      'Load Power': string;
+      'Solar Power': string;
+      'Incomer Power': string;
+    }[] | null
+  >(null);
+  const [startTime, setStartTime] = useState("0");
+  const [endTime, setEndTime] = useState("0");
+
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    } as const;
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,98 +48,67 @@ export default function DataDisplay() {
     fetchData();
   }, []);
 
-  const toggleChartDisplay = () => {
-    setShowSingleChart(!showSingleChart);
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowPieChart((prev) => !prev);
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+
+
+  const aggregatedData = useMemo(() => {
+    if (!data) return null;
+
+    const tData = data.map(item => ({
+      Timestamp: formatDate(item.Timestamp),
+      'Load Power': item['UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD'],
+      'Solar Power': item['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR'],
+      'Incomer Power': item['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER'],
+    }));
+
+    setTransformedData(tData);
+    setStartTime(tData[0].Timestamp);
+    setEndTime(tData[tData.length - 1].Timestamp);
+
+    let totalSolar = 0;
+    let totalIncomerPower = 0;
+    data.forEach((item) => {
+      totalSolar += Number(item['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR']);
+      totalIncomerPower += Number(item['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER']);
+    });
+    return {
+      'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': totalSolar,
+      'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': totalIncomerPower,
+    };
+  }, [data]);
+
 
   return (
     <div style={{ width: '100%', height: 'auto' }}>
-      <button onClick={toggleChartDisplay}>
-        {showSingleChart ? 'Show Multiple Charts' : 'Show Single Chart'}
-      </button>
-      {data ? (
-        showSingleChart ? (
-          <ResponsiveContainer height={500}>
-            <LineChart
-              data={data}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="Timestamp" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD" stroke="#8884d8" dot={false} />
-              <Line type="monotone" dataKey="UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR" stroke="#82ca9d" dot={false} />
-              <Line type="monotone" dataKey="UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER" stroke="#ffc658" dot={false} />
-            </LineChart>
-          </ResponsiveContainer>
-        ) : (
-          <>
-            <ResponsiveContainer height={500}>
-              <LineChart
-                data={data}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="Timestamp" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD" stroke="#8884d8" dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
-            <ResponsiveContainer height={500}>
-              <LineChart
-                data={data}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="Timestamp" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR" stroke="#82ca9d" dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
-            <ResponsiveContainer height={500}>
-              <LineChart
-                data={data}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="Timestamp" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER" stroke="#ffc658" dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
-          </>
-        )
+      {transformedData && aggregatedData ? (
+        <>
+          {showPieChart ? (
+            <>
+              <h1 className="heading">
+                Percentage Energy from Solar and Incomer from {startTime} to {endTime}
+              </h1>
+              <PieChartComponent data={aggregatedData} />
+            </>
+          ) : (
+            <>
+              <h1 className="heading">
+                Energy from Solar and Incomer from {startTime} to {endTime}
+              </h1>
+              <StackedAreaChart data={transformedData} />
+            </>
+          )}
+        </>
       ) : (
-        <p>Loading...</p>
+        <LoadingSpinner />
       )}
     </div>
   );
+
 }
