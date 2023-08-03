@@ -13,7 +13,7 @@ def csv_to_json(csv_filename):
     return data
 
 def csv_data(request):
-    data = csv_to_json('data/UCT_Drawing_School_2023_07_01_2023_07_31.csv')
+    data = csv_to_json('data/UCT_Drawing_School_2023_08_02_2023_08_03.csv')
     return JsonResponse(data, safe=False)
 
 def hello(request):
