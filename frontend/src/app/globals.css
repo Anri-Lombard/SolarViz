@@ -24,4 +24,18 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  font-family: 'Arial', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: rgb(var(--foreground-rgb));
+}
+
+a {
+  color: rgb(var(--foreground-rgb));
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
