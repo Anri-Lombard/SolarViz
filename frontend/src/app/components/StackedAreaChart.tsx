@@ -1,4 +1,3 @@
-// StackedAreaChart.tsx
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
@@ -14,6 +13,9 @@ interface StackedAreaChartProps {
 }
 
 export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data }) => {
+
+    console.log(data);
+    
     return (
         <ResponsiveContainer height={500}>
             <AreaChart
@@ -31,11 +33,11 @@ export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data }) => {
                 <Tooltip
                     formatter={(value: number, name: string) => {
                         switch (name) {
-                            case 'UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD':
+                            case 'Load Power':
                                 return [value, 'Load Power'];
-                            case 'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR':
+                            case 'Solar Power':
                                 return [value, 'Solar Power'];
-                            case 'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER':
+                            case 'Incomer Power':
                                 return [value, 'Incomer Power'];
                             default:
                                 return [value, name];
@@ -43,7 +45,7 @@ export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data }) => {
                     }}
                 />
                 <Legend />
-                {/* <Area type="monotone" dataKey="UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD" stackId="1" stroke="#ffc658" fill="#ffc658" /> */}
+                <Area type="monotone" dataKey="Load Power" stackId="1" stroke="#000" fill="none" strokeWidth={2} />
                 <Area type="monotone" dataKey="Incomer Power" stackId="2" stroke="#82ca9d" fill="#82ca9d" />
                 <Area type="monotone" dataKey="Solar Power" stackId="3" stroke="#8884d8" fill="#8884d8" />
 
