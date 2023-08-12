@@ -42,9 +42,43 @@ def power_data(request):
     data = csv_to_json('data/UCT_Drawing_School_2023_08_01_2023_08_06.csv', delimiter=";")  # Replace with the correct path to your power data CSV file
     return JsonResponse(data, safe=False)
 
+# TODO: test data format, also change to show each story if necessary
 def water_data(request):
-    data = csv_to_json('data/University of Cape Town (UCT - School of Design) 01 Aug to 06 Aug 2023 Report Data.csv')
-    return JsonResponse(data, safe=False)
+    csv_data = csv_to_json('data/University of Cape Town (UCT - School of Design) 01 Aug to 06 Aug 2023 Report Data.csv')
+    
+    # Initialize a dictionary to hold the transformed data
+    transformed_data = {
+        'tstamp': [],
+        'Total Consumption': [],
+    }
+
+    # Iterate through the CSV data and populate the transformed_data dictionary
+    for row in csv_data:
+        timestamp = row['tstamp']
+        total_kl = float(row['total_kl']) # Convert to float to perform arithmetic
+
+        # Check if the timestamp is already in the list
+        if timestamp not in transformed_data['tstamp']:
+            transformed_data['tstamp'].append(timestamp)
+            transformed_data['Total Consumption'].append(total_kl)
+        else:
+            # Find the index of the timestamp
+            index = transformed_data['tstamp'].index(timestamp)
+            # Add the total_kl to the existing value for this timestamp
+            transformed_data['Total Consumption'][index] += total_kl
+
+    # Convert the dictionary into a list of dictionaries for the response
+    response_data = []
+    for i in range(len(transformed_data['tstamp'])):
+        response_data.append({
+            'tstamp': transformed_data['tstamp'][i],
+            'Total Consumption': transformed_data['Total Consumption'][i],
+        })
+
+    return JsonResponse(response_data, safe=False)
+
+
+
 
 
 

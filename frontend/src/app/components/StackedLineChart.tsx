@@ -3,11 +3,9 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 interface WaterDataType {
     tstamp: string;
-    'UCT D-School - First Storey - ': string;
-    'UCT D-School - Ground Storey -': string;
-    'UCT D-School - Second Storey -': string;
-    'UCT D-School - Secondary Store': string;
+    'Total Consumption': number;
 }
+
 
 interface StackedLineChartProps {
     data: WaterDataType[];
@@ -16,7 +14,7 @@ interface StackedLineChartProps {
 export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
 
     console.log(data);
-    
+
     return (
         <ResponsiveContainer height={500}>
             <LineChart
@@ -33,10 +31,7 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="UCT D-School - First Storey - " stroke="#1f77b4" strokeWidth={2} />
-                <Line type="monotone" dataKey="UCT D-School - Ground Storey -" stroke="#ff7f0e" strokeWidth={2} />
-                <Line type="monotone" dataKey="UCT D-School - Second Storey -" stroke="#2ca02c" strokeWidth={2} />
-                <Line type="monotone" dataKey="UCT D-School - Secondary Store" stroke="#d62728" strokeWidth={2} />
+                <Line type="monotone" dataKey="Total Consumption" stroke="#1f77b4" strokeWidth={2} />
             </LineChart>
         </ResponsiveContainer>
     );

@@ -14,7 +14,19 @@ interface DataType {
   'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': string;
 }
 
-export default function DataDisplay() {
+interface WaterDataType {
+  tstamp: string;
+  'Total Consumption': number;
+}
+
+
+interface DataDisplayProps {
+  powerData: DataType[];
+  waterData: WaterDataType[];
+}
+
+
+export default function DataDisplay({ powerData, waterData }: DataDisplayProps) {
   const CHARTS = {
     PIE: 'PIE',
     AREA: 'AREA',
@@ -22,8 +34,8 @@ export default function DataDisplay() {
   };
 
   const [currentChart, setCurrentChart] = useState(CHARTS.PIE);
-  const [powerData, setPowerData] = useState<DataType[] | null>(null);
-  const [waterData, setWaterData] = useState(null);
+  // const [powerData, setPowerData] = useState<DataType[] | null>(null);
+  // const [waterData, setWaterData] = useState(null);
   const [transformedData, setTransformedData] = useState<
     {
       Timestamp: string;
@@ -47,24 +59,24 @@ export default function DataDisplay() {
     return new Date(dateString).toLocaleDateString(undefined, options);
   }
 
-  useEffect(() => {
-    const fetchPowerData = async () => {
-      const response = await fetch('http://localhost:8000/api/power_data/');
-      const data = await response.json();
-      setPowerData(data);
-    };
+  // useEffect(() => {
+  //   const fetchPowerData = async () => {
+  //     const response = await fetch('http://localhost:8000/api/power_data/');
+  //     const data = await response.json();
+  //     setPowerData(data);
+  //   };
 
-    const fetchWaterData = async () => {
-      const response = await fetch('http://localhost:8000/api/water_data/');
-      const data = await response.json();
-      setWaterData(data);
-    };
+  //   const fetchWaterData = async () => {
+  //     const response = await fetch('http://localhost:8000/api/water_data/');
+  //     const data = await response.json();
+  //     setWaterData(data);
+  //   };
 
-    console.log()
+  //   console.log()
 
-    fetchPowerData();
-    fetchWaterData();
-  }, []);
+  //   fetchPowerData();
+  //   fetchWaterData();
+  // }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -86,7 +98,7 @@ export default function DataDisplay() {
   }, []);
 
   const aggregatedData = useMemo(() => {
-    if (!powerData) return null;
+    if (!powerData || powerData.length === 0) return null;
 
     const tData = powerData.map(item => ({
       Timestamp: formatDate(item.Timestamp),
@@ -114,7 +126,7 @@ export default function DataDisplay() {
 
   return (
     <div style={{ width: '100%', height: 'auto' }}>
-      {transformedData && aggregatedData && waterData ? (
+      {transformedData && aggregatedData && waterData && powerData ? (
         <>
           {currentChart === CHARTS.PIE && (
             <>
