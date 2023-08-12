@@ -5,6 +5,7 @@ import '../styles/DataDisplay.css';
 import LoadingSpinner from './LoadingSpinner';
 import { PieChartComponent } from './PieChart';
 import { StackedAreaChart } from './StackedAreaChart';
+import { StackedLineChart } from './StackedLineChart';
 
 interface DataType {
   Timestamp: string;
@@ -13,9 +14,28 @@ interface DataType {
   'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': string;
 }
 
-export default function DataDisplay() {
-  const [data, setData] = useState<DataType[] | null>(null);
-  const [showPieChart, setShowPieChart] = useState(true);
+interface WaterDataType {
+  tstamp: string;
+  'Total Consumption': number;
+}
+
+
+interface DataDisplayProps {
+  powerData: DataType[];
+  waterData: WaterDataType[];
+}
+
+
+export default function DataDisplay({ powerData, waterData }: DataDisplayProps) {
+  const CHARTS = {
+    PIE: 'PIE',
+    AREA: 'AREA',
+    LINE: 'LINE',
+  };
+
+  const [currentChart, setCurrentChart] = useState(CHARTS.PIE);
+  // const [powerData, setPowerData] = useState<DataType[] | null>(null);
+  // const [waterData, setWaterData] = useState(null);
   const [transformedData, setTransformedData] = useState<
     {
       Timestamp: string;
@@ -26,6 +46,7 @@ export default function DataDisplay() {
   >(null);
   const [startTime, setStartTime] = useState("0");
   const [endTime, setEndTime] = useState("0");
+
 
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -38,30 +59,48 @@ export default function DataDisplay() {
     return new Date(dateString).toLocaleDateString(undefined, options);
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('http://localhost:8000/api/');
-      const data = await response.json();
-      setData(data);
-    };
+  // useEffect(() => {
+  //   const fetchPowerData = async () => {
+  //     const response = await fetch('http://localhost:8000/api/power_data/');
+  //     const data = await response.json();
+  //     setPowerData(data);
+  //   };
 
-    fetchData();
-  }, []);
+  //   const fetchWaterData = async () => {
+  //     const response = await fetch('http://localhost:8000/api/water_data/');
+  //     const data = await response.json();
+  //     setWaterData(data);
+  //   };
+
+  //   console.log()
+
+  //   fetchPowerData();
+  //   fetchWaterData();
+  // }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setShowPieChart((prev) => !prev);
+      setCurrentChart((prevChart) => {
+        switch (prevChart) {
+          case CHARTS.PIE:
+            return CHARTS.AREA;
+          case CHARTS.AREA:
+            return CHARTS.LINE;
+          case CHARTS.LINE:
+            return CHARTS.PIE;
+          default:
+            return CHARTS.PIE;
+        }
+      });
     }, 10000);
 
     return () => clearInterval(interval);
   }, []);
 
-
-
   const aggregatedData = useMemo(() => {
-    if (!data) return null;
+    if (!powerData || powerData.length === 0) return null;
 
-    const tData = data.map(item => ({
+    const tData = powerData.map(item => ({
       Timestamp: formatDate(item.Timestamp),
       'Load Power': item['UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD'],
       'Solar Power': item['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR'],
@@ -74,7 +113,7 @@ export default function DataDisplay() {
 
     let totalSolar = 0;
     let totalIncomerPower = 0;
-    data.forEach((item) => {
+    powerData.forEach((item) => {
       totalSolar += Number(item['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR']);
       totalIncomerPower += Number(item['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER']);
     });
@@ -82,26 +121,35 @@ export default function DataDisplay() {
       'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': totalSolar,
       'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': totalIncomerPower,
     };
-  }, [data]);
+  }, [powerData]);
 
 
   return (
     <div style={{ width: '100%', height: 'auto' }}>
-      {transformedData && aggregatedData ? (
+      {transformedData && aggregatedData && waterData && powerData ? (
         <>
-          {showPieChart ? (
+          {currentChart === CHARTS.PIE && (
             <>
               <h1 className="heading">
                 Percentage Energy from Solar and Incomer from {startTime} to {endTime}
               </h1>
               <PieChartComponent data={aggregatedData} />
             </>
-          ) : (
+          )}
+          {currentChart === CHARTS.AREA && (
             <>
               <h1 className="heading">
                 Energy from Solar and Incomer from {startTime} to {endTime}
               </h1>
               <StackedAreaChart data={transformedData} />
+            </>
+          )}
+          {currentChart === CHARTS.LINE && (
+            <>
+              <h1 className="heading">
+                Daily Water Consumption Over July 2023 for Different Storeys
+              </h1>
+              <StackedLineChart data={waterData} />
             </>
           )}
         </>

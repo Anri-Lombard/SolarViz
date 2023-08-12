@@ -24,4 +24,6 @@ urlpatterns = [
     path('api/', views.csv_data),
     path('hello/', views.hello),
     path('', views.index),
+    path('api/power_data/', views.power_data, name='power_data'),
+    path('api/water_data/', views.water_data, name='water_data'),
 ]
