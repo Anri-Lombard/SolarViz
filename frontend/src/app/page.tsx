@@ -39,12 +39,10 @@ export default function Home() {
 
   return (
     <main className="min-h-screen items-center justify-center p-24">
-      <Header />
       {powerData && waterData ? 
         <DataDisplay powerData={powerData} waterData={waterData} />
         : <p>Loading...</p>
       }
-      <Footer />
     </main>
   );
 }
