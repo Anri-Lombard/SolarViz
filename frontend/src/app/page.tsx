@@ -2,8 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import DataDisplay from './components/DataDisplay';
-import Header from './components/Header';
-import Footer from './components/Footer';
 
 interface PowerDataType {
   Timestamp: string;
