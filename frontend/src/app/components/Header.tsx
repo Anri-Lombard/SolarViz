@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import logoImage from './logo.png'; // Import the image
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -18,17 +19,21 @@ const Header: React.FC = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 bg-blue-500 text-white p-3 rounded-br-lg shadow-md">
-      <h1 className="text-xl font-bold text-white">SolarViz</h1>
-      <button onClick={() => setShowMenu(!showMenu)}>Menu</button>
-      {showMenu && (
-        <div className="absolute top-full left-0  bg-white text-black p-3 rounded shadow-md">
+    <div className="fixed top-0 right-0 text-white p-3 rounded-br-lg shadow-md">
+      
+      <div className="logoContainer fixed top-0 left-0">
           <button
             onClick={() => goToPage('/')}
             className={isCurrentPage('/') ? 'bg-blue-200' : ''}
           >
-            Home
+            <img src={logoImage.src} alt="logo" width="200" height="100" />
           </button>
+      </div>
+
+      <button onClick={() => setShowMenu(!showMenu)}>Menu</button>
+
+      {showMenu && (
+        <div className="absolute top-full right-0 bg-white text-black p-3 rounded shadow-md">
           <button
             onClick={() => goToPage('/manual')}
             className={isCurrentPage('/manual') ? 'bg-blue-200' : ''}
