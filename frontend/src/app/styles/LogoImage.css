@@ -1,6 +1,10 @@
 .logoImage {
-    max-width:10%;
+    max-width:15%;
     width: auto;
     height: auto;
     cursor: pointer;
+    padding: 10px;
+    margin: 5px;
+    background-color: #2a2928;
+    border-radius: 20px;
   }

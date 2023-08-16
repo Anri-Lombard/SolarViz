@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import logoImage from './logo.png'; // Import the image
+import logoImage from '../images/logo.png';
 import '../styles/LogoImage.css';
+import Image from 'next/image';
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -20,21 +21,21 @@ const Header: React.FC = () => {
   };
 
   return (
-    <div className="fixed top-5 right-0 text-white p-3 rounded-br-lg shadow-md">
+    <div className="fixed top-5 right-0 p-3 rounded-br-lg shadow-md mr-2 text-white bg-black">
       
       <div className="logoContainer fixed top-0 left-0">
         <div
           onClick={() => goToPage('/')}
           className='logoWrapper'
         >
-          <img src={logoImage.src} alt="logo" className='logoImage'/>
+          <Image src={logoImage} alt="logo" className='logoImage'/>
         </div>
       </div>
 
       <button onClick={() => setShowMenu(!showMenu)}>Menu</button>
 
       {showMenu && (
-        <div className="absolute top-full right-0 bg-white text-black p-3 rounded shadow-md">
+        <div className="absolute top-full right-0 bg-white text-black p-3 rounded shadow-md m-5">
           <button
             onClick={() => goToPage('/manual')}
             className={isCurrentPage('/manual') ? 'bg-blue-200' : ''}
