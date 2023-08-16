@@ -10,14 +10,16 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'SolarViz',
   description: 'Vizualise solar data',
-  icons: [
-    { rel: 'apple-touch-icon', sizes: '180x180', url: '/apple-touch-icon.png' },
-    { rel: 'icon', type: 'image/png', sizes: '32x32', url: '/favicon-32x32.png' },
-    { rel: 'icon', type: 'image/png', sizes: '16x16', url: '/favicon-16x16.png' },
-    { rel: 'icon', type: 'image/png', sizes: '192x192', url: '/android-chrome-192x192.png' },
-    { rel: 'icon', type: 'image/png', sizes: '512x512', url: '/android-chrome-512x512.png' },
-    { rel: 'shortcut icon', url: '/favicon.ico', sizes: 'any' },
-  ],
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+    other: {
+      rel: 'android-chrome-192x192',
+      url: '/android-chrome-192x192.png',
+    },
+  },
+  manifest: '/site.webmanifest',
 }
 
 export default function RootLayout({
