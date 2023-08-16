@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import logoImage from './logo.png'; // Import the image
+import '../styles/LogoImage.css';
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -19,15 +20,15 @@ const Header: React.FC = () => {
   };
 
   return (
-    <div className="fixed top-0 right-0 text-white p-3 rounded-br-lg shadow-md">
+    <div className="fixed top-5 right-0 text-white p-3 rounded-br-lg shadow-md">
       
       <div className="logoContainer fixed top-0 left-0">
-          <button
-            onClick={() => goToPage('/')}
-            className={isCurrentPage('/') ? 'bg-blue-200' : ''}
-          >
-            <img src={logoImage.src} alt="logo" width="200" height="100" />
-          </button>
+        <div
+          onClick={() => goToPage('/')}
+          className='logoWrapper'
+        >
+          <img src={logoImage.src} alt="logo" className='logoImage'/>
+        </div>
       </div>
 
       <button onClick={() => setShowMenu(!showMenu)}>Menu</button>
