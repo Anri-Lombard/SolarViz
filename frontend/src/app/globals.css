@@ -18,7 +18,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  /* background-color: #2a2928; */
+  background-color: #ffffff; 
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
