@@ -30,8 +30,6 @@ interface DataDisplayProps {
   };
 }
 
-
-
 export default function DataDisplay({ powerData, waterData, settings }: DataDisplayProps) {
   const CHARTS = {
     PIE: 'PIE',
@@ -112,7 +110,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
 
 
   return (
-    <div style={{ width: '100%', height: 'auto' }}>
+    <div className='graphContainer'>
       {transformedData && aggregatedData && waterData && powerData ? (
         <>
           {currentChart === CHARTS.PIE && (

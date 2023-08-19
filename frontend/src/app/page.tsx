@@ -40,7 +40,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen items-center justify-center p-24">
+    <main className="flex items-center justify-center h-screen">
       {powerData && waterData ?
         <DataDisplay powerData={powerData} waterData={waterData} settings={settings} />
         : <p>Loading...</p>

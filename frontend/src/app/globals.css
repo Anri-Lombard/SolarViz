@@ -55,3 +55,9 @@ html {
   scroll-behavior: smooth;
 }
 
+.hoverText {
+  position: absolute;
+  color: #292827;
+  background-color: white;
+  border-radius: 2px;
+}
