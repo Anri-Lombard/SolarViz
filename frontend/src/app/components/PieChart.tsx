@@ -6,17 +6,18 @@ interface PieChartComponentProps {
         'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': number;
         'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': number;
     };
+    colors: {
+        incomerPower: string;
+        solarPower: string;
+        water: string;
+    }
 }
 
-const COLORS = ['#0088FE', '#00C49F'];
-
-export const PieChartComponent: React.FC<PieChartComponentProps> = ({ data }) => {
+export const PieChartComponent: React.FC<PieChartComponentProps> = ({ data, colors }) => {
     const chartData = [
-        { name: 'Solar [W]', value: data['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR'] },
-        { name: 'Incomer Power [W]', value: data['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER'] },
+        { name: 'Solar [W]', value: data['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR'], color: colors.solarPower },
+        { name: 'Incomer Power [W]', value: data['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER'], color: colors.incomerPower },
     ];
-
-    const totalValue = chartData.reduce((prev, curr) => prev + curr.value, 0);
 
     const renderLabel = (entry: { percent: number }) => `${(entry.percent * 100).toFixed(0)}%`;
 
@@ -35,14 +36,12 @@ export const PieChartComponent: React.FC<PieChartComponentProps> = ({ data }) =>
                     label={renderLabel}
                 >
                     {chartData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                 </Pie>
-                <Tooltip formatter={(value: number) => `${((value / totalValue) * 100).toFixed(2)}%`} />
+                <Tooltip />
                 <Legend />
             </PieChart>
         </div>
     );
 };
-
-

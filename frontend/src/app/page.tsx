@@ -42,12 +42,9 @@ export default function Home() {
   return (
     <main className="min-h-screen items-center justify-center p-24">
       {powerData && waterData ?
-        <DataDisplay powerData={powerData} waterData={waterData} />
+        <DataDisplay powerData={powerData} waterData={waterData} settings={settings} />
         : <p>Loading...</p>
       }
-      <div style={{ color: settings.color }}>
-        This text will be in the chosen color.
-      </div>
     </main>
   );
 }

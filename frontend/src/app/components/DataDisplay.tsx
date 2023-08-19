@@ -23,10 +23,16 @@ interface WaterDataType {
 interface DataDisplayProps {
   powerData: DataType[];
   waterData: WaterDataType[];
+  settings: {
+    incomerPower: string;
+    solarPower: string;
+    water: string;
+  };
 }
 
 
-export default function DataDisplay({ powerData, waterData }: DataDisplayProps) {
+
+export default function DataDisplay({ powerData, waterData, settings }: DataDisplayProps) {
   const CHARTS = {
     PIE: 'PIE',
     AREA: 'AREA',
@@ -58,25 +64,6 @@ export default function DataDisplay({ powerData, waterData }: DataDisplayProps) 
     } as const;
     return new Date(dateString).toLocaleDateString(undefined, options);
   }
-
-  // useEffect(() => {
-  //   const fetchPowerData = async () => {
-  //     const response = await fetch('http://localhost:8000/api/power_data/');
-  //     const data = await response.json();
-  //     setPowerData(data);
-  //   };
-
-  //   const fetchWaterData = async () => {
-  //     const response = await fetch('http://localhost:8000/api/water_data/');
-  //     const data = await response.json();
-  //     setWaterData(data);
-  //   };
-
-  //   console.log()
-
-  //   fetchPowerData();
-  //   fetchWaterData();
-  // }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -133,7 +120,7 @@ export default function DataDisplay({ powerData, waterData }: DataDisplayProps) 
               <h1 className="heading">
                 Percentage Energy from Solar and Incomer from {startTime} to {endTime}
               </h1>
-              <PieChartComponent data={aggregatedData} />
+              <PieChartComponent data={aggregatedData} colors={settings} />
             </>
           )}
           {currentChart === CHARTS.AREA && (
@@ -141,7 +128,7 @@ export default function DataDisplay({ powerData, waterData }: DataDisplayProps) 
               <h1 className="heading">
                 Energy from Solar and Incomer from {startTime} to {endTime}
               </h1>
-              <StackedAreaChart data={transformedData} />
+              <StackedAreaChart data={transformedData} colors={settings} />
             </>
           )}
           {currentChart === CHARTS.LINE && (
@@ -149,7 +136,7 @@ export default function DataDisplay({ powerData, waterData }: DataDisplayProps) 
               <h1 className="heading">
                 Daily Water Consumption Over July 2023 for Different Storeys
               </h1>
-              <StackedLineChart data={waterData} />
+              <StackedLineChart data={waterData} color={settings.water} />
             </>
           )}
         </>
