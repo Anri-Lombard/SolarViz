@@ -9,9 +9,10 @@ interface WaterDataType {
 
 interface StackedLineChartProps {
     data: WaterDataType[];
+    color: string;
 }
 
-export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
+export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, color }) => {
 
     console.log(data);
 
@@ -31,7 +32,7 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="Total Consumption" stroke="#1f77b4" strokeWidth={2} />
+                <Line type="monotone" dataKey="Total Consumption" stroke={color} strokeWidth={2} />
             </LineChart>
         </ResponsiveContainer>
     );

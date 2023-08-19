@@ -6,5 +6,41 @@
     background-color: #4056A1;
     color: black;
     text-align: center;
-    padding: 10px 0;
+    padding: 5px 0vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.footerText {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px; 
+    flex: 1;
+  }
+
+.helpButton {
+    background-color: #f3e9cb;
+    color: #292827;
+    padding: 0.5vh 2vh;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hoverText {
+    position: absolute;
+    color: #292827;
+    background-color: white;
+    border-radius: 2px;
+    margin-right: 100px;
+    padding: 0.5vh 1vh;
+    font-size: small;
+    display: inline-block;
+    width: fit-content;
+    white-space: nowrap;
 }

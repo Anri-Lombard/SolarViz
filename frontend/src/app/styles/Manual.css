@@ -1,0 +1,23 @@
+.manualContainer {
+    display: flex;
+}
+
+.tableOfContents {
+    width: 200px;
+    /* Adjust as needed */
+    padding: 20px;
+    border-right: 1px solid #ccc;
+}
+
+.tableOfContents a {
+    display: block;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #0070f3;
+    /* Adjust color as needed */
+}
+
+.content {
+    flex-grow: 1;
+    padding: 20px;
+}

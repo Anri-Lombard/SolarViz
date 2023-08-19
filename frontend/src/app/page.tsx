@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import DataDisplay from './components/DataDisplay';
 
+import { useSettings } from './contexts/SettingsContext';
+
 interface PowerDataType {
   Timestamp: string;
   'UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD': string;
@@ -20,6 +22,8 @@ export default function Home() {
   const [powerData, setPowerData] = useState<PowerDataType[]>([]);
   const [waterData, setWaterData] = useState<WaterDataType[]>([]);
 
+  const { settings } = useSettings();
+
   useEffect(() => {
     async function getData() {
       const powerResponse = await fetch('http://localhost:8000/api/power_data/');
@@ -36,9 +40,9 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen items-center justify-center p-24">
-      {powerData && waterData ? 
-        <DataDisplay powerData={powerData} waterData={waterData} />
+    <main className="flex items-center justify-center h-screen">
+      {powerData && waterData ?
+        <DataDisplay powerData={powerData} waterData={waterData} settings={settings} />
         : <p>Loading...</p>
       }
     </main>

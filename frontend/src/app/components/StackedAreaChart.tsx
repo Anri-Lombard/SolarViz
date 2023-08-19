@@ -1,20 +1,16 @@
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-interface DataType {
-    Timestamp: string;
-    'UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD': string;
-    'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': string;
-    'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': string;
-}
-
 interface StackedAreaChartProps {
     data: { Timestamp: string; 'Load Power': string; 'Solar Power': string; 'Incomer Power': string; }[];
+    colors: {
+        incomerPower: string;
+        solarPower: string;
+        water: string;
+    }
 }
 
-export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data }) => {
-
-    console.log(data);
+export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors }) => {
     
     return (
         <ResponsiveContainer height={500}>
@@ -46,8 +42,8 @@ export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data }) => {
                 />
                 <Legend />
                 <Area type="monotone" dataKey="Load Power" stackId="1" stroke="#000" fill="none" strokeWidth={2} />
-                <Area type="monotone" dataKey="Incomer Power" stackId="2" stroke="#82ca9d" fill="#82ca9d" />
-                <Area type="monotone" dataKey="Solar Power" stackId="3" stroke="#8884d8" fill="#8884d8" />
+                <Area type="monotone" dataKey="Incomer Power" stackId="2" stroke={colors.incomerPower} fill={colors.incomerPower} />
+                <Area type="monotone" dataKey="Solar Power" stackId="3" stroke={colors.solarPower} fill={colors.solarPower} />
 
             </AreaChart>
         </ResponsiveContainer>
