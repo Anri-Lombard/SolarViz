@@ -10,6 +10,8 @@ type ColorType = 'incomerPower' | 'solarPower' | 'water';
 export default function Settings() {
   const { settings, setSettings } = useSettings();
 
+  const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'black', 'white', 'gray', 'cyan', 'magenta', 'maroon', 'navy', 'olive', 'teal', 'lime', 'aqua', 'fuchsia', 'silver', 'gold', 'orange'];  
+
   const handleChangeColor = (type: ColorType, color: string) => {
     setSettings({
       ...settings,
@@ -20,27 +22,36 @@ export default function Settings() {
   };
 
   const renderColorOptions = (type: ColorType) => (
-    <div>
-      <h3>{type} Color</h3>
-      {['red', 'blue', 'green', 'yellow', 'purple'].map((color) => (
-        <button
-          key={color}
-          onClick={() => handleChangeColor(type, color)}
-          className={settings[type] === color ? 'selected' : ''}
-        >
-          {color.charAt(0).toUpperCase() + color.slice(1)}
-        </button>
-      ))}
+    <div className="flex">
+      <h3 className='text-black'>{type} Color</h3>
+      <div className="flex flex-wrap">
+        {colors.map((color) => (
+          <div key={color} className="m-1">
+            <button
+              onClick={() => handleChangeColor(type, color)}
+              className={`p-2 ${settings[type] === color ? 'bg-blue-500' : 'bg-gray-400'}`}
+            >
+              {color.charAt(0).toUpperCase() + color.slice(1)}
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 
   return (
-    <div className='mainBlock'>
-      <h1>Settings Page</h1>
-      <p>Adjust settings</p>
-      {renderColorOptions('incomerPower')}
-      {renderColorOptions('solarPower')}
-      {renderColorOptions('water')}
+    <div className='mainBlock p-5'>
+      <h1 className='mb-5 text-black'>Settings Page</h1>
+      <p className='mb-5 text-black'>Adjust settings</p>
+      <div className='mb-5'>
+        {renderColorOptions('incomerPower')}
+      </div>
+      <div className='mb-5'>
+        {renderColorOptions('solarPower')}
+      </div>
+      <div className='mb-5'>
+        {renderColorOptions('water')}
+      </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 .manualContainer {
     display: flex;
+    color: black
 }
 
 .tableOfContents {
