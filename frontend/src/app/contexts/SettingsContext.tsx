@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import type { Metadata } from 'next'
 
 type Settings = {
   color: string;
@@ -23,6 +24,21 @@ export function useSettings() {
 type SettingsProviderProps = {
   children: ReactNode;
 };
+
+export const metadata: Metadata = {
+  title: 'SolarViz',
+  description: 'Vizualise solar data',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+    other: {
+      rel: 'android-chrome-192x192',
+      url: '/android-chrome-192x192.png',
+    },
+  },
+  manifest: '/site.webmanifest',
+}
 
 export function SettingsProvider({ children }: SettingsProviderProps) {
   const [settings, setSettings] = useState<Settings>({
