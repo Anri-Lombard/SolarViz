@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import DataDisplay from './components/DataDisplay';
 
+import { useSettings } from './contexts/SettingsContext';
+
 interface PowerDataType {
   Timestamp: string;
   'UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD': string;
@@ -19,6 +21,8 @@ interface WaterDataType {
 export default function Home() {
   const [powerData, setPowerData] = useState<PowerDataType[]>([]);
   const [waterData, setWaterData] = useState<WaterDataType[]>([]);
+
+  const { settings } = useSettings();
 
   useEffect(() => {
     async function getData() {
@@ -37,10 +41,13 @@ export default function Home() {
 
   return (
     <main className="min-h-screen items-center justify-center p-24">
-      {powerData && waterData ? 
+      {powerData && waterData ?
         <DataDisplay powerData={powerData} waterData={waterData} />
         : <p>Loading...</p>
       }
+      <div style={{ color: settings.color }}>
+        This text will be in the chosen color.
+      </div>
     </main>
   );
 }
