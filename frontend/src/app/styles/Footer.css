@@ -1,24 +1,31 @@
 .footer {
     position: fixed;
-    left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #f3e9cb;
+    background-color: #5F9965;
     color: black;
     text-align: center;
     padding: 5px 0vh;
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    justify-content: space-between;
 }
 
 .footerText {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
     font-size: 16px; 
-    flex: 1;
-  }
+}
+
+.footerContainer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    margin-left: auto;
+    margin-top: 2px;
+}
 
 .helpButton {
     background-color: #f3e9cb;
@@ -26,21 +33,32 @@
     padding: 0.5vh 2vh;
     border-radius: 8px;
     cursor: pointer;
-    margin-right: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
     display: inline-flex;
-    align-items: center;
-    justify-content: center;
 }
+
+.footerImage {
+    max-width: 25px;
+    height: auto;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+
+.helpButton:hover {
+    background-color: #f3e9cb;
+  }
 
 .hoverText {
     position: absolute;
+    right:5px;
     color: #292827;
     background-color: white;
     border-radius: 2px;
-    margin-right: 100px;
     padding: 0.5vh 1vh;
     font-size: small;
     display: inline-block;
     width: fit-content;
     white-space: nowrap;
 }
+  

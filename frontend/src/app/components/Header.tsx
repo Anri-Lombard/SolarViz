@@ -17,6 +17,10 @@ const Header: React.FC = () => {
 
   return (
     <header className="header">
+      <div>
+
+      </div>
+
       <div 
         onMouseEnter={() => setIsLogoHovered(true)}
         onMouseLeave={() => setIsLogoHovered(false)}
@@ -31,14 +35,14 @@ const Header: React.FC = () => {
         onClick={() => goToPage('/admin')}
         className='menuButton'
         >
-        Admin
+        ADMIN
         </div>
 
         <div
           onClick={() => goToPage('/settings')}
           className='menuButton'
         >
-        Control Room
+        CONTROL ROOM
         </div>
       </div>
       
