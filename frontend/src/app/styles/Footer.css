@@ -28,10 +28,11 @@
 }
 
 .helpButton {
-    background-color: #f3e9cb;
     color: #292827;
     padding: 0.5vh 2vh;
     border-radius: 8px;
+    border-width: 2px;
+    border-color: #292827;
     cursor: pointer;
     margin-right: 5px;
     margin-left: 5px;
@@ -46,19 +47,21 @@
   }
 
 .helpButton:hover {
-    background-color: #f3e9cb;
+    background-color: #292827;
+    color: #f3e9cb;
   }
 
 .hoverText {
     position: absolute;
-    right:5px;
+    top:4px;
+    right:50px;
     color: #292827;
     background-color: white;
     border-radius: 2px;
     padding: 0.5vh 1vh;
     font-size: small;
-    display: inline-block;
     width: fit-content;
     white-space: nowrap;
+    z-index: 1;
 }
   

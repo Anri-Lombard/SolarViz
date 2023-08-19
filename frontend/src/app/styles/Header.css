@@ -20,10 +20,12 @@
 }
 
 .menuButton {
-  background-color: #fef4d9;
-  color: #292827;
+  /*background-color: #fef4d9;*/
+  color: #fff4d9;
   padding: 1vh 2vh;
-  border-radius: 8px;
+  border-color: #fff4d9;
+  border-width: 2px;
+  border-radius: 10px;
   cursor: pointer;
   margin-right: 5px;
   margin-left: 5px;
@@ -31,23 +33,25 @@
 
 .menuButton:hover {
   background-color: #f3e9cb;
+  color: #292827;
 }
 
 .logoImage {
   position: absolute;
   top: 2vh;
   left: 10px;
-  width: 30vh;
-  height: 25vh;
+  max-width: 30vh;
+  max-height: 25vh;
   border-radius: 8px;
-  overflow: hidden;
   cursor: pointer;
 }
 
 .hoverText {
   position: absolute;
+  top:40px;
+  right:10px;
   color: #292827;
-  background-color: white;
-  border-radius: 2px;
+  background-color: #fff4d9;
+  border-radius: 10px;
   font-size: small;
 }
