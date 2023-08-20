@@ -11,6 +11,8 @@
     padding: 1vh 1vh;
     color: #292827;
     cursor: pointer;
+    text-transform: uppercase;
+    font-size: small;
 }
 
 .applyButton:hover {

@@ -30,7 +30,7 @@ export default function Admin() {
 
   const renderColorOptions = (type: ColorType) => (
     <div className="flex flex-col mb-5">
-      <h3 className='text-black'>{type} Colour</h3>
+      <h3 className='text-black font-bold'>{type} Colour</h3>
       <div className="flex flex-wrap">
 
         <div
@@ -58,8 +58,8 @@ export default function Admin() {
   return (
     <div className='mainBlock p-5'>
 
-      <h1 className='mb-5 text-black'>Settings Page</h1>
-      <p className='mb-5 text-black'>Adjust settings</p>
+      <h1 className='mb-5 text-black'>Welcome to the administration page. Here you can modify the data that is displayed on the dashboard as well as the colour scheme.</h1>
+      <p className='mb-5 text-black text-xl font-bold'>Adjust colours</p>
 
       <div className='mb-5'>
 
@@ -73,7 +73,7 @@ export default function Admin() {
           Apply changes
         </div>
 
-        <h2 className='text-black'>Default Colors</h2>
+        <h2 className='text-black font-bold'>Default Colours:</h2>
         {Object.entries(defaultColors).map(([type, color]) => (
           <div key={type} className="flex items-center mb-2">
             <span className='text-black mr-2'>{type}: </span>
