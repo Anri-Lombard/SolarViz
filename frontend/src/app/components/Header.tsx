@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import logoImage from '../images/logo.png';
+import lock from '../images/lock.png';
 import '../styles/Header.css';
 import Image from 'next/image';
 
@@ -32,17 +33,18 @@ const Header: React.FC = () => {
 
       <div className='menuButtonContainer'>
         <div 
-        onClick={() => goToPage('/admin')}
+        onClick={() => goToPage('/moreData')}
         className='menuButton'
         >
-        ADMIN
+        More data
         </div>
 
         <div
-          onClick={() => goToPage('/settings')}
+          onClick={() => goToPage('/admin')}
           className='menuButton'
         >
-        CONTROL ROOM
+        Admin
+        <Image src={lock} alt = "Lock" className='lockImage'/>
         </div>
       </div>
       
