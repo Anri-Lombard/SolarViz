@@ -40,7 +40,7 @@ const Header: React.FC = () => {
         </div>
 
         <div
-          onClick={() => goToPage('/admin')}
+          onClick={() => goToPage('/login/admin')}
           className='menuButton'
         >
         Admin
