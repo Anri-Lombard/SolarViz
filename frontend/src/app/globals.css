@@ -29,12 +29,15 @@ body {
 }
 
 .mainBlock {
+  position: relative;
+  margin-top: 100px;
+  margin-bottom: 100px;
   width: 95%;
-  height: 50%;
+  height: 95%;
   background-color: #f3e9cb;
   border: 1px solid #2a2928;
   border-radius: 20px;
-  padding: 20px;
+  padding: 30px 20px;
   box-sizing: border-box;
 }
 

@@ -1,12 +1,15 @@
+
 "use client"
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useSettings } from '../contexts/SettingsContext';
+import '../styles/Admin.css';
 
 type ColorType = 'incomerPower' | 'solarPower' | 'water';
 
-export default function Settings() {
+export default function Admin() {
   const { settings, setSettings } = useSettings();
+  const [pendingChanges, setPendingChanges] = useState(settings);
 
   const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'black', 'white', 'gray', 'cyan', 'magenta', 'maroon', 'navy', 'olive', 'teal', 'lime', 'aqua', 'fuchsia', 'silver', 'gold', 'orange']; 
 
@@ -17,8 +20,8 @@ export default function Settings() {
   };
 
   const handleChangeColor = (type: ColorType, color: string) => {
-    setSettings({
-      ...settings,
+    setPendingChanges({
+      ...pendingChanges,
       [type]: color,
     });
     // Save to local storage
@@ -27,13 +30,23 @@ export default function Settings() {
 
   const renderColorOptions = (type: ColorType) => (
     <div className="flex flex-col mb-5">
-      <h3 className='text-black'>{type} Color</h3>
+      <h3 className='text-black'>{type} Colour</h3>
       <div className="flex flex-wrap">
+
+        <div
+          className='p-2 m-1'
+          style={{
+            backgroundColor: pendingChanges[type],
+            width:'30px',
+            height: '30px',
+          }}
+        ></div>
+
         {colors.map((color) => (
           <button
             key={color}
             onClick={() => handleChangeColor(type, color)}
-            className={`p-2 m-1 ${settings[type as keyof typeof settings] === color ? 'bg-blue-500 text-white' : 'bg-gray-400 text-black'}`}
+            className={`p-2 m-1 ${pendingChanges[type] === color ? 'bg-blue-500 text-white' : 'bg-gray-400 text-black'}`}
           >
             {color.charAt(0).toUpperCase() + color.slice(1)}
           </button>
@@ -44,9 +57,22 @@ export default function Settings() {
 
   return (
     <div className='mainBlock p-5'>
+
       <h1 className='mb-5 text-black'>Settings Page</h1>
       <p className='mb-5 text-black'>Adjust settings</p>
+
       <div className='mb-5'>
+
+        <div 
+          onClick={() => {
+            setSettings(pendingChanges);
+            localStorage.setItem('settings', JSON.stringify(pendingChanges));
+          }}
+          className='applyButton'
+        >
+          Apply changes
+        </div>
+
         <h2 className='text-black'>Default Colors</h2>
         {Object.entries(defaultColors).map(([type, color]) => (
           <div key={type} className="flex items-center mb-2">
@@ -58,9 +84,11 @@ export default function Settings() {
             >
               {color}
             </button>
+            
           </div>
         ))}
       </div>
+      
       {renderColorOptions('incomerPower')}
       {renderColorOptions('solarPower')}
       {renderColorOptions('water')}

@@ -2,7 +2,7 @@
 "use Client"
 import React from 'react';
 
-export default function Admin() {
+export default function moreData() {
   return (
       <div className='mainBlock'>
         <h1>MoreData Page</h1>
