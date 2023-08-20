@@ -44,9 +44,9 @@ export const metadata: Metadata = {
 
 export function SettingsProvider({ children }: SettingsProviderProps) {
     const [settings, setSettings] = useState({
-        incomerPower: 'green',
-        solarPower: 'purple',
-        water: 'blue',
+        incomerPower: '#183d33',
+        solarPower: '#bd5545',
+        water: '#2779a7',
         // Other preferences
     });
 

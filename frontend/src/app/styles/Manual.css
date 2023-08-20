@@ -1,10 +1,10 @@
 .manualContainer {
     display: flex;
+    color: black
 }
 
 .tableOfContents {
     width: 200px;
-    /* Adjust as needed */
     padding: 20px;
     border-right: 1px solid #ccc;
 }
@@ -13,8 +13,7 @@
     display: block;
     margin-bottom: 10px;
     text-decoration: none;
-    color: #0070f3;
-    /* Adjust color as needed */
+    color: #183d33;
 }
 
 .content {

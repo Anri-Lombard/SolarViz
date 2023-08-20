@@ -5,44 +5,53 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 5px;
-    color: black
+    padding: 5vh 5px;
+    color: black;
+    background-color: #183d33;
   }
 
 .menuButtonContainer {
+  position: absolute;
+  top:2vh;
+  right:10px;
   display: flex;
-  gap: 2vh;
   justify-content: flex-end;
+  align-items: flex-start;
 }
 
 .menuButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f3e9cb;
-  color: #292827;
+  /*background-color: #fef4d9;*/
+  color: #fff4d9;
   padding: 1vh 2vh;
-  border-radius: 8px;
+  border-color: #fff4d9;
+  border-width: 2px;
+  border-radius: 10px;
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
 .menuButton:hover {
   background-color: #f3e9cb;
+  color: #292827;
 }
 
 .logoImage {
-    width: 22vh;
-    height: 15vh;
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-  }
+  position: absolute;
+  top: 2vh;
+  left: 10px;
+  max-width: 30vh;
+  max-height: 25vh;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
 .hoverText {
   position: absolute;
+  top:40px;
+  right:10px;
   color: #292827;
-  background-color: white;
-  border-radius: 2px;
+  background-color: #fff4d9;
+  border-radius: 10px;
   font-size: small;
 }
