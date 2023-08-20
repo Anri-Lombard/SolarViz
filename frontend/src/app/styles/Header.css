@@ -8,6 +8,7 @@
     padding: 5vh 5px;
     color: black;
     background-color: #183d33;
+    text-transform: uppercase;
   }
 
 .menuButtonContainer {
@@ -21,19 +22,29 @@
 
 .menuButton {
   /*background-color: #fef4d9;*/
-  color: #fff4d9;
+  color: #f3e9cb;
   padding: 1vh 2vh;
-  border-color: #fff4d9;
+  border-color: #f3e9cb;
   border-width: 2px;
   border-radius: 10px;
   cursor: pointer;
   margin-right: 5px;
   margin-left: 5px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
 }
 
 .menuButton:hover {
   background-color: #f3e9cb;
   color: #292827;
+}
+
+.lockImage {
+  position: relative;
+  max-width: 15px;
+  left: 5px;
+  top: 2px;
 }
 
 .logoImage {

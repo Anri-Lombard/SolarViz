@@ -1,3 +1,3 @@
 # Current superusers
 
-anrilombard: anrispassowrd
+anrilombard: anrispassword

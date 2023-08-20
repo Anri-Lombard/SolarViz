@@ -18,7 +18,10 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
+from .views import CustomAuthToken
+
 urlpatterns = [
+    path('api-token-auth/', CustomAuthToken.as_view(), name='api_token_auth'),
     path('admin/', admin.site.urls),
     path('api/', views.csv_data, name='csv_data'),
     path('hello/', views.hello, name='hello'),

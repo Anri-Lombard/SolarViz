@@ -5,7 +5,6 @@ type Settings = {
     incomerPower: string;
     solarPower: string;
     water: string;
-    // Other preferences can be defined here
 };
 
 type SettingsContextType = {
@@ -45,9 +44,8 @@ export const metadata: Metadata = {
 export function SettingsProvider({ children }: SettingsProviderProps) {
     const [settings, setSettings] = useState({
         incomerPower: '#183d33',
-        solarPower: '#bd5545',
+        solarPower: '#b9544f',
         water: '#2779a7',
-        // Other preferences
     });
 
     return (

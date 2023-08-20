@@ -1,0 +1,42 @@
+.applyButton {
+    position: relative;
+    float: right;
+    right: 10px;
+    top: 150px;
+    background-color: #f3e9cb;
+    border-color: #292827 ;
+    border-width: 2px;
+    border-radius: 10px;
+    justify-content: flex-end;
+    padding: 1vh 1vh;
+    color: #292827;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: small;
+}
+
+.applyButton:hover {
+    color: #f3e9cb;
+    background-color: #292827;
+}
+
+.logoutButton {
+    position: relative;
+    float: right;
+    right: 10px;
+    background-color: #f3e9cb;
+    border-color: #292827 ;
+    border-width: 2px;
+    border-radius: 10px;
+    justify-content: flex-end;
+    padding: 1vh 1vh;
+    color: #292827;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: small;
+}
+
+.logoutButton:hover {
+    color: #f3e9cb;
+    background-color: #292827;
+}
