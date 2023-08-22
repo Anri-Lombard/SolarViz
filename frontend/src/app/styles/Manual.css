@@ -1,22 +1,8 @@
-.manualContainer {
-    display: flex;
-    color: black
-}
-
-.tableOfContents {
-    width: 200px;
-    padding: 20px;
-    border-right: 1px solid #ccc;
-}
-
-.tableOfContents a {
+.tableText a {
     display: block;
-    margin-bottom: 10px;
-    text-decoration: none;
-    color: #183d33;
+    color: blue;
 }
 
-.content {
-    flex-grow: 1;
-    padding: 20px;
+.headings h2 {
+    font-size: 25px;
 }

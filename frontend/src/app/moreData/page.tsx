@@ -1,6 +1,8 @@
 
 "use Client"
 import React from 'react';
+import '../styles/MoreData.css';
+
 
 export default function moreData() {
   return (
