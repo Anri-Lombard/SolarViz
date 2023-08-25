@@ -17,13 +17,13 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, color 
     console.log(data);
 
     return (
-        <ResponsiveContainer height={500}>
+        <ResponsiveContainer height={600}>
             <LineChart
                 data={data}
                 margin={{
                     top: 10,
-                    right: 30,
-                    left: 10,
+                    right: 0,
+                    left: 20,
                     bottom: 0,
                 }}
             >
