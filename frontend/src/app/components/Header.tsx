@@ -4,13 +4,16 @@ import React, { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import logoImage from '../images/logo.png';
 import lock from '../images/lock.png';
+import unlock from '../images/unlock.png';
 import '../styles/Header.css';
 import Image from 'next/image';
+import { useAuth } from '../contexts/LoginContext';
 
 const Header: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams()
   const [isLogoHovered, setIsLogoHovered] = useState(false);
+  const { isLoggedIn } = useAuth(); // get login status from
 
   const goToPage = (path: string) => {
     router.push(path);
@@ -18,9 +21,6 @@ const Header: React.FC = () => {
 
   return (
     <header className="header">
-      <div>
-
-      </div>
 
       <div 
         onMouseEnter={() => setIsLogoHovered(true)}
@@ -44,7 +44,11 @@ const Header: React.FC = () => {
           className='menuButton'
         >
         Admin
-        <Image src={lock} alt = "Lock" className='lockImage'/>
+          {isLoggedIn ? ( // Conditionally render the lock/unlock image
+            <Image src={unlock} alt="Unlock" className='lockImage' />
+          ) : (
+            <Image src={lock} alt="Lock" className='lockImage' />
+          )}
         </div>
       </div>
       

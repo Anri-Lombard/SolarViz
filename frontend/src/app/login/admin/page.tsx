@@ -5,6 +5,7 @@ import withAdminAuth from '../../components/WithAdminAuth';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSettings } from '../../contexts/SettingsContext';
+import { useAuth } from '../../contexts/LoginContext';
 import '../../styles/Admin.css';
 
 type ColorType = 'incomerPower' | 'solarPower' | 'water';
@@ -13,7 +14,7 @@ const Admin = () => {
   const { settings, setSettings } = useSettings();
   const [pendingChanges, setPendingChanges] = useState(settings);
   const router = useRouter();
-
+  const { logout } = useAuth(); // get login function
   const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'black', 'white', 'gray', 'cyan', 'magenta', 'maroon', 'navy', 'olive', 'teal', 'lime', 'aqua', 'fuchsia', 'silver', 'gold', 'orange']; 
 
   const defaultColors = {
@@ -22,9 +23,10 @@ const Admin = () => {
     water: '#2779a7',
   };
 
-  const logout = () => {
+  const handleLogout = () => {
     localStorage.removeItem('token');
     router.push('/login');
+    logout();
   };
 
   const handleChangeColor = (type: ColorType, color: string) => {
@@ -102,7 +104,7 @@ const Admin = () => {
       {renderColorOptions('solarPower')}
       {renderColorOptions('water')}
 
-      <button onClick={logout} className='logoutButton'>Logout</button>
+      <button onClick={handleLogout} className='logoutButton'>Logout</button>
     </div>
   );
 }
