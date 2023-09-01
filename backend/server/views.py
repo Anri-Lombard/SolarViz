@@ -4,6 +4,9 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
+from collections import defaultdict
+from datetime import datetime
+
 import csv
 import json
 import base64
@@ -57,44 +60,46 @@ def power_data(request):
     data = csv_to_json('data/UCT_Drawing_School_2023_08_01_2023_08_06.csv', delimiter=";")  # Replace with the correct path to your power data CSV file
     return JsonResponse(data, safe=False)
 
+
 # TODO: test data format, also change to show each story if necessary
 def water_data(request):
     csv_data = csv_to_json('data/University of Cape Town (UCT - School of Design) 01 Aug to 06 Aug 2023 Report Data.csv')
     
     # Initialize a dictionary to hold the transformed data
-    transformed_data = {
-        'tstamp': [],
-        'Total Consumption': [],
-    }
+    transformed_data = defaultdict(list)
 
     # Iterate through the CSV data and populate the transformed_data dictionary
     for row in csv_data:
         timestamp = row['tstamp']
-        total_kl = float(row['total_kl']) # Convert to float to perform arithmetic
+        meter_description = row['Meter Description']
+        difference_kl = float(row['difference_kl'])  # Convert to float
 
-        # Check if the timestamp is already in the list
-        if timestamp not in transformed_data['tstamp']:
-            transformed_data['tstamp'].append(timestamp)
-            transformed_data['Total Consumption'].append(total_kl)
+        # Extract date and hour from timestamp
+        dt_object = datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S')
+        date_str = dt_object.strftime('%Y-%m-%d')
+        hour_str = dt_object.strftime('%H')
+
+        # Create a key for date, hour, and meter description
+        key = f"{date_str} {hour_str} {meter_description}"
+
+        # Aggregate difference_kl values
+        if key in transformed_data:
+            transformed_data[key] += difference_kl
         else:
-            # Find the index of the timestamp
-            index = transformed_data['tstamp'].index(timestamp)
-            # Add the total_kl to the existing value for this timestamp
-            transformed_data['Total Consumption'][index] += total_kl
+            transformed_data[key] = difference_kl
 
     # Convert the dictionary into a list of dictionaries for the response
     response_data = []
-    for i in range(len(transformed_data['tstamp'])):
+    for key, value in transformed_data.items():
+        date_str, hour_str, meter_description = key.split(" ")
         response_data.append({
-            'tstamp': transformed_data['tstamp'][i],
-            'Total Consumption': transformed_data['Total Consumption'][i],
+            'date': date_str,
+            'hour': hour_str,
+            'Meter Description': meter_description,
+            'difference_kl': value,
         })
 
     return JsonResponse(response_data, safe=False)
-
-
-
-
 
 
 def vcom_data(request):

@@ -2,10 +2,11 @@ import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 interface WaterDataType {
-    tstamp: string;
-    'Total Consumption': number;
+    date: string;
+    hour: string;
+    'Meter Description': string;
+    difference_kl: number;
 }
-
 
 interface StackedLineChartProps {
     data: WaterDataType[];
@@ -28,11 +29,11 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, color 
                 }}
             >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="tstamp" />
+                <XAxis dataKey={item => `${item.date} ${item.hour}`} />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="Total Consumption" stroke={color} strokeWidth={2} />
+                <Line type="monotone" dataKey="difference_kl" stroke={color} strokeWidth={2} />
             </LineChart>
         </ResponsiveContainer>
     );
