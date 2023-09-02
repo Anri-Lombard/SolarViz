@@ -14,12 +14,12 @@ interface StackedLineChartProps {
 
 const formatWaterDate = (date: string) => {
     const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
     } as const;
     return new Date(date).toLocaleDateString(undefined, options);
-  }
+}
 
 export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
     const colorMapping = {
@@ -58,12 +58,12 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
                 }}
             >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                    dataKey="dateHour" 
-                    type="category" 
+                <XAxis
+                    dataKey="dateHour"
+                    type="category"
                     label={{ value: 'Date and Hour', position: 'bottom' }}
                 />
-                <YAxis 
+                <YAxis
                     label={{ value: 'Usage (L)', angle: -90, position: 'insideLeft', offset: -10 }}
                 />
                 <Tooltip />
