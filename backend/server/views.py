@@ -63,7 +63,7 @@ def power_data(request):
 
 # TODO: test data format, also change to show each story if necessary
 def water_data(request):
-    csv_data = csv_to_json('data/University of Cape Town (UCT - School of Design) 01 Aug to 06 Aug 2023 Report Data.csv')
+    csv_data = csv_to_json('data/University of Cape Town (UCT - School of Design) 01 Aug to 06 Aug 2023 Report Data.csv')  
     
     # Initialize a dictionary to hold the transformed data
     transformed_data = defaultdict(list)
@@ -79,8 +79,8 @@ def water_data(request):
         date_str = dt_object.strftime('%Y-%m-%d')
         hour_str = dt_object.strftime('%H')
 
-        # Create a key for date, hour, and meter description
-        key = f"{date_str} {hour_str} {meter_description}"
+        # Create a key for date, hour, and meter description using a unique delimiter
+        key = f"{date_str}||{hour_str}||{meter_description}"  
 
         # Aggregate difference_kl values
         if key in transformed_data:
@@ -91,13 +91,15 @@ def water_data(request):
     # Convert the dictionary into a list of dictionaries for the response
     response_data = []
     for key, value in transformed_data.items():
-        date_str, hour_str, meter_description = key.split(" ")
+        date_str, hour_str, meter_description = key.split("||")  # Use the same unique delimiter to split
         response_data.append({
             'date': date_str,
             'hour': hour_str,
             'Meter Description': meter_description,
             'difference_kl': value,
         })
+    
+    print(response_data)
 
     return JsonResponse(response_data, safe=False)
 

@@ -115,7 +115,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
     <div className='graphContainer'>
       {transformedData && aggregatedData && waterData && powerData ? (
         <>
-          {currentChart === CHARTS.PIE && (
+          {/* {currentChart === CHARTS.PIE && (
             <>
               <h1 className="heading">
                 Percentage Energy from Solar and Incomer from {startTime} to {endTime}
@@ -138,7 +138,12 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
               </h1>
               <StackedLineChart data={waterData} color={settings.water} />
             </>
-          )}
+          )} */}
+
+          <h1 className="heading">
+            Daily Water Consumption Over July 2023 for Different Storeys
+          </h1>
+          <StackedLineChart data={waterData} color={settings.water} />
         </>
       ) : (
         <LoadingSpinner />
