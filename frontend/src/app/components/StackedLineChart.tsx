@@ -13,21 +13,31 @@ interface StackedLineChartProps {
 }
 
 export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
-    // Define a mapping between "Meter Descriptions" and colors
     const colorMapping = {
-        "UCT D-School - First Storey -": "#FF0000",  // Red
-        "UCT D-School - Ground Storey -": "#00FF00",  // Green
-        "UCT D-School - Second Storey -": "#0000FF",  // Blue
-        "UCT D-School - Secondary Store": "#FFA500"   // Orange
+        "UCT D-School - First Storey -": "#FF0000",
+        "UCT D-School - Ground Storey -": "#00FF00",
+        "UCT D-School - Second Storey -": "#0000FF",
+        "UCT D-School - Secondary Store": "#FFA500"
     };
 
-    // Create a list of unique "Meter Descriptions"
     const meterDescriptions = Array.from(new Set(data.map(item => item['Meter Description'])));
+    const dateHourCombinations = Array.from(new Set(data.map(item => `${item.date} ${item.hour}`)));
+
+    // Create a new data array that consolidates the data based on unique date-hour combinations and meter descriptions
+    const consolidatedData = dateHourCombinations.map(dateHour => {
+        const obj: any = { 'dateHour': dateHour };
+        meterDescriptions.forEach(desc => {
+            const filteredData = data.filter(item => `${item.date} ${item.hour}` === dateHour && item['Meter Description'] === desc);
+            const sum = filteredData.reduce((acc, curr) => acc + curr.difference_kl, 0);
+            obj[desc] = sum;
+        });
+        return obj;
+    });
 
     return (
         <ResponsiveContainer height={600}>
             <LineChart
-                data={data}
+                data={consolidatedData}
                 margin={{
                     top: 10,
                     right: 30,
@@ -36,7 +46,7 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
                 }}
             >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey={item => `${item.date} ${item.hour}`} />
+                <XAxis dataKey="dateHour" type="category" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
@@ -44,12 +54,12 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
                     <Line
                         key={index}
                         type="monotone"
-                        dataKey="difference_kl"
+                        dataKey={desc}
                         stroke={colorMapping[desc as keyof typeof colorMapping]}
                         strokeWidth={2}
-                        isAnimationActive={false}
+                        isAnimationActive={true}
                         name={desc}
-                        data={data.filter(item => item['Meter Description'] === desc)}
+                        dot={false}
                     />
                 ))}
             </LineChart>

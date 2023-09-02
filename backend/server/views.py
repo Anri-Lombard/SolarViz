@@ -99,7 +99,8 @@ def water_data(request):
             'difference_kl': value,
         })
     
-    print(response_data)
+    # Sort the list of dictionaries based on 'date' and 'hour'
+    response_data.sort(key=lambda x: (x['date'], x['hour']))
 
     return JsonResponse(response_data, safe=False)
 
