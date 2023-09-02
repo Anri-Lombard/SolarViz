@@ -13,8 +13,10 @@ interface PowerDataType {
 }
 
 interface WaterDataType {
-  tstamp: string;
-  'Total Consumption': number;
+  date: string;
+  hour: string;
+  'Meter Description': string;
+  difference_kl: number;
 }
 
 

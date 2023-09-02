@@ -15,8 +15,10 @@ interface DataType {
 }
 
 interface WaterDataType {
-  tstamp: string;
-  'Total Consumption': number;
+  date: string;
+  hour: string;
+  'Meter Description': string;
+  difference_kl: number;
 }
 
 
@@ -38,8 +40,6 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
   };
 
   const [currentChart, setCurrentChart] = useState(CHARTS.PIE);
-  // const [powerData, setPowerData] = useState<DataType[] | null>(null);
-  // const [waterData, setWaterData] = useState(null);
   const [transformedData, setTransformedData] = useState<
     {
       Timestamp: string;
@@ -48,20 +48,21 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
       'Incomer Power': string;
     }[] | null
   >(null);
-  const [startTime, setStartTime] = useState("0");
-  const [endTime, setEndTime] = useState("0");
+  const [powerStartTime, setPowerStartTime] = useState("0");
+  const [powerEndTime, setPowerEndTime] = useState("0");
+  const [waterStartTime, setWaterStartTime] = useState("0");
+  const [waterEndTime, setWaterEndTime] = useState("0");
 
 
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
       year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    } as const;
+      month: 'long',
+      day: 'numeric'
+    };
     return new Date(dateString).toLocaleDateString(undefined, options);
-  }
+  };
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -93,8 +94,13 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
     }));
 
     setTransformedData(tData);
-    setStartTime(tData[0].Timestamp);
-    setEndTime(tData[tData.length - 1].Timestamp);
+    setPowerStartTime(tData[0].Timestamp);
+    setPowerEndTime(tData[tData.length - 1].Timestamp);
+
+    if (waterData && waterData.length > 0) {
+      setWaterStartTime(formatDate(waterData[0].date));
+      setWaterEndTime(formatDate(waterData[waterData.length - 1].date));
+    }
 
     let totalSolar = 0;
     let totalIncomerPower = 0;
@@ -106,7 +112,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
       'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': totalSolar,
       'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': totalIncomerPower,
     };
-  }, [powerData]);
+  }, [powerData, waterData]);
 
 
   return (
@@ -116,7 +122,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
           {currentChart === CHARTS.PIE && (
             <>
               <h1 className="heading">
-                Percentage Energy from Solar and Incomer from {startTime} to {endTime}
+                Percentage Energy from Solar and Incomer from {powerStartTime} to {powerEndTime}
               </h1>
               <PieChartComponent data={aggregatedData} colors={settings} />
             </>
@@ -124,7 +130,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
           {currentChart === CHARTS.AREA && (
             <>
               <h1 className="heading">
-                Energy from Solar and Incomer from {startTime} to {endTime}
+                Energy from Solar and Incomer from {powerStartTime} to {powerEndTime}
               </h1>
               <StackedAreaChart data={transformedData} colors={settings} />
             </>
@@ -132,9 +138,9 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
           {currentChart === CHARTS.LINE && (
             <>
               <h1 className="heading">
-                Daily Water Consumption Over July 2023 for Different Storeys
+                Water Consumption from {waterStartTime} to {waterEndTime} for Different Storeys
               </h1>
-              <StackedLineChart data={waterData} color={settings.water} />
+              <StackedLineChart data={waterData} />
             </>
           )}
         </>
