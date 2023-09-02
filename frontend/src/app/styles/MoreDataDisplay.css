@@ -6,38 +6,29 @@
 
 .graphContainer {
     margin-top: 5vh;
-    max-height: 85vh; /* Set maximum height */
-    overflow-y: auto; /* Allow scrolling */
-    /* display: flex;
-    flex-direction: column; */
-    align-items: center; /* Center the content horizontally */
+    max-height: 85vh;
+    overflow-y: auto;
+    align-items: center;
 }
 
 
 .chartWrapper {
-    /* Removed display: absolute; */
     display: flex;
     justify-content: space-between;
-    margin: 2rem 0; /* Add some space between chart wrappers */
-    /* If you want to set a max height */
-    /* max-height: calc(90vh / 3); */
-    /* overflow-y: auto; */
+    margin: 2rem 0;
 
 }
 
 .chartSection {
-    flex: 2; /* Takes up 2/3 of the space */
-    /* If you want to set a max height */
-    /* max-height: 100%; */
-    /* overflow-y: auto; */
+    flex: 2;
 }
 
 .textSection {
-    flex: 1; /* Takes up 1/3 of the space */
+    flex: 1;
     padding: 20px;
     margin-left: 2rem;
-    background-color: #f3e9cb; /* Just for demonstration */
-    /* If you want to set a max height */
-    /* max-height: 100%; */
-    /* overflow-y: auto; */
+    background-color: #f3e9cb;
+    border-color: #292827 ;
+    border-width: 2px;
+    border-radius: 10px;
 }
