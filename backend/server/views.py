@@ -129,6 +129,8 @@ def index(request):
     res.write("3. /api\n")
     return res
 
+from django.core.exceptions import ValidationError
+
 @api_view(['GET', 'POST', 'DELETE'])
 @permission_classes([permissions.IsAdminUser])
 def manage_admins(request):
@@ -140,9 +142,23 @@ def manage_admins(request):
     elif request.method == 'POST':
         username = request.data.get('username')
         password = request.data.get('password')
-        new_admin = User.objects.create_user(username=username, password=password, is_staff=True)
-        new_admin.save()
-        return Response({"message": "Admin added successfully"}, status=status.HTTP_201_CREATED)
+
+        # Validate username and password
+        if not username or not password:
+            return Response({"error": "Both username and password must be entered."}, status=status.HTTP_400_BAD_REQUEST)
+        if len(username) < 6 or len(password) < 6:
+            return Response({"error": "Both username and password must be at least 6 characters long."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Check for duplicate username
+        if User.objects.filter(username=username).exists():
+            return Response({"error": "Username already exists. Please choose a different username."}, status=status.HTTP_409_CONFLICT)
+
+        try:
+            new_admin = User.objects.create_user(username=username, password=password, is_staff=True)
+            new_admin.save()
+            return Response({"message": "Admin added successfully"}, status=status.HTTP_201_CREATED)
+        except ValidationError as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
         admin_id = request.data.get('id')
@@ -152,3 +168,4 @@ def manage_admins(request):
             return Response({"message": "Admin removed successfully"}, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response({"error": "Admin not found"}, status=status.HTTP_404_NOT_FOUND)
+

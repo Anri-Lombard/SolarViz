@@ -24,6 +24,7 @@ const Admin = () => {
   const [newAdminUsername, setNewAdminUsername] = useState('');
   const [newAdminPassword, setNewAdminPassword] = useState('');
   const [token, setToken] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 
   const router = useRouter();
@@ -116,6 +117,16 @@ const Admin = () => {
   }, [token]);
 
   const addAdmin = async (username: string, password: string) => {
+    // Validate username and password
+    if (!username || !password) {
+      setErrorMessage("Both username and password must be entered.");
+      return;
+    }
+    if (username.length < 6 || password.length < 6) {
+      setErrorMessage("Both username and password must be at least 6 characters long.");
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:8000/api/manage-admins/', {
         method: 'POST',
@@ -126,7 +137,12 @@ const Admin = () => {
         body: JSON.stringify({ username, password }),
       })
 
+      const data = await response.json();
+
       if (response.ok) {
+        // Clear any existing error messages
+        setErrorMessage(null);
+
         // Force a re-fetch of the admin list
         const fetchAdmins = async () => {
           const res = await fetch('http://localhost:8000/api/manage-admins/', {
@@ -139,12 +155,10 @@ const Admin = () => {
         };
         fetchAdmins();
       } else {
-        // TODO: Display error message
-        console.error("Error adding admin:", response.statusText);
+        setErrorMessage(data.error || "An error occurred while adding the admin.");
       }
     } catch (error) {
-      // TODO: Display error message
-      console.error("Error adding admin:", error);
+      setErrorMessage("An unexpected error occurred. Please try again.");
     }
   };
 
@@ -160,15 +174,18 @@ const Admin = () => {
         body: JSON.stringify({ id }),
       })
 
+      const data = await response.json();
+
       if (response.ok) {
+        // Clear any existing error messages
+        setErrorMessage(null);
+
         setAdmins(prevAdmins => prevAdmins.filter(admin => admin.id !== id));  // Use functional update
       } else {
-        // TODO: Display error message
-        console.error("Error removing admin:", response.statusText);
+        setErrorMessage(data.error || "Error removing admin");
       }
     } catch (error) {
-      // TODO: Display error message
-      console.error("Error removing admin:", error);
+      setErrorMessage("Error removing admin: " + error);
     }
   };
 
@@ -211,14 +228,6 @@ const Admin = () => {
 
       <div className='mb-5 manage-admins'>
         <h2>Manage Administrators</h2>
-        <ul>
-          {admins.map(admin => (
-            <li key={admin.id}>
-              {admin.username}
-              <button onClick={() => removeAdmin(admin.id)}>Remove</button>
-            </li>
-          ))}
-        </ul>
         <form onSubmit={(e) => {
           e.preventDefault();
           addAdmin(newAdminUsername, newAdminPassword);
@@ -244,7 +253,16 @@ const Admin = () => {
             />
           </label>
           <button type="submit">Add Admin</button>
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
         </form>
+        <ul>
+          {admins.map(admin => (
+            <li key={admin.id}>
+              {admin.username}
+              <button onClick={() => removeAdmin(admin.id)}>Remove</button>
+            </li>
+          ))}
+        </ul>
       </div>
 
 

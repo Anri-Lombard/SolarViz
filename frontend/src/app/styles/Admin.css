@@ -90,3 +90,9 @@
     background-color: #f3e9cb;
     color: #292827;
 }
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    padding: 2rem 1rem;
+}
