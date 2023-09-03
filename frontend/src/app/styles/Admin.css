@@ -15,6 +15,21 @@
     font-size: small;
 }
 
+h2 {
+    font-size: x-large;
+    font-weight: bold;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.intro {
+    font-size: medium;
+    padding-top:100px;
+    padding-bottom: 20px;
+    margin: 40px;
+}
+
 .applyButton:hover {
     color: #f3e9cb;
     background-color: #292827;
@@ -41,33 +56,35 @@
     background-color: #292827;
 }
 
-.manage-admins {
+.adminBlock {
     background-color: #f3e9cb;
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
     border: 2px solid #292827;
+    border-width: 1px;
+    margin: 20px;
 }
 
-.manage-admins ul {
+.adminBlock ul {
     list-style-type: none;
     padding: 0;
 }
 
-.manage-admins li {
+.adminBlock li {
     padding: 10px;
     border-bottom: 1px solid #292827;
     display: flex;
     justify-content: space-between;
 }
 
-.manage-admins label {
+.adminBlock label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 600;
     color: #292827;
 }
 
-.manage-admins input {
+.adminBlock input {
     width: 100%;
     padding: 0.5rem;
     margin-bottom: 1rem;
@@ -75,7 +92,7 @@
     border-radius: 5px;
 }
 
-.manage-admins button {
+.adminBlock button {
     background-color: #292827;
     color: #f3e9cb;
     padding: 10px 20px;
@@ -86,7 +103,7 @@
     font-size: small;
 }
 
-.manage-admins button:hover {
+.adminBlock button:hover {
     background-color: #f3e9cb;
     color: #292827;
 }
