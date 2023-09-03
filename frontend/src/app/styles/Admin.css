@@ -49,6 +49,7 @@ h2 {
     cursor: pointer;
     text-transform: uppercase;
     font-size: small;
+    margin-bottom: 60px;
 }
 
 .logoutButton:hover {
