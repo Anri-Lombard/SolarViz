@@ -24,6 +24,7 @@ urlpatterns = [
     path('api-token-auth/', CustomAuthToken.as_view(), name='api_token_auth'),
     path('admin/', admin.site.urls),
     path('api/', views.csv_data, name='csv_data'),
+    path('api/manage-admins/', views.manage_admins, name='manage_admins'),
     path('hello/', views.hello, name='hello'),
     path('', views.index, name='index'),
     path('api/power_data/', views.power_data, name='power_data'),

@@ -2,6 +2,9 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import User
+from rest_framework import permissions, status
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 from collections import defaultdict
@@ -61,7 +64,6 @@ def power_data(request):
     return JsonResponse(data, safe=False)
 
 
-# TODO: test data format, also change to show each story if necessary
 def water_data(request):
     csv_data = csv_to_json('data/University of Cape Town (UCT - School of Design) 01 Aug to 06 Aug 2023 Report Data.csv')  
     
@@ -126,3 +128,27 @@ def index(request):
     res.write("2. /admin\n")
     res.write("3. /api\n")
     return res
+
+@api_view(['GET', 'POST', 'DELETE'])
+@permission_classes([permissions.IsAdminUser])
+def manage_admins(request):
+    if request.method == 'GET':
+        admins = User.objects.filter(is_staff=True)
+        admin_data = [{"id": admin.id, "username": admin.username} for admin in admins]
+        return Response(admin_data)
+
+    elif request.method == 'POST':
+        username = request.data.get('username')
+        password = request.data.get('password')
+        new_admin = User.objects.create_user(username=username, password=password, is_staff=True)
+        new_admin.save()
+        return Response({"message": "Admin added successfully"}, status=status.HTTP_201_CREATED)
+
+    elif request.method == 'DELETE':
+        admin_id = request.data.get('id')
+        try:
+            admin_to_remove = User.objects.get(id=admin_id)
+            admin_to_remove.delete()
+            return Response({"message": "Admin removed successfully"}, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({"error": "Admin not found"}, status=status.HTTP_404_NOT_FOUND)
