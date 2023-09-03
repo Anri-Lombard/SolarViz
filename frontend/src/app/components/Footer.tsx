@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import '../styles/Footer.css';
 import Image from 'next/image';
-import footerImage from '../images/darkBulb.png';
+import footerImage from '../images/darkbulb.png';
 
 export const Footer: React.FC = () => {
   const router = useRouter();
@@ -12,10 +12,13 @@ export const Footer: React.FC = () => {
     router.push('/manual');
   };
 
+  // get year dynamically
+  const year = new Date().getFullYear();
+
   return (
     <footer className="footer">
       <div className='footerText'>
-        <p>© 2023 SolarViz. All rights reserved.</p>
+        <p>© {year} SolarViz. All rights reserved.</p>
       </div>
 
       <div className='footerContainer'>

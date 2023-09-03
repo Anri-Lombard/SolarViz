@@ -1,0 +1,17 @@
+# Byte-compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+
+# Database files (if using SQLite for development)
+*.sqlite3
+
+# Virtual environment (if you have one)
+venv/
+
+# Logs
+*.log
+
+# Other
+*.swp
+*.swo
