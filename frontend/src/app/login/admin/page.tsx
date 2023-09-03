@@ -91,24 +91,27 @@ const Admin = () => {
   );
 
   useEffect(() => {
-    if (token) {
-      // Fetch list of administrators
-      fetch('http://localhost:8000/api/manage-admins/', {
-        headers: {
-          'Authorization': `Token ${token}`
+    // Fetch list of administrators when the component mounts or the token changes
+    const fetchAdmins = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/manage-admins/', {
+          headers: {
+            'Authorization': `Token ${token}`
+          }
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setAdmins(data);
+        } else {
+          console.error("Error fetching admins:", response.statusText);
         }
-      })
-      .then(response => response.json())
-      .then(data => {
-        setAdmins(data);
-      })
-      .catch(error => {
-        // TODO: Display error message
+      } catch (error) {
         console.error("Error fetching admins:", error);
-      });
-    } else {
-      // TODO: Display error message
-      console.log("No token found")
+      }
+    };
+
+    if (token) {
+      fetchAdmins();
     }
   }, [token]);
 
@@ -124,9 +127,17 @@ const Admin = () => {
       })
 
       if (response.ok) {
-        const data = await response.json();
-        // Update the list of admins
-        setAdmins([...admins, data]);
+        // Force a re-fetch of the admin list
+        const fetchAdmins = async () => {
+          const res = await fetch('http://localhost:8000/api/manage-admins/', {
+            headers: {
+              'Authorization': `Token ${token}`
+            }
+          });
+          const data = await res.json();
+          setAdmins(data);
+        };
+        fetchAdmins();
       } else {
         // TODO: Display error message
         console.error("Error adding admin:", response.statusText);
@@ -150,8 +161,7 @@ const Admin = () => {
       })
 
       if (response.ok) {
-        // Update the list of admins by removing the deleted one
-        setAdmins(admins.filter(admin => admin.id !== id));
+        setAdmins(prevAdmins => prevAdmins.filter(admin => admin.id !== id));  // Use functional update
       } else {
         // TODO: Display error message
         console.error("Error removing admin:", response.statusText);
@@ -193,7 +203,13 @@ const Admin = () => {
 
           </div>
         ))}
+      </div>
 
+      {renderColorOptions('incomerPower')}
+      {renderColorOptions('solarPower')}
+      {renderColorOptions('water')}
+
+      <div className='mb-5 manage-admins'>
         <h2>Manage Administrators</h2>
         <ul>
           {admins.map(admin => (
@@ -215,6 +231,7 @@ const Admin = () => {
               type="text"
               value={newAdminUsername}
               onChange={(e) => setNewAdminUsername(e.target.value)}
+              placeholder="New admin username"
             />
           </label>
           <label>
@@ -223,15 +240,13 @@ const Admin = () => {
               type="password"
               value={newAdminPassword}
               onChange={(e) => setNewAdminPassword(e.target.value)}
+              placeholder="New admin password"
             />
           </label>
           <button type="submit">Add Admin</button>
         </form>
       </div>
 
-      {renderColorOptions('incomerPower')}
-      {renderColorOptions('solarPower')}
-      {renderColorOptions('water')}
 
       <button onClick={handleLogout} className='logoutButton'>Logout</button>
     </div>

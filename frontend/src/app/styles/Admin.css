@@ -4,7 +4,7 @@
     right: 10px;
     top: 150px;
     background-color: #f3e9cb;
-    border-color: #292827 ;
+    border-color: #292827;
     border-width: 2px;
     border-radius: 10px;
     justify-content: flex-end;
@@ -25,7 +25,7 @@
     float: right;
     right: 10px;
     background-color: #f3e9cb;
-    border-color: #292827 ;
+    border-color: #292827;
     border-width: 2px;
     border-radius: 10px;
     justify-content: flex-end;
@@ -39,4 +39,54 @@
 .logoutButton:hover {
     color: #f3e9cb;
     background-color: #292827;
+}
+
+.manage-admins {
+    background-color: #f3e9cb;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #292827;
+}
+
+.manage-admins ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.manage-admins li {
+    padding: 10px;
+    border-bottom: 1px solid #292827;
+    display: flex;
+    justify-content: space-between;
+}
+
+.manage-admins label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #292827;
+}
+
+.manage-admins input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #292827;
+    border-radius: 5px;
+}
+
+.manage-admins button {
+    background-color: #292827;
+    color: #f3e9cb;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: small;
+}
+
+.manage-admins button:hover {
+    background-color: #f3e9cb;
+    color: #292827;
 }
