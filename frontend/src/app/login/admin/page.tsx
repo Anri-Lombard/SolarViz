@@ -172,44 +172,62 @@ const Admin = () => {
     }
   };
 
-
-
   return (
-    <div className='mainBlock p-5'>
-      <h1 className='mb-5 text-black'>Welcome to the administration page. Here you can modify the data that is displayed on the dashboard as well as the colour scheme.</h1>
-      <p className='mb-5 text-black text-xl font-bold'>Adjust colours</p>
-      <div className='mb-5'>
-        <div
-          onClick={() => {
-            setSettings(pendingChanges);
-            localStorage.setItem('settings', JSON.stringify(pendingChanges));
-          }}
-          className='applyButton'
-        >
-          Apply changes
-        </div>
+    <div>
 
-        <h2 className='text-black font-bold'>Default Colours:</h2>
-        {Object.entries(defaultColors).map(([type, color]) => (
-          <div key={type} className="flex items-center mb-2">
-            <span className='text-black mr-2'>{type}: </span>
-            <button
-              onClick={() => handleChangeColor(type as ColorType, color)}
-              className={`p-2 ${settings[type as keyof typeof settings] === color ? 'bg-blue-500 text-white' : 'bg-gray-400 text-black'}`}
-              style={{ backgroundColor: color }}
-            >
-              {color}
-            </button>
+      <div className='intro'>
+      <p>Welcome to the administration page. Adjust the colour schemes of the graphs displayed, 
+        select the content to be displayed on the main dashboard, or manage the administrators. Select one of the options below.</p>
 
-          </div>
-        ))}
+      <nav>
+        <ul className= 'hover=underline' style={{ paddingTop: '10px' }}>
+          <li><a href="#adjust-colours">Adjust Colours</a></li>
+          <li><a href="#select-content">Select dashboard content</a></li>
+          <li><a href="#manage-admins">Manage Administrators</a></li>
+        </ul>
+      </nav>
       </div>
 
+      <div id="adjust-colours" className='mb-5 adminBlock' >
+
+        <h2>Adjust colours</h2>
+        <div className='mb-5'>
+          <div
+            onClick={() => {
+              setSettings(pendingChanges);
+              localStorage.setItem('settings', JSON.stringify(pendingChanges));
+            }}
+            className='applyButton'
+          >
+            Apply changes
+          </div>
+
+          <h1 className='text-black font-bold'>Default Colours:</h1>
+          {Object.entries(defaultColors).map(([type, color]) => (
+            <div key={type} className="flex items-center mb-2">
+              <span className='text-black mr-2'>{type}: </span>
+              <button
+                onClick={() => handleChangeColor(type as ColorType, color)}
+                className={`p-2 ${settings[type as keyof typeof settings] === color ? 'bg-blue-500 text-white' : 'bg-gray-400 text-black'}`}
+                style={{ backgroundColor: color }}
+              >
+                {color}
+              </button>
+
+            </div>
+          ))}
+        </div>
       {renderColorOptions('incomerPower')}
       {renderColorOptions('solarPower')}
       {renderColorOptions('water')}
 
-      <div className='mb-5 manage-admins'>
+      </div> 
+
+      <div id="select-content" className='mb-5 adminBlock'>
+        <h2> Select graphs to be displayed on the main dashboard</h2>
+      </div>
+
+      <div id="manage-admins" className='mb-5 adminBlock'>
         <h2>Manage Administrators</h2>
         <ul>
           {admins.map(admin => (
@@ -246,7 +264,6 @@ const Admin = () => {
           <button type="submit">Add Admin</button>
         </form>
       </div>
-
 
       <button onClick={handleLogout} className='logoutButton'>Logout</button>
     </div>
