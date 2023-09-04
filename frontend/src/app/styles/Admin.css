@@ -1,8 +1,4 @@
 .applyButton {
-    position: relative;
-    float: right;
-    right: 10px;
-    top: 150px;
     background-color: #f3e9cb;
     border-color: #292827;
     border-width: 2px;
@@ -13,6 +9,28 @@
     cursor: pointer;
     text-transform: uppercase;
     font-size: small;
+}
+
+.applyButtonContainer {
+    position: relative;
+    float: right;
+    right: 10px;
+    top: 150px;
+    display: flex;
+    flex-direction: column;
+  }
+
+.changesAppliedMessage {
+    position: absolute;
+    bottom: 30px;
+    margin: 10px;
+    color: blue;
+    font-size: small;
+}
+
+.applyButton:hover {
+    color: #f3e9cb;
+    background-color: #292827;
 }
 
 h2 {
@@ -30,10 +48,6 @@ h2 {
     margin: 40px;
 }
 
-.applyButton:hover {
-    color: #f3e9cb;
-    background-color: #292827;
-}
 
 .logoutButton {
     position: relative;
