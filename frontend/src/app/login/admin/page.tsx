@@ -24,7 +24,7 @@ const Admin = () => {
   const [newAdminUsername, setNewAdminUsername] = useState('');
   const [newAdminPassword, setNewAdminPassword] = useState('');
   const [token, setToken] = useState<string | null>(null);
-
+  const [changesAppliedMessage, setChangesAppliedMessage] = useState<string | null>(null);
 
   const router = useRouter();
   const { logout } = useAuth(); // get login function
@@ -172,6 +172,14 @@ const Admin = () => {
     }
   };
 
+  const showChangesAppliedMessage = () => {
+    setChangesAppliedMessage('Changes applied');
+    setTimeout(() => {
+      setChangesAppliedMessage(null); // Hide the message after a few seconds
+    }, 500);
+  };
+  
+
   return (
     <div>
 
@@ -192,15 +200,18 @@ const Admin = () => {
 
         <h2>Adjust colours</h2>
         <div className='mb-5'>
-          <div
-            onClick={() => {
-              setSettings(pendingChanges);
-              localStorage.setItem('settings', JSON.stringify(pendingChanges));
-            }}
-            className='applyButton'
-          >
-            Apply changes
-          </div>
+
+        <div
+          onClick={() => {
+            setSettings(pendingChanges);
+            localStorage.setItem('settings', JSON.stringify(pendingChanges));
+            showChangesAppliedMessage();
+          }}
+          className='applyButtonContainer'
+        >
+          <div className='applyButton'>Apply changes</div>
+          {changesAppliedMessage && <div className="changesAppliedMessage">{changesAppliedMessage}</div>}
+        </div>
 
           <h1 className='text-black font-bold'>Default Colours:</h1>
           {Object.entries(defaultColors).map(([type, color]) => (
