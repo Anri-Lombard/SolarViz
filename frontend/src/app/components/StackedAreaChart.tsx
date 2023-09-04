@@ -30,7 +30,7 @@ export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors
                     bottom: 20,
                 }}
             >
-                <CartesianGrid strokeDasharray="3 3" />
+                {/* <CartesianGrid strokeDasharray="3 3" /> */}
                 <XAxis 
                     dataKey="Timestamp" 
                     label={{ value: 'Date and Hour', position: 'bottom' }}

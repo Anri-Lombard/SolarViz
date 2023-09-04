@@ -57,7 +57,7 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
                     bottom: 20,
                 }}
             >
-                <CartesianGrid strokeDasharray="3 3" />
+                {/* <CartesianGrid strokeDasharray="3 3" /> */}
                 <XAxis
                     dataKey="dateHour"
                     type="category"
