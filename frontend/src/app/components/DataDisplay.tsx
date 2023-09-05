@@ -165,17 +165,6 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
     .sort((a, b) => a.sequence - b.sequence)
     .filter(chart => chart.display);
 
-
-  // const { pieChart, areaChart, lineChart } = settings;
-  // const charts = [
-  //   { type: CHARTS.PIE, ...pieChart },
-  //   { type: CHARTS.AREA, ...areaChart },
-  //   { type: CHARTS.LINE, ...lineChart },
-  // ]
-  //   .sort((a, b) => a.sequence - b.sequence)
-  //   .filter(chart => chart.display);
-
-
   return (
     <div className='graphContainer'>
       {transformedData && aggregatedData && waterData && powerData ? (
