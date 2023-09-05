@@ -33,6 +33,7 @@ const Admin = () => {
     areaChart: settings.areaChart,
     lineChart: settings.lineChart,
   });
+  const [graphSettingsError, setGraphSettingsError] = useState<string | null>(null);
 
 
   const router = useRouter();
@@ -47,6 +48,44 @@ const Admin = () => {
     incomerPower: '#183d33',
     solarPower: '#bd5545',
     water: '#2779a7',
+  };
+
+  const validateGraphSettings = () => {
+    const sequenceNumbers = Object.values(pendingGraphSettings).map(setting => setting.sequence);
+    const uniqueSequenceNumbers = new Set(sequenceNumbers);
+
+    // Check if a sequence number is chosen twice
+    if (sequenceNumbers.length !== uniqueSequenceNumbers.size) {
+      setGraphSettingsError("Sequence numbers must be unique.");
+      return false;
+    }
+
+    // Check if sequence numbers follow each other
+    const sortedSequenceNumbers = sequenceNumbers.sort((a, b) => a - b);
+    for (let i = 0; i < sortedSequenceNumbers.length - 1; i++) {
+      if (sortedSequenceNumbers[i + 1] - sortedSequenceNumbers[i] !== 1) {
+        setGraphSettingsError("Sequence numbers must follow each other.");
+        return false;
+      }
+    }
+
+    // Check if at least one graph is displayed
+    const isAnyGraphDisplayed = Object.values(pendingGraphSettings).some(setting => setting.display);
+    if (!isAnyGraphDisplayed) {
+      setGraphSettingsError("At least one graph must be displayed.");
+      return false;
+    }
+
+    // Check if duration for each displayed graph is at least 10 seconds
+    const isDurationValid = Object.values(pendingGraphSettings).every(setting => !setting.display || setting.duration >= 10);
+    if (!isDurationValid) {
+      setGraphSettingsError("Duration for each displayed graph must be more than 10 seconds.");
+      return false;
+    }
+
+    // If all checks pass
+    setGraphSettingsError(null);
+    return true;
   };
 
   const handleGraphSettingsChange = (chartType: ChartType, field: string, value: number | boolean) => {
@@ -207,24 +246,39 @@ const Admin = () => {
     }, 1000);
   };
 
-  // FIXME: different for colors and other sections
-  const applyChanges = () => {
-    if (window.confirm("Are you sure you want to apply these changes?")) {
+  const applyColorChanges = () => {
+    if (window.confirm("Are you sure you want to apply color changes?")) {
       setSettings({
-        ...pendingChanges,
-        pieChart: pendingGraphSettings.pieChart,
-        areaChart: pendingGraphSettings.areaChart,
-        lineChart: pendingGraphSettings.lineChart,
+        ...settings,
+        incomerPower: pendingChanges.incomerPower,
+        solarPower: pendingChanges.solarPower,
+        water: pendingChanges.water,
       });
-      localStorage.setItem('settings', JSON.stringify({
-        ...pendingChanges,
-        pieChart: pendingGraphSettings.pieChart,
-        areaChart: pendingGraphSettings.areaChart,
-        lineChart: pendingGraphSettings.lineChart,
-      }));
+      localStorage.setItem('settings', JSON.stringify(pendingChanges));
       showChangesAppliedMessage();
     }
   };
+
+  const applyGraphSettingsChanges = () => {
+    if (validateGraphSettings()) {
+      if (window.confirm("Are you sure you want to apply graph settings changes?")) {
+        setSettings({
+          ...settings,
+          pieChart: pendingGraphSettings.pieChart,
+          areaChart: pendingGraphSettings.areaChart,
+          lineChart: pendingGraphSettings.lineChart,
+        });
+        localStorage.setItem('settings', JSON.stringify({
+          ...settings,
+          pieChart: pendingGraphSettings.pieChart,
+          areaChart: pendingGraphSettings.areaChart,
+          lineChart: pendingGraphSettings.lineChart,
+        }));
+        showChangesAppliedMessage();
+      }
+    }
+  };
+
 
 
 
@@ -250,10 +304,10 @@ const Admin = () => {
         <div className='mb-5'>
 
           <div
-            onClick={applyChanges}
+            onClick={applyColorChanges}
             className='applyButtonContainer'
           >
-            <div className='applyButton'>Apply changes</div>
+            <div className='applyButton'>Apply Color Changes</div>
             {changesAppliedMessage && <div className="changesAppliedMessage">{changesAppliedMessage}</div>}
           </div>
 
@@ -280,6 +334,18 @@ const Admin = () => {
 
       <div id="select-content" className='mb-5 adminBlock'>
         <h2> Select graphs to be displayed on the main dashboard</h2>
+
+        <div
+          onClick={applyGraphSettingsChanges}
+          className='applyGraphSettingsButtonContainer'
+        >
+          <div className='applyGraphSettingsButton'>Apply Graph Settings Changes</div>
+          {changesAppliedMessage && <div className="changesAppliedMessage">{changesAppliedMessage}</div>}
+        </div>
+
+        {graphSettingsError && <div className="errorMessage">{graphSettingsError}</div>}
+
+
         {(['pieChart', 'areaChart', 'lineChart'] as ChartType[]).map((chartType) => (
           <div key={chartType}>
             <h3>{chartType}</h3>
