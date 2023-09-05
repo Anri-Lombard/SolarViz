@@ -336,47 +336,49 @@ const Admin = () => {
         <h2> Select graphs to be displayed on the main dashboard</h2>
 
         <div
-          onClick={applyGraphSettingsChanges}
-          className='applyGraphSettingsButtonContainer'
-        >
-          <div className='applyGraphSettingsButton'>Apply Graph Settings Changes</div>
-          {changesAppliedMessage && <div className="changesAppliedMessage">{changesAppliedMessage}</div>}
-        </div>
-
-        {graphSettingsError && <div className="errorMessage">{graphSettingsError}</div>}
-
-
-        {(['pieChart', 'areaChart', 'lineChart'] as ChartType[]).map((chartType) => (
-          <div key={chartType}>
-            <h3>{chartType}</h3>
-            <label>
-              Sequence:
-              <input
-                type="number"
-                value={pendingGraphSettings[chartType].sequence}
-                onChange={(e) => handleGraphSettingsChange(chartType, 'sequence', parseInt(e.target.value))}
-              />
-            </label>
-            <label>
-              Duration (seconds):
-              <input
-                type="number"
-                value={pendingGraphSettings[chartType].duration}
-                onChange={(e) => handleGraphSettingsChange(chartType, 'duration', parseInt(e.target.value))}
-              />
-            </label>
-            <label>
-              Display:
-              <input
-                type="checkbox"
-                checked={pendingGraphSettings[chartType].display}
-                onChange={(e) => handleGraphSettingsChange(chartType, 'display', e.target.checked)}
-              />
-            </label>
+            onClick={applyGraphSettingsChanges}
+            className='applyGraphSettingsButtonContainer'
+          >
+            <div className='applyGraphSettingsButton'>Apply Graph Settings Changes</div>
+            {changesAppliedMessage && <div className="changesAppliedMessage">{changesAppliedMessage}</div>}
           </div>
-        ))}
-      </div>
 
+        <div className='selectionBlock'>
+          {graphSettingsError && <div className="errorMessage">{graphSettingsError}</div>}
+
+          {(['pieChart', 'areaChart', 'lineChart'] as ChartType[]).map((chartType) => (
+            <div key={chartType}>
+              <h3>{chartType}</h3>
+              <label>
+                Sequence:
+                <input
+                  type="number"
+                  value={pendingGraphSettings[chartType].sequence}
+                  onChange={(e) => handleGraphSettingsChange(chartType, 'sequence', parseInt(e.target.value))}
+                />
+              </label>
+              <label>
+                Duration (seconds):
+                <input
+                  type="number"
+                  value={pendingGraphSettings[chartType].duration}
+                  onChange={(e) => handleGraphSettingsChange(chartType, 'duration', parseInt(e.target.value))}
+                />
+              </label>
+            
+              <label className='checkbox'>
+                Display:
+                <input
+                  type="checkbox"
+                  checked={pendingGraphSettings[chartType].display}
+                  onChange={(e) => handleGraphSettingsChange(chartType, 'display', e.target.checked)}
+                />
+              </label>
+            </div>
+          ))}
+
+        </div>
+      </div>
 
       <div id="manage-admins" className='mb-5 adminBlock'>
         <h2>Manage Administrators</h2>
