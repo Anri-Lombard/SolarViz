@@ -164,18 +164,22 @@ h2 {
     border-radius: 10px;
     border: 2px solid #292827;
     margin-top: 60px;
-    border-width: 1px;
+    border-width: 0px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     grid-column-gap: 20px;
+}
+
+.gridElement {
+    padding: 0.2rem;
+    border-right: 1px solid #292827;
+    border-radius: 0px; 
 }
 
 .selectionBlock input {
     width: 60px;
     padding: 0.5rem;
     margin-bottom: 1rem;
-    border: 1px solid #292827;
-    border-radius: 5px;
 }
 
 .selectionBlock label {

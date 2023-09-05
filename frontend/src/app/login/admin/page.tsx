@@ -347,8 +347,8 @@ const Admin = () => {
           {graphSettingsError && <div className="errorMessage">{graphSettingsError}</div>}
 
           {(['pieChart', 'areaChart', 'lineChart'] as ChartType[]).map((chartType) => (
-            <div key={chartType}>
-              <h3>{chartType}</h3>
+            <div className="gridElement" key={chartType}>
+              <h3 className="font-bold text-l">{chartType}</h3>
               <label>
                 Sequence:
                 <input
