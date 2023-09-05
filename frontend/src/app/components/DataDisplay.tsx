@@ -21,6 +21,11 @@ interface WaterDataType {
   difference_kl: number;
 }
 
+type GraphSettings = {
+  sequence: number;
+  duration: number;
+  display: boolean;
+};
 
 interface DataDisplayProps {
   powerData: DataType[];
@@ -29,6 +34,9 @@ interface DataDisplayProps {
     incomerPower: string;
     solarPower: string;
     water: string;
+    pieChart: GraphSettings;
+    areaChart: GraphSettings;
+    lineChart: GraphSettings;
   };
 }
 
@@ -113,6 +121,24 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
       'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': totalIncomerPower,
     };
   }, [powerData, waterData]);
+
+  useEffect(() => {
+    const { pieChart, areaChart, lineChart } = settings;
+    const charts = [
+      { type: CHARTS.PIE, ...pieChart },
+      { type: CHARTS.AREA, ...areaChart },
+      { type: CHARTS.LINE, ...lineChart },
+    ].sort((a, b) => a.sequence - b.sequence)
+     .filter(chart => chart.display);
+  
+    let index = 0;
+    const interval = setInterval(() => {
+      setCurrentChart(charts[index].type);
+      index = (index + 1) % charts.length;
+    }, charts[index].duration * 1000);
+  
+    return () => clearInterval(interval);
+  }, [settings]);
 
 
   return (

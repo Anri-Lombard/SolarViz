@@ -11,6 +11,9 @@ import '../../styles/Admin.css';
 
 type ColorType = 'incomerPower' | 'solarPower' | 'water';
 
+type ChartType = 'pieChart' | 'areaChart' | 'lineChart';
+
+
 interface Admin {
   id: number;
   username: string;
@@ -25,6 +28,12 @@ const Admin = () => {
   const [newAdminPassword, setNewAdminPassword] = useState('');
   const [token, setToken] = useState<string | null>(null);
   const [changesAppliedMessage, setChangesAppliedMessage] = useState<string | null>(null);
+  const [pendingGraphSettings, setPendingGraphSettings] = useState({
+    pieChart: settings.pieChart,
+    areaChart: settings.areaChart,
+    lineChart: settings.lineChart,
+  });
+
 
   const router = useRouter();
   const { logout } = useAuth(); // get login function
@@ -40,6 +49,17 @@ const Admin = () => {
     water: '#2779a7',
   };
 
+  const handleGraphSettingsChange = (chartType: ChartType, field: string, value: number | boolean) => {
+    setPendingGraphSettings({
+      ...pendingGraphSettings,
+      [chartType]: {
+        ...pendingGraphSettings[chartType],
+        [field]: value,
+      },
+    });
+  };
+
+
   useEffect(() => {
     // This will only run on the client-side
     const storedToken = localStorage.getItem('token');
@@ -49,9 +69,11 @@ const Admin = () => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    router.push('/login');
-    logout();
+    if (window.confirm("Are you sure you want to logout?")) {
+      localStorage.removeItem('token');
+      router.push('/login');
+      logout();
+    }
   };
 
   const handleChangeColor = (type: ColorType, color: string) => {
@@ -116,84 +138,110 @@ const Admin = () => {
   }, [token]);
 
   const addAdmin = async (username: string, password: string) => {
-    try {
-      const response = await fetch('http://localhost:8000/api/manage-admins/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Token ${token}`
-        },
-        body: JSON.stringify({ username, password }),
-      })
+    if (window.confirm(`Are you sure you want to add ${username} as an admin?`)) {
 
-      if (response.ok) {
-        // Force a re-fetch of the admin list
-        const fetchAdmins = async () => {
-          const res = await fetch('http://localhost:8000/api/manage-admins/', {
-            headers: {
-              'Authorization': `Token ${token}`
-            }
-          });
-          const data = await res.json();
-          setAdmins(data);
-        };
-        fetchAdmins();
-      } else {
+      try {
+        const response = await fetch('http://localhost:8000/api/manage-admins/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+          },
+          body: JSON.stringify({ username, password }),
+        })
+
+        if (response.ok) {
+          // Force a re-fetch of the admin list
+          const fetchAdmins = async () => {
+            const res = await fetch('http://localhost:8000/api/manage-admins/', {
+              headers: {
+                'Authorization': `Token ${token}`
+              }
+            });
+            const data = await res.json();
+            setAdmins(data);
+          };
+          fetchAdmins();
+        } else {
+          // TODO: Display error message
+          console.error("Error adding admin:", response.statusText);
+        }
+      } catch (error) {
         // TODO: Display error message
-        console.error("Error adding admin:", response.statusText);
+        console.error("Error adding admin:", error);
       }
-    } catch (error) {
-      // TODO: Display error message
-      console.error("Error adding admin:", error);
     }
   };
 
 
   const removeAdmin = async (id: number) => {
-    try {
-      const response = await fetch('http://localhost:8000/api/manage-admins/', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Token ${token}`
-        },
-        body: JSON.stringify({ id }),
-      })
+    if (window.confirm(`Are you sure you want to remove this admin?`)) {
 
-      if (response.ok) {
-        setAdmins(prevAdmins => prevAdmins.filter(admin => admin.id !== id));  // Use functional update
-      } else {
+      try {
+        const response = await fetch('http://localhost:8000/api/manage-admins/', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+          },
+          body: JSON.stringify({ id }),
+        })
+
+        if (response.ok) {
+          setAdmins(prevAdmins => prevAdmins.filter(admin => admin.id !== id));  // Use functional update
+        } else {
+          // TODO: Display error message
+          console.error("Error removing admin:", response.statusText);
+        }
+      } catch (error) {
         // TODO: Display error message
-        console.error("Error removing admin:", response.statusText);
+        console.error("Error removing admin:", error);
       }
-    } catch (error) {
-      // TODO: Display error message
-      console.error("Error removing admin:", error);
     }
   };
 
   const showChangesAppliedMessage = () => {
     setChangesAppliedMessage('Changes applied');
     setTimeout(() => {
-      setChangesAppliedMessage(null); // Hide the message after a few seconds
-    }, 500);
+      setChangesAppliedMessage(null);
+    }, 1000);
   };
-  
+
+  // FIXME: different for colors and other sections
+  const applyChanges = () => {
+    if (window.confirm("Are you sure you want to apply these changes?")) {
+      setSettings({
+        ...pendingChanges,
+        pieChart: pendingGraphSettings.pieChart,
+        areaChart: pendingGraphSettings.areaChart,
+        lineChart: pendingGraphSettings.lineChart,
+      });
+      localStorage.setItem('settings', JSON.stringify({
+        ...pendingChanges,
+        pieChart: pendingGraphSettings.pieChart,
+        areaChart: pendingGraphSettings.areaChart,
+        lineChart: pendingGraphSettings.lineChart,
+      }));
+      showChangesAppliedMessage();
+    }
+  };
+
+
 
   return (
     <div>
 
       <div className='intro'>
-      <p>Welcome to the administration page. Adjust the colour schemes of the graphs displayed, 
-        select the content to be displayed on the main dashboard, or manage the administrators. Select one of the options below.</p>
+        <p>Welcome to the administration page. Adjust the colour schemes of the graphs displayed,
+          select the content to be displayed on the main dashboard, or manage the administrators. Select one of the options below.</p>
 
-      <nav>
-        <ul className= 'hover=underline' style={{ paddingTop: '10px' }}>
-          <li><a href="#adjust-colours">Adjust Colours</a></li>
-          <li><a href="#select-content">Select dashboard content</a></li>
-          <li><a href="#manage-admins">Manage Administrators</a></li>
-        </ul>
-      </nav>
+        <nav>
+          <ul className='hover=underline' style={{ paddingTop: '10px' }}>
+            <li><a href="#adjust-colours">Adjust Colours</a></li>
+            <li><a href="#select-content">Select dashboard content</a></li>
+            <li><a href="#manage-admins">Manage Administrators</a></li>
+          </ul>
+        </nav>
       </div>
 
       <div id="adjust-colours" className='mb-5 adminBlock' >
@@ -201,17 +249,13 @@ const Admin = () => {
         <h2>Adjust colours</h2>
         <div className='mb-5'>
 
-        <div
-          onClick={() => {
-            setSettings(pendingChanges);
-            localStorage.setItem('settings', JSON.stringify(pendingChanges));
-            showChangesAppliedMessage();
-          }}
-          className='applyButtonContainer'
-        >
-          <div className='applyButton'>Apply changes</div>
-          {changesAppliedMessage && <div className="changesAppliedMessage">{changesAppliedMessage}</div>}
-        </div>
+          <div
+            onClick={applyChanges}
+            className='applyButtonContainer'
+          >
+            <div className='applyButton'>Apply changes</div>
+            {changesAppliedMessage && <div className="changesAppliedMessage">{changesAppliedMessage}</div>}
+          </div>
 
           <h1 className='text-black font-bold'>Default Colours:</h1>
           {Object.entries(defaultColors).map(([type, color]) => (
@@ -228,15 +272,45 @@ const Admin = () => {
             </div>
           ))}
         </div>
-      {renderColorOptions('incomerPower')}
-      {renderColorOptions('solarPower')}
-      {renderColorOptions('water')}
+        {renderColorOptions('incomerPower')}
+        {renderColorOptions('solarPower')}
+        {renderColorOptions('water')}
 
-      </div> 
+      </div>
 
       <div id="select-content" className='mb-5 adminBlock'>
         <h2> Select graphs to be displayed on the main dashboard</h2>
+        {(['pieChart', 'areaChart', 'lineChart'] as ChartType[]).map((chartType) => (
+          <div key={chartType}>
+            <h3>{chartType}</h3>
+            <label>
+              Sequence:
+              <input
+                type="number"
+                value={pendingGraphSettings[chartType].sequence}
+                onChange={(e) => handleGraphSettingsChange(chartType, 'sequence', parseInt(e.target.value))}
+              />
+            </label>
+            <label>
+              Duration (seconds):
+              <input
+                type="number"
+                value={pendingGraphSettings[chartType].duration}
+                onChange={(e) => handleGraphSettingsChange(chartType, 'duration', parseInt(e.target.value))}
+              />
+            </label>
+            <label>
+              Display:
+              <input
+                type="checkbox"
+                checked={pendingGraphSettings[chartType].display}
+                onChange={(e) => handleGraphSettingsChange(chartType, 'display', e.target.checked)}
+              />
+            </label>
+          </div>
+        ))}
       </div>
+
 
       <div id="manage-admins" className='mb-5 adminBlock'>
         <h2>Manage Administrators</h2>
