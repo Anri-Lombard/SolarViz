@@ -117,6 +117,9 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
 
   return (
     <div className='graphContainer'>
+
+      
+           
       {transformedData && aggregatedData && waterData && powerData ? (
         <>
           {currentChart === CHARTS.PIE && (
