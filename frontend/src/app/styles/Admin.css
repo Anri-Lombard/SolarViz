@@ -1,3 +1,12 @@
+.errorMessage {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* FIXME: applybutton needs to change names */
+
 .applyButton {
     background-color: #f3e9cb;
     border-color: #292827;
@@ -18,7 +27,34 @@
     top: 150px;
     display: flex;
     flex-direction: column;
-  }
+}
+
+.applyGraphSettingsButtonContainer {
+    position: relative;
+    float: right;
+    right: 10px;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.applyGraphSettingsButton {
+    background-color: #f3e9cb;
+    border-color: #292827;
+    border-width: 2px;
+    border-radius: 10px;
+    justify-content: flex-end;
+    padding: 1vh 1vh;
+    color: #292827;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: small;
+}
+
+.applyGraphSettingsButton:hover {
+    color: #f3e9cb;
+    background-color: #292827;
+}
 
 .changesAppliedMessage {
     position: absolute;
@@ -43,7 +79,7 @@ h2 {
 
 .intro {
     font-size: medium;
-    padding-top:100px;
+    padding-top: 100px;
     padding-bottom: 20px;
     margin: 40px;
 }
@@ -95,14 +131,13 @@ h2 {
 .adminBlock label {
     display: block;
     margin-bottom: 0.5rem;
-    font-weight: 600;
     color: #292827;
 }
 
 .adminBlock input {
-    width: 100%;
     padding: 0.5rem;
-    margin-bottom: 1rem;
+    max-width: 200px;
+    margin: 30px;
     border: 1px solid #292827;
     border-radius: 5px;
 }
@@ -121,4 +156,34 @@ h2 {
 .adminBlock button:hover {
     background-color: #f3e9cb;
     color: #292827;
+}
+
+.selectionBlock {
+    background-color: #f3e9cb;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #292827;
+    margin-top: 60px;
+    border-width: 0px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-column-gap: 20px;
+}
+
+.gridElement {
+    padding: 0.2rem;
+    border-right: 1px solid #292827;
+    border-radius: 0px; 
+}
+
+.selectionBlock input {
+    width: 60px;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.selectionBlock label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
