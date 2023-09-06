@@ -1,11 +1,11 @@
 .heading {
+  margin-top: 50px;
   font-size: 20px;
   text-align: center;
   font-family: 'Verdana', sans-serif;
 }
 
 .graphContainer {
-  margin-top: 5vh;
   width: auto;
   height: auto;
 }

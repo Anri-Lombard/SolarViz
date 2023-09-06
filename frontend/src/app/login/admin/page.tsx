@@ -11,6 +11,9 @@ import '../../styles/Admin.css';
 
 type ColorType = 'incomerPower' | 'solarPower' | 'water';
 
+type ChartType = 'pieChart' | 'areaChart' | 'lineChart';
+
+
 interface Admin {
   id: number;
   username: string;
@@ -25,6 +28,13 @@ const Admin = () => {
   const [newAdminPassword, setNewAdminPassword] = useState('');
   const [token, setToken] = useState<string | null>(null);
   const [changesAppliedMessage, setChangesAppliedMessage] = useState<string | null>(null);
+  const [pendingGraphSettings, setPendingGraphSettings] = useState({
+    pieChart: settings.pieChart,
+    areaChart: settings.areaChart,
+    lineChart: settings.lineChart,
+  });
+  const [graphSettingsError, setGraphSettingsError] = useState<string | null>(null);
+
 
   const router = useRouter();
   const { logout } = useAuth(); // get login function
@@ -40,6 +50,55 @@ const Admin = () => {
     water: '#2779a7',
   };
 
+  const validateGraphSettings = () => {
+    const sequenceNumbers = Object.values(pendingGraphSettings).map(setting => setting.sequence);
+    const uniqueSequenceNumbers = new Set(sequenceNumbers);
+
+    // Check if a sequence number is chosen twice
+    if (sequenceNumbers.length !== uniqueSequenceNumbers.size) {
+      setGraphSettingsError("Sequence numbers must be unique.");
+      return false;
+    }
+
+    // Check if sequence numbers follow each other
+    const sortedSequenceNumbers = sequenceNumbers.sort((a, b) => a - b);
+    for (let i = 0; i < sortedSequenceNumbers.length - 1; i++) {
+      if (sortedSequenceNumbers[i + 1] - sortedSequenceNumbers[i] !== 1) {
+        setGraphSettingsError("Sequence numbers must follow each other.");
+        return false;
+      }
+    }
+
+    // Check if at least one graph is displayed
+    const isAnyGraphDisplayed = Object.values(pendingGraphSettings).some(setting => setting.display);
+    if (!isAnyGraphDisplayed) {
+      setGraphSettingsError("At least one graph must be displayed.");
+      return false;
+    }
+
+    // Check if duration for each displayed graph is at least 10 seconds
+    const isDurationValid = Object.values(pendingGraphSettings).every(setting => !setting.display || setting.duration >= 10);
+    if (!isDurationValid) {
+      setGraphSettingsError("Duration for each displayed graph must be more than 10 seconds.");
+      return false;
+    }
+
+    // If all checks pass
+    setGraphSettingsError(null);
+    return true;
+  };
+
+  const handleGraphSettingsChange = (chartType: ChartType, field: string, value: number | boolean) => {
+    setPendingGraphSettings({
+      ...pendingGraphSettings,
+      [chartType]: {
+        ...pendingGraphSettings[chartType],
+        [field]: value,
+      },
+    });
+  };
+
+
   useEffect(() => {
     // This will only run on the client-side
     const storedToken = localStorage.getItem('token');
@@ -49,9 +108,11 @@ const Admin = () => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    router.push('/login');
-    logout();
+    if (window.confirm("Are you sure you want to logout?")) {
+      localStorage.removeItem('token');
+      router.push('/login');
+      logout();
+    }
   };
 
   const handleChangeColor = (type: ColorType, color: string) => {
@@ -116,84 +177,125 @@ const Admin = () => {
   }, [token]);
 
   const addAdmin = async (username: string, password: string) => {
-    try {
-      const response = await fetch('http://localhost:8000/api/manage-admins/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Token ${token}`
-        },
-        body: JSON.stringify({ username, password }),
-      })
+    if (window.confirm(`Are you sure you want to add ${username} as an admin?`)) {
 
-      if (response.ok) {
-        // Force a re-fetch of the admin list
-        const fetchAdmins = async () => {
-          const res = await fetch('http://localhost:8000/api/manage-admins/', {
-            headers: {
-              'Authorization': `Token ${token}`
-            }
-          });
-          const data = await res.json();
-          setAdmins(data);
-        };
-        fetchAdmins();
-      } else {
+      try {
+        const response = await fetch('http://localhost:8000/api/manage-admins/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+          },
+          body: JSON.stringify({ username, password }),
+        })
+
+        if (response.ok) {
+          // Force a re-fetch of the admin list
+          const fetchAdmins = async () => {
+            const res = await fetch('http://localhost:8000/api/manage-admins/', {
+              headers: {
+                'Authorization': `Token ${token}`
+              }
+            });
+            const data = await res.json();
+            setAdmins(data);
+          };
+          fetchAdmins();
+        } else {
+          // TODO: Display error message
+          console.error("Error adding admin:", response.statusText);
+        }
+      } catch (error) {
         // TODO: Display error message
-        console.error("Error adding admin:", response.statusText);
+        console.error("Error adding admin:", error);
       }
-    } catch (error) {
-      // TODO: Display error message
-      console.error("Error adding admin:", error);
     }
   };
 
 
   const removeAdmin = async (id: number) => {
-    try {
-      const response = await fetch('http://localhost:8000/api/manage-admins/', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Token ${token}`
-        },
-        body: JSON.stringify({ id }),
-      })
+    if (window.confirm(`Are you sure you want to remove this admin?`)) {
 
-      if (response.ok) {
-        setAdmins(prevAdmins => prevAdmins.filter(admin => admin.id !== id));  // Use functional update
-      } else {
+      try {
+        const response = await fetch('http://localhost:8000/api/manage-admins/', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+          },
+          body: JSON.stringify({ id }),
+        })
+
+        if (response.ok) {
+          setAdmins(prevAdmins => prevAdmins.filter(admin => admin.id !== id));  // Use functional update
+        } else {
+          // TODO: Display error message
+          console.error("Error removing admin:", response.statusText);
+        }
+      } catch (error) {
         // TODO: Display error message
-        console.error("Error removing admin:", response.statusText);
+        console.error("Error removing admin:", error);
       }
-    } catch (error) {
-      // TODO: Display error message
-      console.error("Error removing admin:", error);
     }
   };
 
   const showChangesAppliedMessage = () => {
     setChangesAppliedMessage('Changes applied');
     setTimeout(() => {
-      setChangesAppliedMessage(null); // Hide the message after a few seconds
-    }, 500);
+      setChangesAppliedMessage(null);
+    }, 1000);
   };
-  
+
+  const applyColorChanges = () => {
+    if (window.confirm("Are you sure you want to apply color changes?")) {
+      setSettings({
+        ...settings,
+        incomerPower: pendingChanges.incomerPower,
+        solarPower: pendingChanges.solarPower,
+        water: pendingChanges.water,
+      });
+      localStorage.setItem('settings', JSON.stringify(pendingChanges));
+      showChangesAppliedMessage();
+    }
+  };
+
+  const applyGraphSettingsChanges = () => {
+    if (validateGraphSettings()) {
+      if (window.confirm("Are you sure you want to apply graph settings changes?")) {
+        setSettings({
+          ...settings,
+          pieChart: pendingGraphSettings.pieChart,
+          areaChart: pendingGraphSettings.areaChart,
+          lineChart: pendingGraphSettings.lineChart,
+        });
+        localStorage.setItem('settings', JSON.stringify({
+          ...settings,
+          pieChart: pendingGraphSettings.pieChart,
+          areaChart: pendingGraphSettings.areaChart,
+          lineChart: pendingGraphSettings.lineChart,
+        }));
+        showChangesAppliedMessage();
+      }
+    }
+  };
+
+
+
 
   return (
     <div>
 
       <div className='intro'>
-      <p>Welcome to the administration page. Adjust the colour schemes of the graphs displayed, 
-        select the content to be displayed on the main dashboard, or manage the administrators. Select one of the options below.</p>
+        <p>Welcome to the administration page. Adjust the colour schemes of the graphs displayed,
+          select the content to be displayed on the main dashboard, or manage the administrators. Select one of the options below.</p>
 
-      <nav>
-        <ul className= 'hover=underline' style={{ paddingTop: '10px' }}>
-          <li><a href="#adjust-colours">Adjust Colours</a></li>
-          <li><a href="#select-content">Select dashboard content</a></li>
-          <li><a href="#manage-admins">Manage Administrators</a></li>
-        </ul>
-      </nav>
+        <nav>
+          <ul className='hover=underline' style={{ paddingTop: '10px' }}>
+            <li><a href="#adjust-colours">Adjust Colours</a></li>
+            <li><a href="#select-content">Select dashboard content</a></li>
+            <li><a href="#manage-admins">Manage Administrators</a></li>
+          </ul>
+        </nav>
       </div>
 
       <div id="adjust-colours" className='mb-5 adminBlock' >
@@ -201,17 +303,13 @@ const Admin = () => {
         <h2>Adjust colours</h2>
         <div className='mb-5'>
 
-        <div
-          onClick={() => {
-            setSettings(pendingChanges);
-            localStorage.setItem('settings', JSON.stringify(pendingChanges));
-            showChangesAppliedMessage();
-          }}
-          className='applyButtonContainer'
-        >
-          <div className='applyButton'>Apply changes</div>
-          {changesAppliedMessage && <div className="changesAppliedMessage">{changesAppliedMessage}</div>}
-        </div>
+          <div
+            onClick={applyColorChanges}
+            className='applyButtonContainer'
+          >
+            <div className='applyButton'>Apply Color Changes</div>
+            {changesAppliedMessage && <div className="changesAppliedMessage">{changesAppliedMessage}</div>}
+          </div>
 
           <h1 className='text-black font-bold'>Default Colours:</h1>
           {Object.entries(defaultColors).map(([type, color]) => (
@@ -228,14 +326,58 @@ const Admin = () => {
             </div>
           ))}
         </div>
-      {renderColorOptions('incomerPower')}
-      {renderColorOptions('solarPower')}
-      {renderColorOptions('water')}
+        {renderColorOptions('incomerPower')}
+        {renderColorOptions('solarPower')}
+        {renderColorOptions('water')}
 
-      </div> 
+      </div>
 
       <div id="select-content" className='mb-5 adminBlock'>
         <h2> Select graphs to be displayed on the main dashboard</h2>
+
+        <div
+            onClick={applyGraphSettingsChanges}
+            className='applyGraphSettingsButtonContainer'
+          >
+            <div className='applyGraphSettingsButton'>Apply Graph Settings Changes</div>
+            {changesAppliedMessage && <div className="changesAppliedMessage">{changesAppliedMessage}</div>}
+          </div>
+
+        <div className='selectionBlock'>
+          {graphSettingsError && <div className="errorMessage">{graphSettingsError}</div>}
+
+          {(['pieChart', 'areaChart', 'lineChart'] as ChartType[]).map((chartType) => (
+            <div className="gridElement" key={chartType}>
+              <h3 className="font-bold text-l">{chartType}</h3>
+              <label>
+                Sequence:
+                <input
+                  type="number"
+                  value={pendingGraphSettings[chartType].sequence}
+                  onChange={(e) => handleGraphSettingsChange(chartType, 'sequence', parseInt(e.target.value))}
+                />
+              </label>
+              <label>
+                Duration (seconds):
+                <input
+                  type="number"
+                  value={pendingGraphSettings[chartType].duration}
+                  onChange={(e) => handleGraphSettingsChange(chartType, 'duration', parseInt(e.target.value))}
+                />
+              </label>
+            
+              <label className='checkbox'>
+                Display:
+                <input
+                  type="checkbox"
+                  checked={pendingGraphSettings[chartType].display}
+                  onChange={(e) => handleGraphSettingsChange(chartType, 'display', e.target.checked)}
+                />
+              </label>
+            </div>
+          ))}
+
+        </div>
       </div>
 
       <div id="manage-admins" className='mb-5 adminBlock'>

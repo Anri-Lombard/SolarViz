@@ -21,6 +21,11 @@ interface WaterDataType {
   difference_kl: number;
 }
 
+type GraphSettings = {
+  sequence: number;
+  duration: number;
+  display: boolean;
+};
 
 interface DataDisplayProps {
   powerData: DataType[];
@@ -29,6 +34,9 @@ interface DataDisplayProps {
     incomerPower: string;
     solarPower: string;
     water: string;
+    pieChart: GraphSettings;
+    areaChart: GraphSettings;
+    lineChart: GraphSettings;
   };
 }
 
@@ -40,6 +48,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
   };
 
   const [currentChart, setCurrentChart] = useState(CHARTS.PIE);
+  const [currentChartIndex, setCurrentChartIndex] = useState(0);
   const [transformedData, setTransformedData] = useState<
     {
       Timestamp: string;
@@ -62,26 +71,6 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
     };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
-
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentChart((prevChart) => {
-        switch (prevChart) {
-          case CHARTS.PIE:
-            return CHARTS.AREA;
-          case CHARTS.AREA:
-            return CHARTS.LINE;
-          case CHARTS.LINE:
-            return CHARTS.PIE;
-          default:
-            return CHARTS.PIE;
-        }
-      });
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   const aggregatedData = useMemo(() => {
     if (!powerData || powerData.length === 0) return null;
@@ -115,37 +104,72 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
   }, [powerData, waterData]);
 
 
+  const renderChart = (chartType: string) => {
+    switch (chartType) {
+      case CHARTS.PIE:
+        return aggregatedData ? (
+          <>
+            <h1 className="heading">
+              Percentage Energy from Solar and Incomer from {powerStartTime} to {powerEndTime}
+            </h1>
+            <PieChartComponent data={aggregatedData} colors={settings} />
+          </>
+        ) : null;
+      case CHARTS.AREA:
+        return transformedData ? (
+          <>
+            <h1 className="heading">
+              Energy from Solar and Incomer from {powerStartTime} to {powerEndTime}
+            </h1>
+            <StackedAreaChart data={transformedData} colors={settings} />
+          </>
+        ) : null;
+      case CHARTS.LINE:
+        return (
+          <>
+            <h1 className="heading">
+              Water Consumption from {waterStartTime} to {waterEndTime} for Different Storeys
+            </h1>
+            <StackedLineChart data={waterData} />
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
+  useEffect(() => {
+    const { pieChart, areaChart, lineChart } = settings;
+    const charts = [
+      { type: CHARTS.PIE, ...pieChart },
+      { type: CHARTS.AREA, ...areaChart },
+      { type: CHARTS.LINE, ...lineChart },
+    ]
+      .sort((a, b) => a.sequence - b.sequence)
+      .filter(chart => chart.display);
+
+    let index = 0;
+    const interval = setInterval(() => {
+      setCurrentChartIndex(index);
+      index = (index + 1) % charts.length;
+    }, charts[index].duration * 1000);
+
+    return () => clearInterval(interval);
+  }, [settings]);
+
+  const charts = [
+    { type: CHARTS.PIE, ...settings.pieChart },
+    { type: CHARTS.AREA, ...settings.areaChart },
+    { type: CHARTS.LINE, ...settings.lineChart },
+  ]
+    .sort((a, b) => a.sequence - b.sequence)
+    .filter(chart => chart.display);
+
   return (
     <div className='graphContainer'>
-
-      
-           
       {transformedData && aggregatedData && waterData && powerData ? (
         <>
-          {currentChart === CHARTS.PIE && (
-            <>
-              <h1 className="heading">
-                Percentage Energy from Solar and Incomer from {powerStartTime} to {powerEndTime}
-              </h1>
-              <PieChartComponent data={aggregatedData} colors={settings} />
-            </>
-          )}
-          {currentChart === CHARTS.AREA && (
-            <>
-              <h1 className="heading">
-                Energy from Solar and Incomer from {powerStartTime} to {powerEndTime}
-              </h1>
-              <StackedAreaChart data={transformedData} colors={settings} />
-            </>
-          )}
-          {currentChart === CHARTS.LINE && (
-            <>
-              <h1 className="heading">
-                Water Consumption from {waterStartTime} to {waterEndTime} for Different Storeys
-              </h1>
-              <StackedLineChart data={waterData} />
-            </>
-          )}
+          {renderChart(charts[currentChartIndex].type)}
         </>
       ) : (
         <LoadingSpinner />
