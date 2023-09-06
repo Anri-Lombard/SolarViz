@@ -60,7 +60,18 @@ def get_vcom_data():
 
 
 def power_data(request):
-    data = csv_to_json('data/UCT_Drawing_School_2023_08_01_2023_08_06.csv', delimiter=";")  # Replace with the correct path to your power data CSV file
+    data = csv_to_json('data/UCT_Drawing_School_2023_08_01_2023_08_06.csv', delimiter=";")
+    
+    # Replace negative values with 0
+    for row in data:
+        for key, value in row.items():
+            try:
+                if float(value) < 0:
+                    row[key] = '0'
+            except ValueError:
+                # Skip if the value is not a number
+                continue
+
     return JsonResponse(data, safe=False)
 
 
@@ -94,6 +105,11 @@ def water_data(request):
     response_data = []
     for key, value in transformed_data.items():
         date_str, hour_str, meter_description = key.split("||")  # Use the same unique delimiter to split
+
+        # Replace negative values with 0
+        if value < 0:
+            value = 0
+
         response_data.append({
             'date': date_str,
             'hour': hour_str,
