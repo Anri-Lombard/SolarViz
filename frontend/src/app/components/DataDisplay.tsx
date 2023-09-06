@@ -139,6 +139,8 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
   };
 
   useEffect(() => {
+    let timeoutId: any;
+
     const { pieChart, areaChart, lineChart } = settings;
     const charts = [
       { type: CHARTS.PIE, ...pieChart },
@@ -148,13 +150,21 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
       .sort((a, b) => a.sequence - b.sequence)
       .filter(chart => chart.display);
 
-    let index = 0;
-    const interval = setInterval(() => {
+    const updateChart = (index: number) => {
       setCurrentChartIndex(index);
-      index = (index + 1) % charts.length;
-    }, charts[index].duration * 1000);
+      const nextIndex = (index + 1) % charts.length;
+      const nextDuration = charts[nextIndex].duration * 1000;
 
-    return () => clearInterval(interval);
+      timeoutId = setTimeout(() => {
+        updateChart(nextIndex);
+      }, nextDuration);
+
+      return () => clearTimeout(timeoutId);
+    };
+
+    // Start the loop
+    updateChart(currentChartIndex);
+
   }, [settings]);
 
   const charts = [

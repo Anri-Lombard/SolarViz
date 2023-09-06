@@ -104,6 +104,8 @@ const Admin = () => {
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
       setToken(storedToken);
+    } else {
+      router.push('/login');
     }
   }, []);
 

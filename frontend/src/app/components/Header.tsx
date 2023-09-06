@@ -13,7 +13,7 @@ const Header: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams()
   const [isLogoHovered, setIsLogoHovered] = useState(false);
-  const { isLoggedIn } = useAuth(); // get login status from
+  const { isLoggedIn } = useAuth();
 
   const goToPage = (path: string) => {
     router.push(path);
