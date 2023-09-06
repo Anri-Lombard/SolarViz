@@ -141,15 +141,6 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
   useEffect(() => {
     let timeoutId: any;
 
-    const { pieChart, areaChart, lineChart } = settings;
-    const charts = [
-      { type: CHARTS.PIE, ...pieChart },
-      { type: CHARTS.AREA, ...areaChart },
-      { type: CHARTS.LINE, ...lineChart },
-    ]
-      .sort((a, b) => a.sequence - b.sequence)
-      .filter(chart => chart.display);
-
     const updateChart = (index: number) => {
       setCurrentChartIndex(index);
       const nextIndex = (index + 1) % charts.length;
@@ -158,14 +149,16 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
       timeoutId = setTimeout(() => {
         updateChart(nextIndex);
       }, nextDuration);
-
-      return () => clearTimeout(timeoutId);
     };
 
     // Start the loop
     updateChart(currentChartIndex);
 
+    return () => {
+      clearTimeout(timeoutId);  // Clear the timeout when the component unmounts
+    };
   }, [settings]);
+
 
   const charts = [
     { type: CHARTS.PIE, ...settings.pieChart },
