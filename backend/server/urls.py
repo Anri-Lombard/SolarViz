@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from . import views
+from dashboard import views
 
-from .views import CustomAuthToken
+from dashboard.views import CustomAuthToken
 
 urlpatterns = [
     path('api-token-auth/', CustomAuthToken.as_view(), name='api_token_auth'),
@@ -29,4 +29,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('api/power_data/', views.power_data, name='power_data'),
     path('api/water_data/', views.water_data, name='water_data'),
+    path('api/get_global_settings/', views.get_global_settings, name='get_global_settings'),
+    path('api/update_global_settings/', views.update_global_settings, name='update_global_settings'),
 ]

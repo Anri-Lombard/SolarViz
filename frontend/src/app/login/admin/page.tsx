@@ -250,38 +250,39 @@ const Admin = () => {
 
   const applyColorChanges = () => {
     if (window.confirm("Are you sure you want to apply color changes?")) {
-      setSettings({
+      const newSettings = {
         ...settings,
         incomerPower: pendingChanges.incomerPower,
         solarPower: pendingChanges.solarPower,
         water: pendingChanges.water,
-      });
-      localStorage.setItem('settings', JSON.stringify(pendingChanges));
-      showChangesAppliedMessage();
+      };
+      if (token) {
+        setSettings(newSettings, token); // Update global settings
+        showChangesAppliedMessage();
+      } else {
+        // TODO: Handle unauthorized access
+      }
     }
   };
 
   const applyGraphSettingsChanges = () => {
     if (validateGraphSettings()) {
       if (window.confirm("Are you sure you want to apply graph settings changes?")) {
-        setSettings({
+        const newSettings = {
           ...settings,
           pieChart: pendingGraphSettings.pieChart,
           areaChart: pendingGraphSettings.areaChart,
           lineChart: pendingGraphSettings.lineChart,
-        });
-        localStorage.setItem('settings', JSON.stringify({
-          ...settings,
-          pieChart: pendingGraphSettings.pieChart,
-          areaChart: pendingGraphSettings.areaChart,
-          lineChart: pendingGraphSettings.lineChart,
-        }));
-        showChangesAppliedMessage();
+        };
+        if (token) {
+          setSettings(newSettings, token); // Update global settings
+          showChangesAppliedMessage();
+        } else {
+          // TODO: Handle unauthorized access
+        }
       }
     }
   };
-
-
 
 
   return (
