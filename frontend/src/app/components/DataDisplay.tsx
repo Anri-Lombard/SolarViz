@@ -6,8 +6,8 @@ import LoadingSpinner from './LoadingSpinner';
 import { PieChartComponent } from './PieChart';
 import { StackedAreaChart } from './StackedAreaChart';
 import { StackedLineChart } from './StackedLineChart';
-// import { ProgressBar }from './ProgressBar';
-// import { ProgressBarIcon }from './ProgressBarIcon';
+import  ProgressBar from './ProgressBar';
+import  ProgressBarIcon from './ProgressBarIcon';
 
 interface DataType {
   Timestamp: string;
@@ -181,6 +181,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
   return (
 
     <div className='graphContainer'>
+      <ProgressBar />
       {transformedData && aggregatedData && waterData && powerData ? (
         <>
           {renderChart(charts[currentChartIndex].type)}
