@@ -7,6 +7,15 @@ import { PieChartComponent } from './PieChart';
 import { StackedAreaChart } from './StackedAreaChart';
 import { StackedLineChart } from './StackedLineChart';
 
+import { transformPowerData, aggregateData, formatDate } from '../utils/DataUtils'
+
+
+enum ChartTypes {
+  PIE = 'PIE',
+  AREA = 'AREA',
+  LINE = 'LINE',
+}
+
 interface DataType {
   Timestamp: string;
   'UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD': string;
@@ -41,13 +50,6 @@ interface DataDisplayProps {
 }
 
 export default function DataDisplay({ powerData, waterData, settings }: DataDisplayProps) {
-  const CHARTS = {
-    PIE: 'PIE',
-    AREA: 'AREA',
-    LINE: 'LINE',
-  };
-
-  const [currentChart, setCurrentChart] = useState(CHARTS.PIE);
   const [currentChartIndex, setCurrentChartIndex] = useState(0);
   const [transformedData, setTransformedData] = useState<
     {
@@ -62,29 +64,15 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
   const [waterStartTime, setWaterStartTime] = useState("0");
   const [waterEndTime, setWaterEndTime] = useState("0");
 
-
-  const formatDate = (dateString: string) => {
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
-
   const aggregatedData = useMemo(() => {
     if (!powerData || powerData.length === 0) return null;
 
-    const tData = powerData.map(item => ({
-      Timestamp: formatDate(item.Timestamp),
-      'Load Power': item['UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD'],
-      'Solar Power': item['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR'],
-      'Incomer Power': item['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER'],
-    }));
-
-    setTransformedData(tData);
-    setPowerStartTime(tData[0].Timestamp);
-    setPowerEndTime(tData[tData.length - 1].Timestamp);
+    const transformed = transformPowerData(powerData);
+    const aggregated = aggregateData(powerData);
+    
+    setTransformedData(transformed);
+    setPowerStartTime(transformed[0].Timestamp);
+    setPowerEndTime(transformed[transformed.length - 1].Timestamp);
 
     if (waterData && waterData.length > 0) {
       setWaterStartTime(formatDate(waterData[0].date));
@@ -97,16 +85,13 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
       totalSolar += Number(item['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR']);
       totalIncomerPower += Number(item['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER']);
     });
-    return {
-      'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': totalSolar,
-      'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': totalIncomerPower,
-    };
+    return aggregated;
   }, [powerData, waterData]);
 
 
   const renderChart = (chartType: string) => {
     switch (chartType) {
-      case CHARTS.PIE:
+      case ChartTypes.PIE:
         return aggregatedData ? (
           <>
             <h1 className="heading">
@@ -115,7 +100,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
             <PieChartComponent data={aggregatedData} colors={settings} />
           </>
         ) : null;
-      case CHARTS.AREA:
+      case ChartTypes.AREA:
         return transformedData ? (
           <>
             <h1 className="heading">
@@ -124,7 +109,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
             <StackedAreaChart data={transformedData} colors={settings} />
           </>
         ) : null;
-      case CHARTS.LINE:
+      case ChartTypes.LINE:
         return (
           <>
             <h1 className="heading">
@@ -161,9 +146,9 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
 
 
   const charts = [
-    { type: CHARTS.PIE, ...settings.pieChart },
-    { type: CHARTS.AREA, ...settings.areaChart },
-    { type: CHARTS.LINE, ...settings.lineChart },
+    { type: ChartTypes.PIE, ...settings.pieChart },
+    { type: ChartTypes.AREA, ...settings.areaChart },
+    { type: ChartTypes.LINE, ...settings.lineChart },
   ]
     .sort((a, b) => a.sequence - b.sequence)
     .filter(chart => chart.display);
