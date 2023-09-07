@@ -288,53 +288,12 @@ const Admin = () => {
 
         <nav>
           <ul className='hover=underline' style={{ paddingTop: '10px' }}>
-            <li><a href="#adjust-colours">Adjust Colours</a></li>
             <li><a href="#select-content">Select dashboard content</a></li>
+            <li><a href="#select-media">Select media</a></li>
+            <li><a href="#adjust-colours">Adjust Colours</a></li>
             <li><a href="#manage-admins">Manage Administrators</a></li>
           </ul>
         </nav>
-      </div>
-
-      <div id="adjust-colours" className='mb-5 adminBlock' >
-
-        <h2>Adjust colours</h2>
-        <div className='mb-5'>
-
-          <div
-            onClick={applyColorChanges}
-            className='applyButtonContainer'
-          >
-            <div className='applyButton'>Apply Color Changes</div>
-            {changesAppliedMessage && <div className="changesAppliedMessage">{changesAppliedMessage}</div>}
-          </div>
-
-          <h1 className='text-black font-bold'>Default Colours:</h1>
-          {Object.entries(defaultColors).map(([type, color]) => (
-            <div key={type} className="flex items-center mb-2">
-              <span className='text-black mr-2'>{type}: </span>
-              <button
-                onClick={() => handleChangeColor(type as ColorType, color)}
-                className={`p-2 ${settings[type as keyof typeof settings] === color ? 'bg-blue-500 text-white' : 'bg-gray-400 text-black'}`}
-                style={{ backgroundColor: color }}
-              >
-                {color}
-              </button>
-
-            </div>
-          ))}
-
-          {(['incomerPower', 'solarPower', 'water'] as ColorType[]).map((type) => (
-            <ColorOptions
-              key={type}
-              type={type}
-              colors={colors}
-              handleChangeColor={handleChangeColor}
-              currentColor={pendingChanges[type]}
-            />
-          ))}
-
-
-        </div>
       </div>
 
         <div id="select-content" className='mb-5 adminBlock'>
@@ -359,6 +318,52 @@ const Admin = () => {
                 settings={pendingGraphSettings}
               />
             ))}
+
+          </div>
+        </div>
+
+        <div id="select-media" className='mb-5 adminBlock'>
+          <h2> add section for selecting whether video plays or not</h2>
+        </div>
+
+        <div id="adjust-colours" className='mb-5 adminBlock' >
+
+          <h2>Adjust colours</h2>
+          <div className='mb-5'>
+
+            <div
+              onClick={applyColorChanges}
+              className='applyButtonContainer'
+            >
+              <div className='applyButton'>Apply Color Changes</div>
+              {changesAppliedMessage && <div className="changesAppliedMessage">{changesAppliedMessage}</div>}
+            </div>
+
+            <h1 className='text-black font-bold'>Default Colours:</h1>
+            {Object.entries(defaultColors).map(([type, color]) => (
+              <div key={type} className="flex items-center mb-2">
+                <span className='text-black mr-2'>{type}: </span>
+                <button
+                  onClick={() => handleChangeColor(type as ColorType, color)}
+                  className={`p-2 ${settings[type as keyof typeof settings] === color ? 'bg-blue-500 text-white' : 'bg-gray-400 text-black'}`}
+                  style={{ backgroundColor: color }}
+                >
+                  {color}
+                </button>
+
+              </div>
+            ))}
+
+            {(['incomerPower', 'solarPower', 'water'] as ColorType[]).map((type) => (
+              <ColorOptions
+                key={type}
+                type={type}
+                colors={colors}
+                handleChangeColor={handleChangeColor}
+                currentColor={pendingChanges[type]}
+              />
+            ))}
+
 
           </div>
         </div>
