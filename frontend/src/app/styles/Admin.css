@@ -140,6 +140,7 @@ h2 {
     margin: 30px;
     border: 1px solid #292827;
     border-radius: 5px;
+    caret-color: black
 }
 
 .adminBlock button {
