@@ -1,6 +1,5 @@
 "use client"
 
-import axios from 'axios';
 import withAdminAuth from '../../components/WithAdminAuth';
 
 import React, { useState, useEffect } from 'react';
@@ -9,15 +8,7 @@ import { useSettings } from '../../contexts/SettingsContext';
 import { useAuth } from '../../contexts/LoginContext';
 import '../../styles/Admin.css';
 
-type ColorType = 'incomerPower' | 'solarPower' | 'water';
-
-type ChartType = 'pieChart' | 'areaChart' | 'lineChart';
-
-
-interface Admin {
-  id: number;
-  username: string;
-}
+import { Admin, ColorType, ChartType } from '../../types/dataTypes'
 
 
 const Admin = () => {

@@ -44,3 +44,31 @@ export type Settings = {
     areaChart: GraphSettings;
     lineChart: GraphSettings;
 };
+
+export interface Admin {
+    id: number;
+    username: string;
+}
+
+export type ColorType = 'incomerPower' | 'solarPower' | 'water';
+
+export type ChartType = 'pieChart' | 'areaChart' | 'lineChart';
+
+export type ColorOptionsProps = {
+    type: string,
+    colors: string[],
+    handleChangeColor: (type: string, color: string) => void,
+    currentColor: string
+};
+
+export type GraphSettingsProps = {
+    chartType: ChartType,
+    handleGraphSettingsChange: (chartType: ChartType, field: string, value: number | boolean) => void,
+    settings: any // Replace 'any' with the appropriate type
+};
+
+export type ManageAdminProps = {
+    admins: Admin[],
+    removeAdmin: (id: number) => void,
+    addAdmin: (username: string, password: string) => void
+};
