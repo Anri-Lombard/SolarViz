@@ -1,10 +1,8 @@
-import '@testing-library/jest-dom/extend-expect';
-
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import DataDisplay from '../DataDisplay';
-import { DataContext } from '../../contexts/DataContext';  // Adjust the import to your file structure
-import { SettingsContext } from '../../contexts/SettingsContext';  // Adjust the import to your file structure
+import { DataContext } from '../../contexts/DataContext';
+import { SettingsContext } from '../../contexts/SettingsContext';
 
 describe('DataDisplay Component', () => {
   it('should render LoadingSpinner when data is not available', () => {
