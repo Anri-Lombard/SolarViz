@@ -12,10 +12,13 @@ export default function Home() {
 
   return (
     <main className="flex items-center justify-center h-screen">
-      {powerData && waterData ?
-        <DataDisplay powerData={powerData} waterData={waterData} settings={settings} />
-        : <p>Loading...</p>
-      }
+      {powerData && waterData ? (
+        <>
+          <DataDisplay powerData={powerData} waterData={waterData} settings={settings} />
+        </>
+      ) : (
+        <p>Loading...</p>
+      )}
     </main>
   );
 }

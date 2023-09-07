@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import '../styles/DataDisplay.css';
+import VideoComponent from './VideoComponent'; // Import the VideoComponent
 
 // Custom components
 import LoadingSpinner from './LoadingSpinner';
@@ -26,6 +27,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
   const [powerEndTime, setPowerEndTime] = useState("0");
   const [waterStartTime, setWaterStartTime] = useState("0");
   const [waterEndTime, setWaterEndTime] = useState("0");
+  const [videoDuration, setVideoDuration] = useState<number | null >(null);
 
   const aggregatedData = useMemo(() => {
     if (!powerData || powerData.length === 0) return null;
@@ -92,7 +94,11 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
     const updateChart = (index: number) => {
       setCurrentChartIndex(index);
       const nextIndex = (index + 1) % charts.length;
-      const nextDuration = charts[nextIndex].duration * 1000;
+      let nextDuration = charts[nextIndex].duration * 1000;
+
+      if (charts[nextIndex].type === 'VIDEO' && videoDuration !== null) {
+        nextDuration = videoDuration * 1000;
+      }
 
       timeoutId = setTimeout(() => {
         updateChart(nextIndex);
@@ -105,27 +111,41 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
     return () => {
       clearTimeout(timeoutId);  // Clear the timeout when the component unmounts
     };
-  }, [settings]);
+  }, [settings, videoDuration]);
 
+  useEffect(() => {
+    const video = document.getElementById('video-element') as HTMLVideoElement;
+
+    if (video) {
+      video.addEventListener('loadedmetadata', () => {
+        setVideoDuration(video.duration);
+      });
+    }
+  }, []);
 
   const charts = [
     { type: ChartTypes.PIE, ...settings.pieChart },
     { type: ChartTypes.AREA, ...settings.areaChart },
     { type: ChartTypes.LINE, ...settings.lineChart },
+    { type: 'VIDEO', sequence: 4, display: true, duration: 10 }, // new 'chart' type for the video
   ]
     .sort((a, b) => a.sequence - b.sequence)
     .filter(chart => chart.display);
 
-  return (
-    <div className='graphContainer'>
-      {transformedData && aggregatedData && waterData && powerData ? (
-        <>
-          {renderChart(charts[currentChartIndex].type)}
-        </>
-      ) : (
-        <LoadingSpinner />
-      )}
-    </div>
-  );
+    return (
+      <div className='graphContainer'>
+        {transformedData && aggregatedData && waterData && powerData ? (
+          <>
+            {charts[currentChartIndex].type === 'VIDEO' ? (
+              <VideoComponent/> // Render the video component
+            ) : (
+              renderChart(charts[currentChartIndex].type)
+            )}
+          </>
+        ) : (
+          <LoadingSpinner />
+        )}
+      </div>
+    );
 
 }
