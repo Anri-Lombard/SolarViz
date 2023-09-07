@@ -1,26 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import type { Metadata } from 'next'
 
-type GraphSettings = {
-    sequence: number;
-    duration: number;
-    display: boolean;
-};
-
-type Settings = {
-    incomerPower: string;
-    solarPower: string;
-    water: string;
-    pieChart: GraphSettings;
-    areaChart: GraphSettings;
-    lineChart: GraphSettings;
-};
-
-
-type SettingsContextType = {
-    settings: Settings;
-    setSettings: React.Dispatch<React.SetStateAction<Settings>> | ((newSettings: Settings, token: string) => void);
-};
+import { SettingsContextType } from '../types/contextTypes';
+import { Settings } from '../types/dataTypes';
 
 
 export const SettingsContext = createContext<SettingsContextType | undefined>(undefined);

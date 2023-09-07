@@ -1,14 +1,6 @@
 import React from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
-interface StackedAreaChartProps {
-    data: { Timestamp: string; 'Load Power': string; 'Solar Power': string; 'Incomer Power': string; }[];
-    colors: {
-        incomerPower: string;
-        solarPower: string;
-        water: string;
-    }
-}
+import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { StackedAreaChartProps } from '../types/chartTypes';
 
 export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors }) => {
     // Convert power data to kWh assuming the data is already aggregated per hour
@@ -30,7 +22,6 @@ export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors
                     bottom: 20,
                 }}
             >
-                {/* <CartesianGrid strokeDasharray="3 3" /> */}
                 <XAxis 
                     dataKey="Timestamp" 
                     label={{ value: 'Date and Hour', position: 'bottom' }}

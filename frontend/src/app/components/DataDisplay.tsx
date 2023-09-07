@@ -7,47 +7,10 @@ import { PieChartComponent } from './PieChart';
 import { StackedAreaChart } from './StackedAreaChart';
 import { StackedLineChart } from './StackedLineChart';
 
-import { transformPowerData, aggregateData, formatDate } from '../utils/DataUtils'
+import { transformPowerData, aggregateData, formatDate } from '../utils/dataUtils';
 
-
-enum ChartTypes {
-  PIE = 'PIE',
-  AREA = 'AREA',
-  LINE = 'LINE',
-}
-
-interface DataType {
-  Timestamp: string;
-  'UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD': string;
-  'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': string;
-  'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': string;
-}
-
-interface WaterDataType {
-  date: string;
-  hour: string;
-  'Meter Description': string;
-  difference_kl: number;
-}
-
-type GraphSettings = {
-  sequence: number;
-  duration: number;
-  display: boolean;
-};
-
-interface DataDisplayProps {
-  powerData: DataType[];
-  waterData: WaterDataType[];
-  settings: {
-    incomerPower: string;
-    solarPower: string;
-    water: string;
-    pieChart: GraphSettings;
-    areaChart: GraphSettings;
-    lineChart: GraphSettings;
-  };
-}
+import { ChartTypes } from '../types/chartTypes'
+import { DataDisplayProps } from '../types/dataTypes'
 
 export default function DataDisplay({ powerData, waterData, settings }: DataDisplayProps) {
   const [currentChartIndex, setCurrentChartIndex] = useState(0);

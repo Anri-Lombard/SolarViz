@@ -1,17 +1,7 @@
 import React from 'react';
 import { PieChart, Pie, Tooltip, Legend, Cell } from 'recharts';
 
-interface PieChartComponentProps {
-    data: {
-        'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': number;
-        'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': number;
-    };
-    colors: {
-        incomerPower: string;
-        solarPower: string;
-        water: string;
-    }
-}
+import { PieChartComponentProps } from '../types/chartTypes';
 
 export const PieChartComponent: React.FC<PieChartComponentProps> = ({ data, colors }) => {
     const chartData = [

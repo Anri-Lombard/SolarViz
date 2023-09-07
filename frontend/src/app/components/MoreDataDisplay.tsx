@@ -6,31 +6,9 @@ import LoadingSpinner from './LoadingSpinner';
 import { PieChartComponent } from './PieChart';
 import { StackedAreaChart } from './StackedAreaChart';
 import { StackedLineChart } from './StackedLineChart';
-import { formatDate, transformPowerData } from '../utils/DataUtils';
+import { transformPowerData } from '../utils/dataUtils';
 
-interface DataType {
-  Timestamp: string;
-  'UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD': string;
-  'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': string;
-  'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': string;
-}
-
-interface WaterDataType {
-  date: string;
-  hour: string;
-  'Meter Description': string;
-  difference_kl: number;
-}
-
-interface DataDisplayProps {
-  powerData: DataType[];
-  waterData: WaterDataType[];
-  settings: {
-    incomerPower: string;
-    solarPower: string;
-    water: string;
-  };
-}
+import { DataDisplayProps } from '../types/dataTypes';
 
 export default function DataDisplay({ powerData, waterData, settings }: DataDisplayProps) {
   const [transformedData, setTransformedData] = useState<

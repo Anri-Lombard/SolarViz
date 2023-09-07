@@ -64,3 +64,19 @@ export const formatDate = (dateString: string): string => {
     };
     return new Date(dateString).toLocaleDateString(undefined, options);
 };
+
+export const formatWaterDate = (date: string): string => {
+    const options: Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+    } as const;
+    return new Date(date).toLocaleDateString(undefined, options);
+}
+
+export const colorMapping = {
+    "UCT D-School - First Storey -": "#FF0000",
+    "UCT D-School - Ground Storey -": "#00FF00",
+    "UCT D-School - Second Storey -": "#0000FF",
+    "UCT D-School - Secondary Store": "#FFA500"
+};

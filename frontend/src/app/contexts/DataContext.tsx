@@ -1,25 +1,7 @@
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 
-// Define your data types
-interface PowerDataType {
-  Timestamp: string;
-  'UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD': string;
-  'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': string;
-  'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': string;
-}
-
-interface WaterDataType {
-  date: string;
-  hour: string;
-  'Meter Description': string;
-  difference_kl: number;
-}
-
-// Define the shape of the context
-interface DataContextProps {
-  powerData: PowerDataType[];
-  waterData: WaterDataType[];
-}
+import { DataContextProps } from '../types/contextTypes';
+import { DataType, WaterDataType } from '../types/dataTypes';
 
 // Create the context
 export const DataContext = createContext<DataContextProps>({
@@ -29,14 +11,14 @@ export const DataContext = createContext<DataContextProps>({
 
 // Create the provider component
 export const DataProvider: React.FC<{children: ReactNode}> = ({ children }) => {
-  const [powerData, setPowerData] = useState<PowerDataType[]>([]);
+  const [powerData, setPowerData] = useState<DataType[]>([]);
   const [waterData, setWaterData] = useState<WaterDataType[]>([]);
 
   useEffect(() => {
     // Fetch power data
     fetch('http://localhost:8000/api/power_data/')
       .then((response) => response.json())
-      .then((data: PowerDataType[]) => setPowerData(data));
+      .then((data: DataType[]) => setPowerData(data));
 
     // Fetch water data
     fetch('http://localhost:8000/api/water_data/')

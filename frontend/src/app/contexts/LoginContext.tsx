@@ -1,11 +1,7 @@
 // LoginContext.tsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-interface AuthContextType {
-  isLoggedIn: boolean;
-  login: () => void;
-  logout: () => void;
-}
+import { AuthContextType } from '../types/contextTypes';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
