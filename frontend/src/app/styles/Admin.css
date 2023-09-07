@@ -1,8 +1,13 @@
+.errorMessage {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* FIXME: applybutton needs to change names */
+
 .applyButton {
-    position: relative;
-    float: right;
-    right: 10px;
-    top: 150px;
     background-color: #f3e9cb;
     border-color: #292827;
     border-width: 2px;
@@ -15,10 +20,70 @@
     font-size: small;
 }
 
+.applyButtonContainer {
+    position: relative;
+    float: right;
+    right: 10px;
+    top: 150px;
+    display: flex;
+    flex-direction: column;
+}
+
+.applyGraphSettingsButtonContainer {
+    position: relative;
+    float: right;
+    right: 10px;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.applyGraphSettingsButton {
+    background-color: #f3e9cb;
+    border-color: #292827;
+    border-width: 2px;
+    border-radius: 10px;
+    justify-content: flex-end;
+    padding: 1vh 1vh;
+    color: #292827;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: small;
+}
+
+.applyGraphSettingsButton:hover {
+    color: #f3e9cb;
+    background-color: #292827;
+}
+
+.changesAppliedMessage {
+    position: absolute;
+    bottom: 30px;
+    margin: 10px;
+    color: blue;
+    font-size: small;
+}
+
 .applyButton:hover {
     color: #f3e9cb;
     background-color: #292827;
 }
+
+h2 {
+    font-size: x-large;
+    font-weight: bold;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.intro {
+    font-size: medium;
+    padding-top: 100px;
+    padding-bottom: 20px;
+    margin: 40px;
+}
+
 
 .logoutButton {
     position: relative;
@@ -34,6 +99,7 @@
     cursor: pointer;
     text-transform: uppercase;
     font-size: small;
+    margin-bottom: 60px;
 }
 
 .logoutButton:hover {
@@ -41,41 +107,42 @@
     background-color: #292827;
 }
 
-.manage-admins {
+.adminBlock {
     background-color: #f3e9cb;
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
     border: 2px solid #292827;
+    border-width: 1px;
+    margin: 20px;
 }
 
-.manage-admins ul {
+.adminBlock ul {
     list-style-type: none;
     padding: 0;
 }
 
-.manage-admins li {
+.adminBlock li {
     padding: 10px;
     border-bottom: 1px solid #292827;
     display: flex;
     justify-content: space-between;
 }
 
-.manage-admins label {
+.adminBlock label {
     display: block;
     margin-bottom: 0.5rem;
-    font-weight: 600;
     color: #292827;
 }
 
-.manage-admins input {
-    width: 100%;
+.adminBlock input {
     padding: 0.5rem;
-    margin-bottom: 1rem;
+    max-width: 200px;
+    margin: 30px;
     border: 1px solid #292827;
     border-radius: 5px;
 }
 
-.manage-admins button {
+.adminBlock button {
     background-color: #292827;
     color: #f3e9cb;
     padding: 10px 20px;
@@ -86,7 +153,37 @@
     font-size: small;
 }
 
-.manage-admins button:hover {
+.adminBlock button:hover {
     background-color: #f3e9cb;
     color: #292827;
+}
+
+.selectionBlock {
+    background-color: #f3e9cb;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #292827;
+    margin-top: 60px;
+    border-width: 0px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-column-gap: 20px;
+}
+
+.gridElement {
+    padding: 0.2rem;
+    border-right: 1px solid #292827;
+    border-radius: 0px; 
+}
+
+.selectionBlock input {
+    width: 60px;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.selectionBlock label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
