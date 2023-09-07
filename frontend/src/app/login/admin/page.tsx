@@ -1,6 +1,5 @@
 "use client"
 
-import axios from 'axios';
 import withAdminAuth from '../../components/WithAdminAuth';
 
 import React, { useState, useEffect } from 'react';
@@ -8,16 +7,11 @@ import { useRouter } from 'next/navigation';
 import { useSettings } from '../../contexts/SettingsContext';
 import { useAuth } from '../../contexts/LoginContext';
 import '../../styles/Admin.css';
+import ColorOptions from '../../components/ColorOptions';
+import GraphSettingsComponent from '../../components/GraphSettings';
+import ManageAdmin from '../../components/ManageAdmins';
 
-type ColorType = 'incomerPower' | 'solarPower' | 'water';
-
-type ChartType = 'pieChart' | 'areaChart' | 'lineChart';
-
-
-interface Admin {
-  id: number;
-  username: string;
-}
+import { Admin, ColorType, ChartType } from '../../types/dataTypes'
 
 
 const Admin = () => {
@@ -328,17 +322,24 @@ const Admin = () => {
 
             </div>
           ))}
+
+          {(['incomerPower', 'solarPower', 'water'] as ColorType[]).map((type) => (
+            <ColorOptions
+              key={type}
+              type={type}
+              colors={colors}
+              handleChangeColor={handleChangeColor}
+              currentColor={pendingChanges[type]}
+            />
+          ))}
+
+
         </div>
-        {renderColorOptions('incomerPower')}
-        {renderColorOptions('solarPower')}
-        {renderColorOptions('water')}
 
-      </div>
+        <div id="select-content" className='mb-5 adminBlock'>
+          <h2> Select graphs to be displayed on the main dashboard</h2>
 
-      <div id="select-content" className='mb-5 adminBlock'>
-        <h2> Select graphs to be displayed on the main dashboard</h2>
-
-        <div
+          <div
             onClick={applyGraphSettingsChanges}
             className='applyGraphSettingsButtonContainer'
           >
@@ -346,82 +347,27 @@ const Admin = () => {
             {changesAppliedMessage && <div className="changesAppliedMessage">{changesAppliedMessage}</div>}
           </div>
 
-        <div className='selectionBlock'>
-          {graphSettingsError && <div className="errorMessage">{graphSettingsError}</div>}
+          <div className='selectionBlock'>
+            {graphSettingsError && <div className="errorMessage">{graphSettingsError}</div>}
 
-          {(['pieChart', 'areaChart', 'lineChart'] as ChartType[]).map((chartType) => (
-            <div className="gridElement" key={chartType}>
-              <h3 className="font-bold text-l">{chartType}</h3>
-              <label>
-                Sequence:
-                <input
-                  type="number"
-                  value={pendingGraphSettings[chartType].sequence}
-                  onChange={(e) => handleGraphSettingsChange(chartType, 'sequence', parseInt(e.target.value))}
-                />
-              </label>
-              <label>
-                Duration (seconds):
-                <input
-                  type="number"
-                  value={pendingGraphSettings[chartType].duration}
-                  onChange={(e) => handleGraphSettingsChange(chartType, 'duration', parseInt(e.target.value))}
-                />
-              </label>
-            
-              <label className='checkbox'>
-                Display:
-                <input
-                  type="checkbox"
-                  checked={pendingGraphSettings[chartType].display}
-                  onChange={(e) => handleGraphSettingsChange(chartType, 'display', e.target.checked)}
-                />
-              </label>
-            </div>
-          ))}
+            {(['pieChart', 'areaChart', 'lineChart'] as ChartType[]).map((chartType) => (
+              <GraphSettingsComponent
+                key={chartType}
+                chartType={chartType}
+                handleGraphSettingsChange={handleGraphSettingsChange}
+                settings={pendingGraphSettings}
+              />
+            ))}
 
+          </div>
+        </div>
+
+        <div id="manage-admins" className='mb-5 adminBlock'>
+          <h2>Manage Administrators</h2>
+          <ManageAdmin admins={admins} removeAdmin={removeAdmin} addAdmin={addAdmin} />
+          <button onClick={handleLogout} className='logoutButton'>Logout</button>
         </div>
       </div>
-
-      <div id="manage-admins" className='mb-5 adminBlock'>
-        <h2>Manage Administrators</h2>
-        <ul>
-          {admins.map(admin => (
-            <li key={admin.id}>
-              {admin.username}
-              <button onClick={() => removeAdmin(admin.id)}>Remove</button>
-            </li>
-          ))}
-        </ul>
-        <form onSubmit={(e) => {
-          e.preventDefault();
-          addAdmin(newAdminUsername, newAdminPassword);
-          setNewAdminUsername(''); // Clear the form
-          setNewAdminPassword(''); // Clear the form
-        }}>
-          <label>
-            Username:
-            <input
-              type="text"
-              value={newAdminUsername}
-              onChange={(e) => setNewAdminUsername(e.target.value)}
-              placeholder="New admin username"
-            />
-          </label>
-          <label>
-            Password:
-            <input
-              type="password"
-              value={newAdminPassword}
-              onChange={(e) => setNewAdminPassword(e.target.value)}
-              placeholder="New admin password"
-            />
-          </label>
-          <button type="submit">Add Admin</button>
-        </form>
-      </div>
-
-      <button onClick={handleLogout} className='logoutButton'>Logout</button>
     </div>
   );
 }

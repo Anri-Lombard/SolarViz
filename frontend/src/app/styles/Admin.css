@@ -23,8 +23,8 @@
 .applyButtonContainer {
     position: relative;
     float: right;
-    right: 10px;
-    top: 150px;
+    right: 20px;
+    top: 100px;
     display: flex;
     flex-direction: column;
 }
