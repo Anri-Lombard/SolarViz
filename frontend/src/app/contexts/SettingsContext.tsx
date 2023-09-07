@@ -23,7 +23,7 @@ type SettingsContextType = {
 };
 
 
-const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
+export const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
 export function useSettings() {
     const context = useContext(SettingsContext);
