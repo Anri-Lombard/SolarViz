@@ -1,15 +1,16 @@
 .header {
-    position:fixed;
-    width: 100%;
-    top: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 5vh 5px;
-    color: black;
-    background-color: #183d33;
-    text-transform: uppercase;
-  }
+  position:fixed;
+  width: 100%;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5vh 5px;
+  color: black;
+  background-color: #183d33;
+  text-transform: uppercase;
+  caret-color: transparent;
+}
 
 .menuButtonContainer {
   position: absolute;
@@ -21,7 +22,6 @@
 }
 
 .menuButton {
-  /*background-color: #fef4d9;*/
   color: #f3e9cb;
   padding: 1vh 2vh;
   border-color: #f3e9cb;

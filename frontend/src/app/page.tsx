@@ -23,6 +23,7 @@ interface WaterDataType {
 export default function Home() {
   const [powerData, setPowerData] = useState<PowerDataType[]>([]);
   const [waterData, setWaterData] = useState<WaterDataType[]>([]);
+  const [showVideo, setShowVideo] = useState<boolean>(false); // state for video visibility
 
   const { settings } = useSettings();
 
@@ -36,6 +37,8 @@ export default function Home() {
 
       setPowerData(powerData);
       setWaterData(waterData);
+
+      setShowVideo(true);
     }
 
     getData();
