@@ -6,6 +6,8 @@ import LoadingSpinner from './LoadingSpinner';
 import { PieChartComponent } from './PieChart';
 import { StackedAreaChart } from './StackedAreaChart';
 import { StackedLineChart } from './StackedLineChart';
+// import { ProgressBar }from './ProgressBar';
+// import { ProgressBarIcon }from './ProgressBarIcon';
 
 interface DataType {
   Timestamp: string;
@@ -45,6 +47,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
     PIE: 'PIE',
     AREA: 'AREA',
     LINE: 'LINE',
+    BAR: 'BAR'
   };
 
   const [currentChart, setCurrentChart] = useState(CHARTS.PIE);
@@ -62,6 +65,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
   const [waterStartTime, setWaterStartTime] = useState("0");
   const [waterEndTime, setWaterEndTime] = useState("0");
 
+  
 
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -133,6 +137,12 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
             <StackedLineChart data={waterData} />
           </>
         );
+      case CHARTS.BAR:
+
+          return{
+
+          }
+
       default:
         return null;
     }
@@ -169,6 +179,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
     .filter(chart => chart.display);
 
   return (
+
     <div className='graphContainer'>
       {transformedData && aggregatedData && waterData && powerData ? (
         <>
@@ -178,6 +189,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
         <LoadingSpinner />
       )}
     </div>
+    
   );
 
 }
