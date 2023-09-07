@@ -7,6 +7,8 @@ from rest_framework import permissions, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
+from .models import GlobalSettings
+
 from collections import defaultdict
 from datetime import datetime
 
@@ -26,6 +28,69 @@ class CustomAuthToken(ObtainAuthToken):
         return Response({
             'token': token.key,
         })
+
+@api_view(['POST'])
+@permission_classes([permissions.IsAdminUser])
+def update_global_settings(request):
+    settings = GlobalSettings.load()
+
+    # Update the settings based on the request data
+    data = request.data
+    
+    print("data:", data)
+    settings.incomerPower = data.get('incomerPower', settings.incomerPower)
+    settings.solarPower = data.get('solarPower', settings.solarPower)
+    settings.water = data.get('water', settings.water)
+
+    pieChart = data.get('pieChart', {})
+    settings.pieChart_sequence = pieChart.get('sequence', settings.pieChart_sequence)
+    settings.pieChart_duration = pieChart.get('duration', settings.pieChart_duration)
+    settings.pieChart_display = pieChart.get('display', settings.pieChart_display)
+
+    areaChart = data.get('areaChart', {})
+    settings.areaChart_sequence = areaChart.get('sequence', settings.areaChart_sequence)
+    settings.areaChart_duration = areaChart.get('duration', settings.areaChart_duration)
+    settings.areaChart_display = areaChart.get('display', settings.areaChart_display)
+
+    lineChart = data.get('lineChart', {})
+    settings.lineChart_sequence = lineChart.get('sequence', settings.lineChart_sequence)
+    settings.lineChart_duration = lineChart.get('duration', settings.lineChart_duration)
+    settings.lineChart_display = lineChart.get('display', settings.lineChart_display)
+    
+    print("settings:", settings)
+
+    # settings.save()
+
+    # FIXME: breaking
+    return Response({"message": "Global settings updated successfully"}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def get_global_settings(request):
+    settings = GlobalSettings.load()
+    transformed_data = {
+        'incomerPower': settings.incomerPower,
+        'solarPower': settings.solarPower,
+        'water': settings.water,
+        'pieChart': {
+            'sequence': settings.pieChart_sequence,
+            'duration': settings.pieChart_duration,
+            'display': settings.pieChart_display,
+        },
+        'areaChart': {
+            'sequence': settings.areaChart_sequence,
+            'duration': settings.areaChart_duration,
+            'display': settings.areaChart_display,
+        },
+        'lineChart': {
+            'sequence': settings.lineChart_sequence,
+            'duration': settings.lineChart_duration,
+            'display': settings.lineChart_display,
+        },
+    }
+    return Response(transformed_data, status=status.HTTP_200_OK)
+
+
 
 def csv_to_json(csv_filename, delimiter=','):
     data = []

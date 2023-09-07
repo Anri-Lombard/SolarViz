@@ -1,8 +1,16 @@
+/**
+ * Footer Component
+ * 
+ * This component is responsible for rendering the footer of the application.
+ * It includes a copyright text, a footer image, and a help button that redirects to the user manual.
+ */
+
+// Importing dependencies and custom components
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import '../styles/Footer.css';
 import Image from 'next/image';
 import footerImage from '../images/darkBulb.png';
+import '../styles/Footer.css';
 
 export const Footer: React.FC = () => {
   const router = useRouter();
