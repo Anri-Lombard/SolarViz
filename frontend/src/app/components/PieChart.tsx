@@ -22,7 +22,7 @@ export const PieChartComponent: React.FC<PieChartComponentProps> = ({ data, colo
     const renderLabel = (entry: { percent: number }) => `${(entry.percent * 100).toFixed(0)}%`;
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div data-testid="pie-chart-component" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <PieChart width={1000} height={600}>
                 <Pie
                     dataKey="value"
