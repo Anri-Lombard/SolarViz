@@ -335,6 +335,7 @@ const Admin = () => {
 
 
         </div>
+      </div>
 
         <div id="select-content" className='mb-5 adminBlock'>
           <h2> Select graphs to be displayed on the main dashboard</h2>
@@ -365,9 +366,10 @@ const Admin = () => {
         <div id="manage-admins" className='mb-5 adminBlock'>
           <h2>Manage Administrators</h2>
           <ManageAdmin admins={admins} removeAdmin={removeAdmin} addAdmin={addAdmin} />
-          <button onClick={handleLogout} className='logoutButton'>Logout</button>
+          
         </div>
-      </div>
+        
+        <button onClick={handleLogout} className='logoutButton'>Logout</button>
     </div>
   );
 }
