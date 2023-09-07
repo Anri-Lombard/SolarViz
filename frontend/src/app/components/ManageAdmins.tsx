@@ -11,7 +11,6 @@ const ManageAdmin: React.FC<ManageAdminProps> = ({ admins, removeAdmin, addAdmin
 
   return (
     <div>
-      <h2>Manage Administrators</h2>
       <ul>
         {admins.map(admin => (
           <li key={admin.id}>

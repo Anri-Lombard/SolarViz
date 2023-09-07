@@ -57,7 +57,7 @@ export type ChartType = 'pieChart' | 'areaChart' | 'lineChart';
 export type ColorOptionsProps = {
     type: string,
     colors: string[],
-    handleChangeColor: (type: string, color: string) => void,
+    handleChangeColor: (type: ColorType, color: string) => void,
     currentColor: string
 };
 
