@@ -1,18 +1,25 @@
 "use client"
 
 import React from 'react';
+import '../styles/Manual.css';
 
 export default function Manual() {
   return (
-    <div className='flex h-screen bg-gray-200 p-10 mt-32 mb-20 mainBlock'>
-      <div className='w-64 flex flex-col mr-6'>
+    <div className='manualContainer'>
+      <div className='tableOfContents'>
         <h2 className='text-xl font-bold mb-4'>Table of Contents</h2>
         <a href='#about' className='text-blue-500 hover:underline mb-2'>About</a>
-        <a href='#settings' className='text-blue-500 hover:underline mb-2'>Settings</a>
+        <a href='#moreData' className='text-blue-500 hover:underline mb-2'>More Data</a>
         <a href='#administration' className='text-blue-500 hover:underline mb-2'>Administration</a>
         <a href='#contribution' className='text-blue-500 hover:underline mb-2'>Contribution</a>
       </div>
-      <div className='flex-1 overflow-auto'>
+      <div className='content'>
+
+      <h1> Welcome to the Sustainability Dashboard User Manual – 
+        your guide to exploring the sustainability practices at D-skool. 
+        This manual will walk you through the ins and outs of the navigating website.
+        Get ready to dive into the world of sustainable living!</h1>
+        
         <div id='about'>
           <h2 className='text-2xl font-bold mb-2'>About</h2>
           <p className='mb-4'>
@@ -49,8 +56,8 @@ export default function Manual() {
             <p>By utilizing SolarViz, the UCT D-Skool building not only maintains its prestigious 6-star green rating but also sets a standard for sustainable practices that can inspire other institutions. It's a step towards a greener future, where technology and awareness go hand in hand to create a sustainable and responsible environment.</p>
           </p>
         </div>
-        <div id='settings'>
-          <h2 className='text-2xl font-bold mb-2'>Settings</h2>
+        <div id='moreData'>
+          <h2 className='text-2xl font-bold mb-2'>More data</h2>
           <p className='mb-4'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum. Donec in efficitur leo. In hac habitasse platea dictumst. Sed ullamcorper, nunc et pellentesque facilisis, sapien nisl egestas diam, nec blandit elit metus ac erat. Fusce non bibendum dui. Vivamus commodo, sem et sollicitudin malesuada, est quam ultrices orci, a semper augue mauris ut quam.
 
