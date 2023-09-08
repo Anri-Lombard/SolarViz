@@ -233,13 +233,6 @@ const Admin = () => {
     }
   };
 
-  const showChangesAppliedMessage = () => {
-    setChangesAppliedMessage('Changes applied');
-    setTimeout(() => {
-      setChangesAppliedMessage(null);
-    }, 1000);
-  };
-
   const applyColorChanges = () => {
     if (window.confirm("Are you sure you want to apply color changes?")) {
       const newSettings = {
@@ -250,7 +243,6 @@ const Admin = () => {
       };
       if (token) {
         setSettings(newSettings, token); // Update global settings
-        showChangesAppliedMessage();
       } else {
         // TODO: Handle unauthorized access
       }
@@ -268,7 +260,6 @@ const Admin = () => {
         };
         if (token) {
           setSettings(newSettings, token); // Update global settings
-          showChangesAppliedMessage();
         } else {
           // TODO: Handle unauthorized access
         }
@@ -280,14 +271,19 @@ const Admin = () => {
   // new stuff:
   const {playVideo, setPlayVideo} = usePlayVideo(); // state for video playback
   const [localPlayVideo, setLocalPlayVideo] = useState(playVideo); // local state
+  const [localPlayWithAudio, setLocalPlayWithAudio] = useState(playVideo);
 
   const handlePlayVideoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocalPlayVideo(event.target.checked);
   };
-  
+
+  const handlePlayWithAudio = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLocalPlayWithAudio(event.target.checked);
+  };
+
   const applyMediaChanges = () => {
     if (window.confirm("Are you sure you want to apply media changes?")) {
-      setPlayVideo(localPlayVideo);
+      setPlayVideo(localPlayVideo, localPlayWithAudio);
     }
   };
 
@@ -316,7 +312,6 @@ const Admin = () => {
             className='applyGraphSettingsButtonContainer'
           >
             <div className='applyGraphSettingsButton'>Apply Graph Settings Changes</div>
-            {changesAppliedMessage && <div className="changesAppliedMessage">{changesAppliedMessage}</div>}
           </div>
 
           <div className='selectionBlock'>
@@ -342,9 +337,6 @@ const Admin = () => {
             className='applyMediaButtonContainer'
           >
             <div className='applyButton'>Apply Media Changes</div>
-            {changesAppliedMessage && (
-              <div className="changesAppliedMessage">{changesAppliedMessage}</div>
-            )}
           </div>
 
           <label>
@@ -356,7 +348,14 @@ const Admin = () => {
             Play Video
           </label>
 
-          
+          <label>
+            <input
+              type="checkbox"
+              checked={localPlayWithAudio}
+              onChange={handlePlayWithAudio}
+            />{' '}
+            Play with audio
+          </label>
 
         </div>
 
@@ -370,7 +369,6 @@ const Admin = () => {
               className='applyButtonContainer'
             >
               <div className='applyButton'>Apply Color Changes</div>
-              {changesAppliedMessage && <div className="changesAppliedMessage">{changesAppliedMessage}</div>}
             </div>
 
             <h1 className='text-black font-bold'>Default Colours:</h1>

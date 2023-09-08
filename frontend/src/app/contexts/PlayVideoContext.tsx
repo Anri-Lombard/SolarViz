@@ -2,16 +2,23 @@ import React, { createContext, useContext, useState } from 'react';
 
 interface PlayVideoContextProps {
   playVideo: boolean;
-  setPlayVideo: (value: boolean) => void;
+  playWithAudio: boolean;
+  setPlayVideo: (value: boolean, audio: boolean) => void;
 }
 
 const PlayVideoContext = createContext<PlayVideoContextProps | undefined>(undefined);
 
 export const PlayVideoProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [playVideo, setPlayVideo] = useState<boolean>(false);
+  const [playVideo, setPlayVideoState] = useState<boolean>(false);
+  const [playWithAudio, setPlayWithAudio] = useState<boolean>(true);
+
+  const setPlayVideo = (value: boolean, audio: boolean) => {
+    setPlayVideoState(value);
+    setPlayWithAudio(audio);
+  };
 
   return (
-    <PlayVideoContext.Provider value={{ playVideo, setPlayVideo }}>
+    <PlayVideoContext.Provider value={{ playVideo, playWithAudio, setPlayVideo }}>
       {children}
     </PlayVideoContext.Provider>
   );

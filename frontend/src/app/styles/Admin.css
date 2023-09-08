@@ -64,14 +64,6 @@
     background-color: #292827;
 }
 
-.changesAppliedMessage {
-    position: absolute;
-    bottom: 30px;
-    margin: 10px;
-    color: blue;
-    font-size: small;
-}
-
 .applyButton:hover {
     color: #f3e9cb;
     background-color: #292827;
