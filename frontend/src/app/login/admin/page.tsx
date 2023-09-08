@@ -274,11 +274,18 @@ const Admin = () => {
   const [localPlayWithAudio, setLocalPlayWithAudio] = useState(playVideo);
 
   const handlePlayVideoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalPlayVideo(event.target.checked);
+    const isChecked = event.target.checked;
+    setLocalPlayVideo(isChecked);
+
+    if (!isChecked) {
+      setLocalPlayWithAudio(false);
+    }
   };
 
   const handlePlayWithAudio = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalPlayWithAudio(event.target.checked);
+    if (localPlayVideo) {
+      setLocalPlayWithAudio(event.target.checked);
+    }
   };
 
   const applyMediaChanges = () => {
@@ -353,6 +360,7 @@ const Admin = () => {
               type="checkbox"
               checked={localPlayWithAudio}
               onChange={handlePlayWithAudio}
+              disabled={!localPlayVideo} // cant click this if user doesnt want video to be displayed
             />{' '}
             Play with audio
           </label>
