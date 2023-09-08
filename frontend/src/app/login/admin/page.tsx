@@ -299,7 +299,7 @@ const Admin = () => {
 
       <div className='intro'>
         <p>Welcome to the administration page. Adjust the colour schemes of the graphs displayed,
-          select the content to be displayed on the main dashboard, or manage the administrators. Select one of the options below.</p>
+          select the content to be displayed on the main dashboard, or manage the administrators. Select one of the options below:</p>
 
         <nav>
           <ul className='hover=underline' style={{ paddingTop: '10px' }}>

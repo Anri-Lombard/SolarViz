@@ -84,6 +84,10 @@ h2 {
     margin: 40px;
 }
 
+.intro a {
+    color: #183d33;
+}
+
 .adminBlock {
     background-color: #f3e9cb;
     padding: 30px;

@@ -8,6 +8,7 @@
     padding: 5px 0vh;
     display: flex;
     justify-content: space-between;
+    caret-color: transparent;
 }
 
 .footerText {
