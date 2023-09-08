@@ -1,29 +1,11 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import type { Metadata } from 'next'
 
-type GraphSettings = {
-    sequence: number;
-    duration: number;
-    display: boolean;
-};
-
-type Settings = {
-    incomerPower: string;
-    solarPower: string;
-    water: string;
-    pieChart: GraphSettings;
-    areaChart: GraphSettings;
-    lineChart: GraphSettings;
-};
+import { SettingsContextType } from '../types/contextTypes';
+import { Settings } from '../types/dataTypes';
 
 
-type SettingsContextType = {
-    settings: Settings;
-    setSettings: React.Dispatch<React.SetStateAction<Settings>> | ((newSettings: Settings, token: string) => void);
-};
-
-
-const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
+export const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
 export function useSettings() {
     const context = useContext(SettingsContext);

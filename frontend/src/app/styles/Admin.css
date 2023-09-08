@@ -23,8 +23,8 @@
 .applyButtonContainer {
     position: relative;
     float: right;
-    right: 10px;
-    top: 150px;
+    right: 20px;
+    top: 100px;
     display: flex;
     flex-direction: column;
 }
@@ -140,6 +140,7 @@ h2 {
     margin: 30px;
     border: 1px solid #292827;
     border-radius: 5px;
+    caret-color: black
 }
 
 .adminBlock button {
