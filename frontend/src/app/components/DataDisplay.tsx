@@ -182,6 +182,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
 
     <div className='graphContainer'>
       <ProgressBar />
+      <ProgressBarIcon/>
       {transformedData && aggregatedData && waterData && powerData ? (
         <>
           {renderChart(charts[currentChartIndex].type)}
