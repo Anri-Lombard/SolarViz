@@ -1,9 +1,12 @@
 .loginContent {
     width:600px;
+    text-align: center;
 }
 
 h2 {
     font-weight: normal;
+    font-size: x-large;
+    margin: 10px;
 }
 
 .loginImage {

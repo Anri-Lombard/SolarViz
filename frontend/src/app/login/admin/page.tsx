@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSettings } from '../../contexts/SettingsContext';
 import { useAuth } from '../../contexts/LoginContext';
+import { usePlayVideo } from '../../contexts/PlayVideoContext';
 import '../../styles/Admin.css';
 import ColorOptions from '../../components/ColorOptions';
 import GraphSettingsComponent from '../../components/GraphSettings';
@@ -28,7 +29,6 @@ const Admin = () => {
     lineChart: settings.lineChart,
   });
   const [graphSettingsError, setGraphSettingsError] = useState<string | null>(null);
-
 
   const router = useRouter();
   const { logout } = useAuth(); // get login function
@@ -91,7 +91,6 @@ const Admin = () => {
       },
     });
   };
-
 
   useEffect(() => {
     // This will only run on the client-side
@@ -208,7 +207,6 @@ const Admin = () => {
     }
   };
 
-
   const removeAdmin = async (id: number) => {
     if (window.confirm(`Are you sure you want to remove this admin?`)) {
 
@@ -235,13 +233,6 @@ const Admin = () => {
     }
   };
 
-  const showChangesAppliedMessage = () => {
-    setChangesAppliedMessage('Changes applied');
-    setTimeout(() => {
-      setChangesAppliedMessage(null);
-    }, 1000);
-  };
-
   const applyColorChanges = () => {
     if (window.confirm("Are you sure you want to apply color changes?")) {
       const newSettings = {
@@ -252,7 +243,6 @@ const Admin = () => {
       };
       if (token) {
         setSettings(newSettings, token); // Update global settings
-        showChangesAppliedMessage();
       } else {
         // TODO: Handle unauthorized access
       }
@@ -270,14 +260,39 @@ const Admin = () => {
         };
         if (token) {
           setSettings(newSettings, token); // Update global settings
-          showChangesAppliedMessage();
         } else {
           // TODO: Handle unauthorized access
         }
       }
     }
+
   };
 
+  // new stuff:
+  const {playVideo, setPlayVideo} = usePlayVideo(); // state for video playback
+  const [localPlayVideo, setLocalPlayVideo] = useState(playVideo); // local state
+  const [localPlayWithAudio, setLocalPlayWithAudio] = useState(playVideo);
+
+  const handlePlayVideoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const isChecked = event.target.checked;
+    setLocalPlayVideo(isChecked);
+
+    if (!isChecked) {
+      setLocalPlayWithAudio(false);
+    }
+  };
+
+  const handlePlayWithAudio = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (localPlayVideo) {
+      setLocalPlayWithAudio(event.target.checked);
+    }
+  };
+
+  const applyMediaChanges = () => {
+    if (window.confirm("Are you sure you want to apply media changes?")) {
+      setPlayVideo(localPlayVideo, localPlayWithAudio);
+    }
+  };
 
   return (
     <div>
@@ -288,53 +303,13 @@ const Admin = () => {
 
         <nav>
           <ul className='hover=underline' style={{ paddingTop: '10px' }}>
-            <li><a href="#adjust-colours">Adjust Colours</a></li>
             <li><a href="#select-content">Select dashboard content</a></li>
+            <li><a href="#select-media">Select media</a></li>
+            <li><a href="#adjust-colours">Adjust Colours</a></li>
             <li><a href="#manage-admins">Manage Administrators</a></li>
           </ul>
         </nav>
       </div>
-
-      <div id="adjust-colours" className='mb-5 adminBlock' >
-
-        <h2>Adjust colours</h2>
-        <div className='mb-5'>
-
-          <div
-            onClick={applyColorChanges}
-            className='applyButtonContainer'
-          >
-            <div className='applyButton'>Apply Color Changes</div>
-            {changesAppliedMessage && <div className="changesAppliedMessage">{changesAppliedMessage}</div>}
-          </div>
-
-          <h1 className='text-black font-bold'>Default Colours:</h1>
-          {Object.entries(defaultColors).map(([type, color]) => (
-            <div key={type} className="flex items-center mb-2">
-              <span className='text-black mr-2'>{type}: </span>
-              <button
-                onClick={() => handleChangeColor(type as ColorType, color)}
-                className={`p-2 ${settings[type as keyof typeof settings] === color ? 'bg-blue-500 text-white' : 'bg-gray-400 text-black'}`}
-                style={{ backgroundColor: color }}
-              >
-                {color}
-              </button>
-
-            </div>
-          ))}
-
-          {(['incomerPower', 'solarPower', 'water'] as ColorType[]).map((type) => (
-            <ColorOptions
-              key={type}
-              type={type}
-              colors={colors}
-              handleChangeColor={handleChangeColor}
-              currentColor={pendingChanges[type]}
-            />
-          ))}
-
-
-        </div>
 
         <div id="select-content" className='mb-5 adminBlock'>
           <h2> Select graphs to be displayed on the main dashboard</h2>
@@ -344,7 +319,6 @@ const Admin = () => {
             className='applyGraphSettingsButtonContainer'
           >
             <div className='applyGraphSettingsButton'>Apply Graph Settings Changes</div>
-            {changesAppliedMessage && <div className="changesAppliedMessage">{changesAppliedMessage}</div>}
           </div>
 
           <div className='selectionBlock'>
@@ -362,12 +336,85 @@ const Admin = () => {
           </div>
         </div>
 
+        <div id="select-media" className='mb-5 adminBlock'>
+          <h2>Select media</h2>
+
+          <div
+            onClick={applyMediaChanges}
+            className='applyMediaButtonContainer'
+          >
+            <div className='applyButton'>Apply Media Changes</div>
+          </div>
+
+          <label>
+            <input
+              type="checkbox"
+              checked={localPlayVideo}
+              onChange={handlePlayVideoChange}
+            />{' '}
+            Play Video
+          </label>
+
+          <label>
+            <input
+              type="checkbox"
+              checked={localPlayWithAudio}
+              onChange={handlePlayWithAudio}
+              disabled={!localPlayVideo} // cant click this if user doesnt want video to be displayed
+            />{' '}
+            Play with audio
+          </label>
+
+        </div>
+
+        <div id="adjust-colours" className='mb-5 adminBlock' >
+
+          <h2>Adjust colours</h2>
+          <div className='mb-5'>
+
+            <div
+              onClick={applyColorChanges}
+              className='applyButtonContainer'
+            >
+              <div className='applyButton'>Apply Color Changes</div>
+            </div>
+
+            <h1 className='text-black font-bold'>Default Colours:</h1>
+            {Object.entries(defaultColors).map(([type, color]) => (
+              <div key={type} className="flex items-center mb-2">
+                <span className='text-black mr-2'>{type}: </span>
+                <button
+                  onClick={() => handleChangeColor(type as ColorType, color)}
+                  className={`p-2 ${settings[type as keyof typeof settings] === color ? 'bg-blue-500 text-white' : 'bg-gray-400 text-black'}`}
+                  style={{ backgroundColor: color }}
+                >
+                  {color}
+                </button>
+
+              </div>
+            ))}
+
+            {(['incomerPower', 'solarPower', 'water'] as ColorType[]).map((type) => (
+              <ColorOptions
+                key={type}
+                type={type}
+                colors={colors}
+                handleChangeColor={handleChangeColor}
+                currentColor={pendingChanges[type]}
+              />
+            ))}
+
+
+          </div>
+        </div>
+
         <div id="manage-admins" className='mb-5 adminBlock'>
           <h2>Manage Administrators</h2>
           <ManageAdmin admins={admins} removeAdmin={removeAdmin} addAdmin={addAdmin} />
-          <button onClick={handleLogout} className='logoutButton'>Logout</button>
+          
         </div>
-      </div>
+        
+        <button onClick={handleLogout} className='logoutButton'>Logout</button>
     </div>
   );
 }

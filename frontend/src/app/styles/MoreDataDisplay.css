@@ -5,30 +5,29 @@
 }
 
 .graphContainer {
-    margin-top: 5vh;
+    position: absolute;
+    margin-top:5vh;
     max-height: 85vh;
     overflow-y: auto;
     align-items: center;
 }
 
-
 .chartWrapper {
     display: flex;
     justify-content: space-between;
-    margin: 2rem 0;
-
+    margin: 10rem 0;
 }
 
 .chartSection {
-    flex: 2;
+    width: 100vh;
 }
 
 .textSection {
-    flex: 1;
+    width: 300px;
     padding: 20px;
     margin-left: 2rem;
     background-color: #f3e9cb;
     border-color: #292827 ;
     border-width: 2px;
-    border-radius: 10px;
+    border-radius: 20px;
 }

@@ -38,6 +38,14 @@
     flex-direction: column;
 }
 
+.applyMediaButtonContainer {
+    position: relative;
+    float: right;
+    right: 20px;
+    top: 10px;
+    display: flex;
+}
+
 .applyGraphSettingsButton {
     background-color: #f3e9cb;
     border-color: #292827;
@@ -54,14 +62,6 @@
 .applyGraphSettingsButton:hover {
     color: #f3e9cb;
     background-color: #292827;
-}
-
-.changesAppliedMessage {
-    position: absolute;
-    bottom: 30px;
-    margin: 10px;
-    color: blue;
-    font-size: small;
 }
 
 .applyButton:hover {
@@ -82,29 +82,6 @@ h2 {
     padding-top: 100px;
     padding-bottom: 20px;
     margin: 40px;
-}
-
-
-.logoutButton {
-    position: relative;
-    float: right;
-    right: 10px;
-    background-color: #f3e9cb;
-    border-color: #292827;
-    border-width: 2px;
-    border-radius: 10px;
-    justify-content: flex-end;
-    padding: 1vh 1vh;
-    color: #292827;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-size: small;
-    margin-bottom: 60px;
-}
-
-.logoutButton:hover {
-    color: #f3e9cb;
-    background-color: #292827;
 }
 
 .adminBlock {
@@ -145,9 +122,8 @@ h2 {
 
 .adminBlock button {
     background-color: #292827;
-    color: #f3e9cb;
+    color: hsl(45, 63%, 87%);
     padding: 10px 20px;
-    border: none;
     border-radius: 5px;
     cursor: pointer;
     text-transform: uppercase;
@@ -155,8 +131,11 @@ h2 {
 }
 
 .adminBlock button:hover {
-    background-color: #f3e9cb;
     color: #292827;
+    background-color: #f3e9cb;
+    border-color: #292827;
+    border-width: 2px;
+    border-radius: 5px;
 }
 
 .selectionBlock {
@@ -187,4 +166,25 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.logoutButton {
+    position: relative;
+    float: right;
+    margin-bottom: 70px;
+    margin-right: 20px;
+    background-color: #f3e9cb;
+    border-color: #292827;
+    border-width: 2px;
+    border-radius: 10px;
+    padding: 1vh 1vh;
+    color: #292827;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: small;
+}
+
+.logoutButton:hover {
+    color: #f3e9cb;
+    background-color: #292827;
 }
