@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSettings } from '../../contexts/SettingsContext';
 import { useAuth } from '../../contexts/LoginContext';
+import { usePlayVideo } from '../../contexts/PlayVideoContext';
 import '../../styles/Admin.css';
 import ColorOptions from '../../components/ColorOptions';
 import GraphSettingsComponent from '../../components/GraphSettings';
@@ -28,7 +29,6 @@ const Admin = () => {
     lineChart: settings.lineChart,
   });
   const [graphSettingsError, setGraphSettingsError] = useState<string | null>(null);
-
 
   const router = useRouter();
   const { logout } = useAuth(); // get login function
@@ -91,7 +91,6 @@ const Admin = () => {
       },
     });
   };
-
 
   useEffect(() => {
     // This will only run on the client-side
@@ -208,7 +207,6 @@ const Admin = () => {
     }
   };
 
-
   const removeAdmin = async (id: number) => {
     if (window.confirm(`Are you sure you want to remove this admin?`)) {
 
@@ -276,8 +274,22 @@ const Admin = () => {
         }
       }
     }
+
   };
 
+  // new stuff:
+  const {playVideo, setPlayVideo} = usePlayVideo(); // state for video playback
+  const [localPlayVideo, setLocalPlayVideo] = useState(playVideo); // local state
+
+  const handlePlayVideoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLocalPlayVideo(event.target.checked);
+  };
+  
+  const applyMediaChanges = () => {
+    if (window.confirm("Are you sure you want to apply media changes?")) {
+      setPlayVideo(localPlayVideo);
+    }
+  };
 
   return (
     <div>
@@ -323,7 +335,29 @@ const Admin = () => {
         </div>
 
         <div id="select-media" className='mb-5 adminBlock'>
-          <h2> add section for selecting whether video plays or not</h2>
+          <h2>Select media</h2>
+
+          <div
+            onClick={applyMediaChanges}
+            className='applyMediaButtonContainer'
+          >
+            <div className='applyButton'>Apply Media Changes</div>
+            {changesAppliedMessage && (
+              <div className="changesAppliedMessage">{changesAppliedMessage}</div>
+            )}
+          </div>
+
+          <label>
+            <input
+              type="checkbox"
+              checked={localPlayVideo}
+              onChange={handlePlayVideoChange}
+            />{' '}
+            Play Video
+          </label>
+
+          
+
         </div>
 
         <div id="adjust-colours" className='mb-5 adminBlock' >

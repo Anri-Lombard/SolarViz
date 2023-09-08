@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import '../styles/DataDisplay.css';
+import { PlayVideoProvider, usePlayVideo } from '../contexts/PlayVideoContext';
 import VideoComponent from './VideoComponent'; // Import the VideoComponent
 
 // Custom components
@@ -53,7 +54,6 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
     return aggregated;
   }, [powerData, waterData]);
 
-
   const renderChart = (chartType: string) => {
     switch (chartType) {
       case ChartTypes.PIE:
@@ -87,6 +87,8 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
         return null;
     }
   };
+
+  const { playVideo } = usePlayVideo(); // access state from play video context
 
   useEffect(() => {
     let timeoutId: any;
@@ -127,7 +129,11 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
     { type: ChartTypes.PIE, ...settings.pieChart },
     { type: ChartTypes.AREA, ...settings.areaChart },
     { type: ChartTypes.LINE, ...settings.lineChart },
-    { type: 'VIDEO', sequence: 4, display: true, duration: 10 }, // new 'chart' type for the video
+
+    ...(playVideo
+      ? [{ type: 'VIDEO', sequence: 4, display: true, duration: 10 }] // only add video into rotation if playvideo is true
+      : []), //otherwise an empty array
+
   ]
     .sort((a, b) => a.sequence - b.sequence)
     .filter(chart => chart.display);
