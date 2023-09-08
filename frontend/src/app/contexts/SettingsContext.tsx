@@ -35,14 +35,16 @@ export const metadata: Metadata = {
 }
 
 export function SettingsProvider({ children }: SettingsProviderProps) {
-    const [settings, setSettings] = useState({
+    const [settings, setSettings] = useState<Settings>({
         incomerPower: '#183d33',
         solarPower: '#b9544f',
         water: '#2779a7',
         pieChart: { sequence: 1, duration: 10, display: true },
         areaChart: { sequence: 2, duration: 10, display: true },
         lineChart: { sequence: 3, duration: 10, display: true },
-    });
+        media: { sequence: 4, display: true, audio: true },
+      });
+      
 
     // Fetch settings from the backend when the component mounts
     useEffect(() => {
@@ -54,8 +56,6 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
                 return response.json();
             })
             .then(data => {
-                // Validate data here if needed
-                console.log(data);
                 setSettings(data);
             })
             .catch(error => {
@@ -65,7 +65,6 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
 
     // Function to update settings in the backend
     const updateSettings = (newSettings: Settings, token: string) => {
-        console.log(newSettings);
         fetch('http://localhost:8000/api/update_global_settings/', {
             method: 'POST',
             headers: {

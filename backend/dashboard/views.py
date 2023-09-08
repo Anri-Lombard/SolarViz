@@ -37,7 +37,6 @@ def update_global_settings(request):
     # Update the settings based on the request data
     data = request.data
     
-    print("data:", data)
     settings.incomerPower = data.get('incomerPower', settings.incomerPower)
     settings.solarPower = data.get('solarPower', settings.solarPower)
     settings.water = data.get('water', settings.water)
@@ -57,11 +56,14 @@ def update_global_settings(request):
     settings.lineChart_duration = lineChart.get('duration', settings.lineChart_duration)
     settings.lineChart_display = lineChart.get('display', settings.lineChart_display)
     
-    print("settings:", settings)
+    media = data.get('media', {})
+    settings.media_sequence = media.get('sequence', settings.media_sequence)
+    settings.media_display = media.get('display', settings.media_display)
+    settings.media_audio = media.get('audio', settings.media_audio)
 
-    # settings.save()
 
-    # FIXME: breaking
+    settings.save()
+
     return Response({"message": "Global settings updated successfully"}, status=status.HTTP_200_OK)
 
 
@@ -87,6 +89,12 @@ def get_global_settings(request):
             'duration': settings.lineChart_duration,
             'display': settings.lineChart_display,
         },
+        'media': {
+            'sequence': settings.media_sequence,
+            'display': settings.media_display,
+            'audio': settings.media_audio,
+        },
+
     }
     return Response(transformed_data, status=status.HTTP_200_OK)
 

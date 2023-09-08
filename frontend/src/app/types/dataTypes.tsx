@@ -18,17 +18,16 @@ export type GraphSettings = {
     display: boolean;
 };
 
+export type MediaSettings = {
+    sequence: number;
+    display: boolean;
+    audio: boolean;
+}
+
 export interface DataDisplayProps {
     powerData: DataType[];
     waterData: WaterDataType[];
-    settings: {
-        incomerPower: string;
-        solarPower: string;
-        water: string;
-        pieChart: GraphSettings;
-        areaChart: GraphSettings;
-        lineChart: GraphSettings;
-    };
+    settings: Settings;
 }
 
 export type ConsolidatedData = {
@@ -43,6 +42,7 @@ export type Settings = {
     pieChart: GraphSettings;
     areaChart: GraphSettings;
     lineChart: GraphSettings;
+    media: MediaSettings;
 };
 
 export interface Admin {

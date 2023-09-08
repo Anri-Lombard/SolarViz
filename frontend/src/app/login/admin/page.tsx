@@ -6,11 +6,11 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSettings } from '../../contexts/SettingsContext';
 import { useAuth } from '../../contexts/LoginContext';
-import { usePlayVideo } from '../../contexts/PlayVideoContext';
 import '../../styles/Admin.css';
 import ColorOptions from '../../components/ColorOptions';
 import GraphSettingsComponent from '../../components/GraphSettings';
 import ManageAdmin from '../../components/ManageAdmins';
+import MediaSettingsComponent from '../../components/MediaSettingsComponent';
 
 import { Admin, ColorType, ChartType } from '../../types/dataTypes'
 
@@ -19,15 +19,21 @@ const Admin = () => {
   const { settings, setSettings } = useSettings();
   const [pendingChanges, setPendingChanges] = useState(settings);
   const [admins, setAdmins] = useState<Admin[]>([]);
-  const [newAdminUsername, setNewAdminUsername] = useState('');
-  const [newAdminPassword, setNewAdminPassword] = useState('');
+  // const [newAdminUsername, setNewAdminUsername] = useState('');
+  // const [newAdminPassword, setNewAdminPassword] = useState('');
   const [token, setToken] = useState<string | null>(null);
-  const [changesAppliedMessage, setChangesAppliedMessage] = useState<string | null>(null);
+  // const [changesAppliedMessage, setChangesAppliedMessage] = useState<string | null>(null);
   const [pendingGraphSettings, setPendingGraphSettings] = useState({
     pieChart: settings.pieChart,
     areaChart: settings.areaChart,
     lineChart: settings.lineChart,
   });
+  const [pendingMediaSettings, setPendingMediaSettings] = useState({
+    sequence: settings.media.sequence,
+    display: settings.media.display,
+    audio: settings.media.audio,
+  });
+  
   const [graphSettingsError, setGraphSettingsError] = useState<string | null>(null);
 
   const router = useRouter();
@@ -268,32 +274,29 @@ const Admin = () => {
 
   };
 
-  // new stuff:
-  const {playVideo, setPlayVideo} = usePlayVideo(); // state for video playback
-  const [localPlayVideo, setLocalPlayVideo] = useState(playVideo); // local state
-  const [localPlayWithAudio, setLocalPlayWithAudio] = useState(playVideo);
-
-  const handlePlayVideoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const isChecked = event.target.checked;
-    setLocalPlayVideo(isChecked);
-
-    if (!isChecked) {
-      setLocalPlayWithAudio(false);
-    }
+  const handleMediaSettingsChange = (field: string, value: number | boolean) => {
+    setPendingMediaSettings({
+      ...pendingMediaSettings,
+      [field]: value,
+    });
   };
-
-  const handlePlayWithAudio = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (localPlayVideo) {
-      setLocalPlayWithAudio(event.target.checked);
-    }
-  };
+  
 
   const applyMediaChanges = () => {
     if (window.confirm("Are you sure you want to apply media changes?")) {
-      setPlayVideo(localPlayVideo, localPlayWithAudio);
+      const newSettings = {
+        ...settings,
+        media: pendingMediaSettings,
+      };
+      if (token) {
+        setSettings(newSettings, token); // Update global settings
+      } else {
+        // TODO: Handle unauthorized access
+      }
     }
   };
 
+  
   return (
     <div>
 
@@ -311,110 +314,94 @@ const Admin = () => {
         </nav>
       </div>
 
-        <div id="select-content" className='mb-5 adminBlock'>
-          <h2> Select graphs to be displayed on the main dashboard</h2>
+      <div id="select-content" className='mb-5 adminBlock'>
+        <h2> Select graphs to be displayed on the main dashboard</h2>
 
-          <div
-            onClick={applyGraphSettingsChanges}
-            className='applyGraphSettingsButtonContainer'
-          >
-            <div className='applyGraphSettingsButton'>Apply Graph Settings Changes</div>
-          </div>
-
-          <div className='selectionBlock'>
-            {graphSettingsError && <div className="errorMessage">{graphSettingsError}</div>}
-
-            {(['pieChart', 'areaChart', 'lineChart'] as ChartType[]).map((chartType) => (
-              <GraphSettingsComponent
-                key={chartType}
-                chartType={chartType}
-                handleGraphSettingsChange={handleGraphSettingsChange}
-                settings={pendingGraphSettings}
-              />
-            ))}
-
-          </div>
+        <div
+          onClick={applyGraphSettingsChanges}
+          className='applyGraphSettingsButtonContainer'
+        >
+          <div className='applyGraphSettingsButton'>Apply Graph Settings Changes</div>
         </div>
 
-        <div id="select-media" className='mb-5 adminBlock'>
-          <h2>Select media</h2>
+        <div className='selectionBlock'>
+          {graphSettingsError && <div className="errorMessage">{graphSettingsError}</div>}
 
-          <div
-            onClick={applyMediaChanges}
-            className='applyMediaButtonContainer'
-          >
-            <div className='applyButton'>Apply Media Changes</div>
-          </div>
-
-          <label>
-            <input
-              type="checkbox"
-              checked={localPlayVideo}
-              onChange={handlePlayVideoChange}
-            />{' '}
-            Play Video
-          </label>
-
-          <label>
-            <input
-              type="checkbox"
-              checked={localPlayWithAudio}
-              onChange={handlePlayWithAudio}
-              disabled={!localPlayVideo} // cant click this if user doesnt want video to be displayed
-            />{' '}
-            Play with audio
-          </label>
+          {(['pieChart', 'areaChart', 'lineChart'] as ChartType[]).map((chartType) => (
+            <GraphSettingsComponent
+              key={chartType}
+              chartType={chartType}
+              handleGraphSettingsChange={handleGraphSettingsChange}
+              settings={pendingGraphSettings}
+            />
+          ))}
 
         </div>
+      </div>
 
-        <div id="adjust-colours" className='mb-5 adminBlock' >
+      <div id="select-media" className='mb-5 adminBlock'>
+        <h2>Select media</h2>
 
-          <h2>Adjust colours</h2>
-          <div className='mb-5'>
+        <div onClick={applyMediaChanges} className='applyMediaButtonContainer'>
+          <div className='applyButton'>Apply Media Changes</div>
+        </div>
 
-            <div
-              onClick={applyColorChanges}
-              className='applyButtonContainer'
-            >
-              <div className='applyButton'>Apply Color Changes</div>
+        <MediaSettingsComponent
+          handleMediaSettingsChange={handleMediaSettingsChange}
+          settings={pendingMediaSettings}
+        />
+      </div>
+
+
+
+      <div id="adjust-colours" className='mb-5 adminBlock' >
+
+        <h2>Adjust colours</h2>
+        <div className='mb-5'>
+
+          <div
+            onClick={applyColorChanges}
+            className='applyButtonContainer'
+          >
+            <div className='applyButton'>Apply Color Changes</div>
+          </div>
+
+          <h1 className='text-black font-bold'>Default Colours:</h1>
+          {Object.entries(defaultColors).map(([type, color]) => (
+            <div key={type} className="flex items-center mb-2">
+              <span className='text-black mr-2'>{type}: </span>
+              <button
+                onClick={() => handleChangeColor(type as ColorType, color)}
+                className={`p-2 ${settings[type as keyof typeof settings] === color ? 'bg-blue-500 text-white' : 'bg-gray-400 text-black'}`}
+                style={{ backgroundColor: color }}
+              >
+                {color}
+              </button>
+
             </div>
+          ))}
 
-            <h1 className='text-black font-bold'>Default Colours:</h1>
-            {Object.entries(defaultColors).map(([type, color]) => (
-              <div key={type} className="flex items-center mb-2">
-                <span className='text-black mr-2'>{type}: </span>
-                <button
-                  onClick={() => handleChangeColor(type as ColorType, color)}
-                  className={`p-2 ${settings[type as keyof typeof settings] === color ? 'bg-blue-500 text-white' : 'bg-gray-400 text-black'}`}
-                  style={{ backgroundColor: color }}
-                >
-                  {color}
-                </button>
-
-              </div>
-            ))}
-
-            {(['incomerPower', 'solarPower', 'water'] as ColorType[]).map((type) => (
-              <ColorOptions
-                key={type}
-                type={type}
-                colors={colors}
-                handleChangeColor={handleChangeColor}
-                currentColor={pendingChanges[type]}
-              />
-            ))}
+          {(['incomerPower', 'solarPower', 'water'] as ColorType[]).map((type) => (
+            <ColorOptions
+              key={type}
+              type={type}
+              colors={colors}
+              handleChangeColor={handleChangeColor}
+              currentColor={pendingChanges[type]}
+            />
+          ))}
 
 
-          </div>
         </div>
+      </div>
 
-        <div id="manage-admins" className='mb-5 adminBlock'>
-          <h2>Manage Administrators</h2>
-          <ManageAdmin admins={admins} removeAdmin={removeAdmin} addAdmin={addAdmin} />
-          
-        </div>
-        
-        <button onClick={handleLogout} className='logoutButton'>Logout</button>
+      <div id="manage-admins" className='mb-5 adminBlock'>
+        <h2>Manage Administrators</h2>
+        <ManageAdmin admins={admins} removeAdmin={removeAdmin} addAdmin={addAdmin} />
+
+      </div>
+
+      <button onClick={handleLogout} className='logoutButton'>Logout</button>
     </div>
   );
 }

@@ -1,10 +1,7 @@
 // VideoComponent.tsx
 import React from 'react';
-import { usePlayVideo } from '../contexts/PlayVideoContext';
 
-function VideoComponent() {
-  const { playWithAudio } = usePlayVideo();
-
+export function VideoComponent({ playWithAudio }: { playWithAudio: boolean }) {
   return (
     <div className="video-container">
       <video controls autoPlay muted={!playWithAudio}>
@@ -14,5 +11,3 @@ function VideoComponent() {
     </div>
   );
 }
-
-export default VideoComponent;

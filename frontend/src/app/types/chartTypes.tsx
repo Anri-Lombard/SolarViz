@@ -4,6 +4,7 @@ export enum ChartTypes {
     PIE = 'PIE',
     AREA = 'AREA',
     LINE = 'LINE',
+    VIDEO = 'VIDEO',
 }
 
 export interface PieChartComponentProps {

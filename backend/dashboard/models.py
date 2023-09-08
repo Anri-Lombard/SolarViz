@@ -15,6 +15,11 @@ class GlobalSettings(models.Model):
     lineChart_sequence = models.IntegerField(default=3)
     lineChart_duration = models.IntegerField(default=10)
     lineChart_display = models.BooleanField(default=True)
+    media_sequence = models.IntegerField(default=4)
+    media_display = models.BooleanField(default=True)
+    media_audio = models.BooleanField(default=True)
+
+
 
     def save(self, *args, **kwargs):
         self.pk = 1
