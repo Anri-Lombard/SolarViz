@@ -61,7 +61,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
             <h1 className="heading">
               Percentage Energy from Solar and Incomer from {powerStartTime} to {powerEndTime}
             </h1>
-            <PieChartComponent data={aggregatedData} colors={settings} />
+            <PieChartComponent data={aggregatedData} colors={settings.colors} />
           </>
         ) : null;
       case ChartTypes.AREA:
@@ -70,7 +70,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
             <h1 className="heading">
               Energy from Solar and Incomer from {powerStartTime} to {powerEndTime}
             </h1>
-            <StackedAreaChart data={transformedData} colors={settings} />
+            <StackedAreaChart data={transformedData} colors={settings.colors} />
           </>
         ) : null;
       case ChartTypes.LINE:

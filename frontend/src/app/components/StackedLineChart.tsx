@@ -3,10 +3,13 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 import { StackedLineChartProps } from '../types/chartTypes';
 import { ConsolidatedData } from '../types/dataTypes';
-import { formatWaterDate, colorMapping } from '../utils/DataUtils';
+import { formatWaterDate } from '../utils/DataUtils';
+
+import { useSettings } from '../contexts/SettingsContext';
 
 
 export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
+    const { settings } = useSettings();
 
     const meterDescriptions = Array.from(new Set(data.map(item => item['Meter Description'])));
     const dateHourCombinations = Array.from(new Set(data.map(item => `${item.date} ${item.hour}`)));
@@ -52,7 +55,7 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
                         key={index}
                         type="monotone"
                         dataKey={desc}
-                        stroke={colorMapping[desc as keyof typeof colorMapping] || `#000`}
+                        stroke={settings.colors[desc as keyof typeof settings.colors]}
                         strokeWidth={2}
                         isAnimationActive={true}
                         name={desc}

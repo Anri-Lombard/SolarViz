@@ -100,7 +100,7 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
         <>
           <ChartWrapper
             title="Percentage Energy from Solar and Incomer"
-            chart={<PieChartComponent data={aggregatedData} colors={settings} />}
+            chart={<PieChartComponent data={aggregatedData} colors={settings.colors} />}
             filters={
               <>
                 <div>
@@ -113,7 +113,7 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
           />
           <ChartWrapper
             title="Energy from Solar and Incomer"
-            chart={<StackedAreaChart data={transformedData} colors={settings} />}
+            chart={<StackedAreaChart data={transformedData} colors={settings.colors} />}
             filters={
               <>
                 <div>

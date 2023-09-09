@@ -35,10 +35,22 @@ export type ConsolidatedData = {
     [key: string]: number | string;
 };
 
-export type Settings = {
+export type ColorSettings = {
     incomerPower: string;
     solarPower: string;
-    water: string;
+    'Secondary Storey Kitchen': string;
+    'Second Storey Toilet': string;
+    'Second Storey Ablution': string;
+    'Ground Storey Toilet': string;
+    'Ground Storey Hot Ablution': string;
+    'Ground Storey Geyser': string;
+    'Ground Storey Cold Ablution': string;
+    'First Storey Toilet': string;
+    'First Storey Ablution': string;
+}
+
+export type Settings = {
+    colors: ColorSettings;
     pieChart: GraphSettings;
     areaChart: GraphSettings;
     lineChart: GraphSettings;
@@ -50,7 +62,7 @@ export interface Admin {
     username: string;
 }
 
-export type ColorType = 'incomerPower' | 'solarPower' | 'water';
+export type ColorType = 'incomerPower' | 'solarPower';
 
 export type ChartType = 'pieChart' | 'areaChart' | 'lineChart';
 

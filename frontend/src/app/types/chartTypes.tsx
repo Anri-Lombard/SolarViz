@@ -15,7 +15,6 @@ export interface PieChartComponentProps {
     colors: {
         incomerPower: string;
         solarPower: string;
-        water: string;
     };
 }
 
@@ -24,7 +23,6 @@ export interface StackedAreaChartProps {
     colors: {
         incomerPower: string;
         solarPower: string;
-        water: string;
     }
 }
 

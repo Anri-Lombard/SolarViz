@@ -19,15 +19,6 @@ const Admin = () => {
   const { settings, setSettings } = useSettings();
   const [pendingChanges, setPendingChanges] = useState({
     ...settings,
-    'UCT D-School - Secondary Storey - Kitchen': '#00FF00',
-    'UCT D-School - Second Storey - Toilet': '#0000FF',
-    'UCT D-School - Second Storey - Ablution': '#009099',
-    'UCT D-School - Ground Storey - Toilet': '#FF00FF',
-    'UCT D-School - Ground Storey - Hot Ablution': '#00FFFF',
-    'UCT D-School - Ground Storey - Geyser': '#800000',
-    'UCT D-School - Ground Storey - Cold Ablution': '#008000',
-    'UCT D-School - First Storey - Toilet': '#000080',
-    'UCT D-School - First Storey - Ablution': '#808000',
   });
   const [admins, setAdmins] = useState<Admin[]>([]);
   const [token, setToken] = useState<string | null>(null);
@@ -41,7 +32,6 @@ const Admin = () => {
     display: settings.media.display,
     audio: settings.media.audio,
   });
-  const [pendingLineChartColors, setPendingLineChartColors] = useState<{ [key: string]: string }>({});
 
 
   const [graphSettingsError, setGraphSettingsError] = useState<string | null>(null);
@@ -57,7 +47,15 @@ const Admin = () => {
   const defaultColors = {
     incomerPower: '#183d33',
     solarPower: '#bd5545',
-    water: '#2779a7',
+    'Secondary Storey Kitchen': '#00FF00',
+    'Second Storey Toilet': '#0000FF',
+    'Second Storey Ablution': '#009099',
+    'Ground Storey Toilet': '#FF00FF',
+    'Ground Storey Hot Ablution': '#00FFFF',
+    'Ground Storey Geyser': '#800000',
+    'Ground Storey Cold Ablution': '#008000',
+    'First Storey Toilet': '#000080',
+    'First Storey Ablution': '#808000',
   };
 
   const validateGraphSettings = () => {
@@ -108,13 +106,6 @@ const Admin = () => {
     });
   };
 
-  const handleLineChartColorChange = (meterDescription: string, color: string) => {
-    setPendingLineChartColors({
-      ...pendingLineChartColors,
-      [meterDescription]: color,
-    });
-  };
-
 
   useEffect(() => {
     // This will only run on the client-side
@@ -137,38 +128,12 @@ const Admin = () => {
   const handleChangeColor = (type: ColorType, color: string) => {
     setPendingChanges({
       ...pendingChanges,
-      [type]: color,
+      colors: {
+        ...pendingChanges.colors,
+        [type]: color,
+      },
     });
-    // Save to local storage
-    localStorage.setItem('settings', JSON.stringify({ ...settings, [type]: color }));
   };
-
-  const renderColorOptions = (type: ColorType): JSX.Element => (
-    <div className="flex flex-col mb-5">
-      <h3 className='text-black font-bold'>{type} Colour</h3>
-      <div className="flex flex-wrap">
-
-        <div
-          className='p-2 m-1'
-          style={{
-            backgroundColor: pendingChanges[type],
-            width: '30px',
-            height: '30px',
-          }}
-        ></div>
-
-        {colors.map((color) => (
-          <button
-            key={color}
-            onClick={() => handleChangeColor(type, color)}
-            className={`p-2 m-1 ${pendingChanges[type] === color ? 'bg-blue-500 text-white' : 'bg-gray-400 text-black'}`}
-          >
-            {color.charAt(0).toUpperCase() + color.slice(1)}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
 
   useEffect(() => {
     // Fetch list of administrators when the component mounts or the token changes
@@ -261,10 +226,22 @@ const Admin = () => {
     if (window.confirm("Are you sure you want to apply color changes?")) {
       const newSettings = {
         ...settings,
-        incomerPower: pendingChanges.incomerPower,
-        solarPower: pendingChanges.solarPower,
-        water: pendingChanges.water,
+        colors: {
+          incomerPower: pendingChanges.colors.incomerPower,
+          solarPower: pendingChanges.colors.solarPower,
+          'Secondary Storey Kitchen': pendingChanges.colors['Secondary Storey Kitchen'],
+          'Second Storey Toilet': pendingChanges.colors['Second Storey Toilet'],
+          'Second Storey Ablution': pendingChanges.colors['Second Storey Ablution'],
+          'Ground Storey Toilet': pendingChanges.colors['Ground Storey Toilet'],
+          'Ground Storey Hot Ablution': pendingChanges.colors['Ground Storey Hot Ablution'],
+          'Ground Storey Geyser': pendingChanges.colors['Ground Storey Geyser'],
+          'Ground Storey Cold Ablution': pendingChanges.colors['Ground Storey Cold Ablution'],
+          'First Storey Toilet': pendingChanges.colors['First Storey Toilet'],
+          'First Storey Ablution': pendingChanges.colors['First Storey Ablution'],
+        }
       };
+
+      console.log(newSettings)
       if (token) {
         setSettings(newSettings, token); // Update global settings
       } else {
@@ -370,8 +347,6 @@ const Admin = () => {
         />
       </div>
 
-
-
       <div id="adjust-colours" className='mb-5 adminBlock'>
         <h2>Adjust colours</h2>
         <div className='mb-5'>
@@ -388,7 +363,7 @@ const Admin = () => {
               <span className='text-black mr-2'>{type}: </span>
               <button
                 onClick={() => handleChangeColor(type as ColorType, color)}
-                className={`p-2 ${settings[type as keyof typeof settings] === color ? 'bg-blue-500 text-white' : 'bg-gray-400 text-black'}`}
+                className={`p-2`}
                 style={{ backgroundColor: color }}
               >
                 {color}
@@ -396,13 +371,13 @@ const Admin = () => {
             </div>
           ))}
 
-          {(Object.keys(pendingChanges) as Array<ColorType | string>).filter(key => !['pieChart', 'lineChart', 'areaChart', 'media'].includes(key)).map((type) => (
+          {(Object.keys(pendingChanges.colors) as Array<ColorType | string>).map((type) => (
             <ColorOptions
               key={type}
               type={type as ColorType}
               colors={colors}
               handleChangeColor={handleChangeColor}
-              currentColor={(pendingChanges as any)[type]}
+              currentColor={(pendingChanges.colors as any)[type]}
             />
           ))}
 

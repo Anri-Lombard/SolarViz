@@ -36,9 +36,19 @@ export const metadata: Metadata = {
 
 export function SettingsProvider({ children }: SettingsProviderProps) {
     const [settings, setSettings] = useState<Settings>({
-        incomerPower: '#183d33',
-        solarPower: '#b9544f',
-        water: '#2779a7',
+        colors: {
+            incomerPower: '#ff0000',
+            solarPower: '#00ff00',
+            'Secondary Storey Kitchen': '#0000ff',
+            'Secondary Storey Toilet': '#ffff00',
+            'Second Storey Ablution': '#00ffff',
+            'Ground Storey Toilet': '#ff00ff',
+            'Ground Storey Hot Ablution': '#ff8000',
+            'Ground Storey Geyser': '#8000ff',
+            'Ground Storey Cold Ablution': '#ff0080',
+            'First Storey Toilet': '#00ff80',
+            'First Storey Ablution': '#8000ff',
+        },
         pieChart: { sequence: 1, duration: 10, display: true },
         areaChart: { sequence: 2, duration: 10, display: true },
         lineChart: { sequence: 3, duration: 10, display: true },
