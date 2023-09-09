@@ -15,13 +15,8 @@ export default function Manual() {
       </div>
       <div className='content'>
 
-      <h1> Welcome to the Sustainability Dashboard User Manual – 
-        your guide to exploring the sustainability practices at D-skool. 
-        This manual will walk you through the ins and outs of the navigating website.
-        Get ready to dive into the world of sustainable living!</h1>
-        
         <div id='about'>
-          <h2 className='text-2xl font-bold mb-2'>About</h2>
+          <h4>About</h4>
           <p className='mb-4'>
             <h2>SolarViz: Powering Sustainability at UCT D-Skool</h2>
             <h3>Introduction</h3>
@@ -57,7 +52,7 @@ export default function Manual() {
           </p>
         </div>
         <div id='moreData'>
-          <h2 className='text-2xl font-bold mb-2'>More data</h2>
+          <h4>More data</h4>
           <p className='mb-4'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum. Donec in efficitur leo. In hac habitasse platea dictumst. Sed ullamcorper, nunc et pellentesque facilisis, sapien nisl egestas diam, nec blandit elit metus ac erat. Fusce non bibendum dui. Vivamus commodo, sem et sollicitudin malesuada, est quam ultrices orci, a semper augue mauris ut quam.
 
@@ -77,7 +72,7 @@ export default function Manual() {
           </p>
         </div>
         <div id='administration'>
-          <h2 className='text-2xl font-bold mb-2'>Administration</h2>
+          <h4>Administration</h4>
           <p className='mb-4'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum. Donec in efficitur leo. In hac habitasse platea dictumst. Sed ullamcorper, nunc et pellentesque facilisis, sapien nisl egestas diam, nec blandit elit metus ac erat. Fusce non bibendum dui. Vivamus commodo, sem et sollicitudin malesuada, est quam ultrices orci, a semper augue mauris ut quam.
 
@@ -101,7 +96,7 @@ export default function Manual() {
           </p>
         </div>
         <div id='contribution'>
-          <h2 className='text-2xl font-bold mb-2'>Contribution</h2>
+          <h4>Contribution</h4>
           <p className='mb-4'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum. Donec in efficitur leo. In hac habitasse platea dictumst. Sed ullamcorper, nunc et pellentesque facilisis, sapien nisl egestas diam, nec blandit elit metus ac erat. Fusce non bibendum dui. Vivamus commodo, sem et sollicitudin malesuada, est quam ultrices orci, a semper augue mauris ut quam.
 

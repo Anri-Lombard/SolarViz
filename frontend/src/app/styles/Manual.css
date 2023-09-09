@@ -34,3 +34,23 @@
 .content h1 {
     margin-bottom: 20px;
 }
+
+.content h2 {
+    margin-bottom: 20px;
+    font-size: large;
+}
+
+.content h3 {
+    margin-top: 10px;
+    font-size: large;
+}
+
+.content h4 {
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.content li {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
