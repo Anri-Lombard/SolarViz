@@ -40,7 +40,7 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
             incomerPower: '#ff0000',
             solarPower: '#00ff00',
             'Secondary Storey Kitchen': '#0000ff',
-            'Secondary Storey Toilet': '#ffff00',
+            'Second Storey Toilet': '#ffff00',
             'Second Storey Ablution': '#00ffff',
             'Ground Storey Toilet': '#ff00ff',
             'Ground Storey Hot Ablution': '#ff8000',
