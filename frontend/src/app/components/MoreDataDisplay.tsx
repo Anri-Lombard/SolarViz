@@ -107,9 +107,7 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
                   <label>Show Irradiance: </label>
                   <input type="checkbox" checked={stagedSettings.pieChart.showIrradiance} onChange={() => setStagedSettings({ ...stagedSettings, pieChart: { showIrradiance: !stagedSettings.pieChart.showIrradiance } })} />
                 </div>
-                <div className="applyButtonContainer">
-                  <button className="applyButton" onClick={() => applyStagedSettings('pieChart')}>Apply</button>
-                </div>
+                <button className="applyButton" onClick={() => applyStagedSettings('pieChart')}>Apply</button>
               </>
             }
           />
@@ -143,9 +141,7 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
                     <option value="Load">Load</option>
                   </select>
                 </div>
-                <div className="applyButtonContainer">
-                  <button className="applyButton" onClick={() => applyStagedSettings('areaChart')}>Apply</button>
-                </div>
+                <button className="applyButton" onClick={() => applyStagedSettings('areaChart')}>Apply</button>
               </>
             }
           />
@@ -169,9 +165,7 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
                     <option value="UCT D-School - First Storey - Ablution">First Storey - Ablution</option>
                   </select>
                 </div>
-                <div className="applyButtonContainer">
-                  <button className="applyButton" onClick={() => applyStagedSettings('lineChart')}>Apply</button>
-                </div>
+                <button className="applyButton" onClick={() => applyStagedSettings('lineChart')}>Apply</button>
               </>
             }
           />

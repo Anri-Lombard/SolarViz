@@ -17,12 +17,20 @@ import { Admin, ColorType, ChartType } from '../../types/dataTypes'
 
 const Admin = () => {
   const { settings, setSettings } = useSettings();
-  const [pendingChanges, setPendingChanges] = useState(settings);
+  const [pendingChanges, setPendingChanges] = useState({
+    ...settings,
+    'UCT D-School - Secondary Storey - Kitchen': '#00FF00',
+    'UCT D-School - Second Storey - Toilet': '#0000FF',
+    'UCT D-School - Second Storey - Ablution': '#009099',
+    'UCT D-School - Ground Storey - Toilet': '#FF00FF',
+    'UCT D-School - Ground Storey - Hot Ablution': '#00FFFF',
+    'UCT D-School - Ground Storey - Geyser': '#800000',
+    'UCT D-School - Ground Storey - Cold Ablution': '#008000',
+    'UCT D-School - First Storey - Toilet': '#000080',
+    'UCT D-School - First Storey - Ablution': '#808000',
+  });
   const [admins, setAdmins] = useState<Admin[]>([]);
-  // const [newAdminUsername, setNewAdminUsername] = useState('');
-  // const [newAdminPassword, setNewAdminPassword] = useState('');
   const [token, setToken] = useState<string | null>(null);
-  // const [changesAppliedMessage, setChangesAppliedMessage] = useState<string | null>(null);
   const [pendingGraphSettings, setPendingGraphSettings] = useState({
     pieChart: settings.pieChart,
     areaChart: settings.areaChart,
@@ -33,7 +41,9 @@ const Admin = () => {
     display: settings.media.display,
     audio: settings.media.audio,
   });
-  
+  const [pendingLineChartColors, setPendingLineChartColors] = useState<{ [key: string]: string }>({});
+
+
   const [graphSettingsError, setGraphSettingsError] = useState<string | null>(null);
 
   const router = useRouter();
@@ -97,6 +107,14 @@ const Admin = () => {
       },
     });
   };
+
+  const handleLineChartColorChange = (meterDescription: string, color: string) => {
+    setPendingLineChartColors({
+      ...pendingLineChartColors,
+      [meterDescription]: color,
+    });
+  };
+
 
   useEffect(() => {
     // This will only run on the client-side
@@ -280,7 +298,7 @@ const Admin = () => {
       [field]: value,
     });
   };
-  
+
 
   const applyMediaChanges = () => {
     if (window.confirm("Are you sure you want to apply media changes?")) {
@@ -296,7 +314,7 @@ const Admin = () => {
     }
   };
 
-  
+
   return (
     <div>
 
@@ -354,11 +372,9 @@ const Admin = () => {
 
 
 
-      <div id="adjust-colours" className='mb-5 adminBlock' >
-
+      <div id="adjust-colours" className='mb-5 adminBlock'>
         <h2>Adjust colours</h2>
         <div className='mb-5'>
-
           <div
             onClick={applyColorChanges}
             className='applyButtonContainer'
@@ -377,23 +393,22 @@ const Admin = () => {
               >
                 {color}
               </button>
-
             </div>
           ))}
 
-          {(['incomerPower', 'solarPower', 'water'] as ColorType[]).map((type) => (
+          {(Object.keys(pendingChanges) as Array<ColorType | string>).filter(key => !['pieChart', 'lineChart', 'areaChart', 'media'].includes(key)).map((type) => (
             <ColorOptions
               key={type}
-              type={type}
+              type={type as ColorType}
               colors={colors}
               handleChangeColor={handleChangeColor}
-              currentColor={pendingChanges[type]}
+              currentColor={(pendingChanges as any)[type]}
             />
           ))}
 
-
         </div>
       </div>
+
 
       <div id="manage-admins" className='mb-5 adminBlock'>
         <h2>Manage Administrators</h2>

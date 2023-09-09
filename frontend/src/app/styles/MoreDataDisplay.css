@@ -53,10 +53,6 @@
     font-size: small;
 }
 
-.applyButtonContainer {
-    position: relative;
-}
-
 .applyButton:hover {
     color: #f3e9cb;
     background-color: #292827;
