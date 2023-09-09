@@ -72,3 +72,9 @@ export type ManageAdminProps = {
     removeAdmin: (id: number) => void,
     addAdmin: (username: string, password: string) => void
 };
+
+export interface ChartWrapperProps {
+    title: string;
+    chart: React.ReactNode;
+    filters?: React.ReactNode;
+}

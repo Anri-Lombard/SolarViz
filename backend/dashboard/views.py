@@ -133,7 +133,7 @@ def get_vcom_data():
 
 
 def power_data(request):
-    data = csv_to_json('data/UCT_Drawing_School_2023_08_01_2023_08_06.csv', delimiter=";")
+    data = csv_to_json('data/UCT_Drawing_School_2023_08_01_2023_08_31.csv', delimiter=";")
     
     # Replace negative values with 0
     for row in data:
@@ -149,6 +149,19 @@ def power_data(request):
 
 
 def water_data(request):
+    # Mapping of Meter Serial to Meter Description
+    meter_description_mapping = {
+        '8SEN0121279830': 'UCT D-School - Secondary Storey - Kitchen',
+        '8SEN0121100508': 'UCT D-School - Second Storey - Toilet',
+        '8SEN0121077871': 'UCT D-School - Second Storey - Ablution',
+        '8SEN0121208690': 'UCT D-School - Ground Storey - Toilet',
+        '8SEN0121138030': 'UCT D-School - Ground Storey - Hot Ablution',
+        '8SEN0121077881': 'UCT D-School - Ground Storey - Geyser',
+        '8SEN0121160337': 'UCT D-School - Ground Storey - Cold Ablution',
+        '8SEN0120732796': 'UCT D-School - First Storey - Toilet',
+        '8SEN0121077869': 'UCT D-School - First Storey - Ablution',
+    }
+    
     csv_data = csv_to_json('data/University of Cape Town (UCT - School of Design) 01 Aug to 06 Aug 2023 Report Data.csv')  
     
     # Initialize a dictionary to hold the transformed data
@@ -156,6 +169,10 @@ def water_data(request):
 
     # Iterate through the CSV data and populate the transformed_data dictionary
     for row in csv_data:
+        # Update the Meter Description using the mapping
+        meter_serial = row['Meter Serial']
+        row['Meter Description'] = meter_description_mapping.get(meter_serial, row['Meter Description'])
+        
         timestamp = row['tstamp']
         meter_description = row['Meter Description']
         difference_kl = float(row['difference_kl'])  # Convert to float
