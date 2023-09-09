@@ -7,3 +7,7 @@ client:
 
 server:
 	cd backend && python3 manage.py runserver
+
+migrate:
+	cd backend && python3 manage.py makemigrations
+	cd backend && python3 manage.py migrate

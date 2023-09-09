@@ -15,3 +15,5 @@ export type SettingsContextType = {
     settings: Settings;
     setSettings: React.Dispatch<React.SetStateAction<Settings>> | ((newSettings: Settings, token: string) => void);
 };
+
+

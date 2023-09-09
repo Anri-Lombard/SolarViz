@@ -18,17 +18,16 @@ export type GraphSettings = {
     display: boolean;
 };
 
+export type MediaSettings = {
+    sequence: number;
+    display: boolean;
+    audio: boolean;
+}
+
 export interface DataDisplayProps {
     powerData: DataType[];
     waterData: WaterDataType[];
-    settings: {
-        incomerPower: string;
-        solarPower: string;
-        water: string;
-        pieChart: GraphSettings;
-        areaChart: GraphSettings;
-        lineChart: GraphSettings;
-    };
+    settings: Settings;
 }
 
 export type ConsolidatedData = {
@@ -36,13 +35,26 @@ export type ConsolidatedData = {
     [key: string]: number | string;
 };
 
-export type Settings = {
+export type ColorSettings = {
     incomerPower: string;
     solarPower: string;
-    water: string;
+    'Secondary Storey Kitchen': string;
+    'Second Storey Toilet': string;
+    'Second Storey Ablution': string;
+    'Ground Storey Toilet': string;
+    'Ground Storey Hot Ablution': string;
+    'Ground Storey Geyser': string;
+    'Ground Storey Cold Ablution': string;
+    'First Storey Toilet': string;
+    'First Storey Ablution': string;
+}
+
+export type Settings = {
+    colors: ColorSettings;
     pieChart: GraphSettings;
     areaChart: GraphSettings;
     lineChart: GraphSettings;
+    media: MediaSettings;
 };
 
 export interface Admin {
@@ -50,7 +62,7 @@ export interface Admin {
     username: string;
 }
 
-export type ColorType = 'incomerPower' | 'solarPower' | 'water';
+export type ColorType = 'incomerPower' | 'solarPower';
 
 export type ChartType = 'pieChart' | 'areaChart' | 'lineChart';
 
@@ -72,3 +84,9 @@ export type ManageAdminProps = {
     removeAdmin: (id: number) => void,
     addAdmin: (username: string, password: string) => void
 };
+
+export interface ChartWrapperProps {
+    title: string;
+    chart: React.ReactNode;
+    filters?: React.ReactNode;
+}
