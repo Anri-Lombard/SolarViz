@@ -75,8 +75,14 @@ export const formatWaterDate = (date: string): string => {
 }
 
 export const colorMapping = {
-    "UCT D-School - First Storey -": "#FF0000",
-    "UCT D-School - Ground Storey -": "#00FF00",
-    "UCT D-School - Second Storey -": "#0000FF",
-    "UCT D-School - Secondary Store": "#FFA500"
-};
+    'All': '#FF0000',
+    'UCT D-School - Secondary Storey - Kitchen': '#00FF00',
+    'UCT D-School - Second Storey - Toilet': '#0000FF',
+    'UCT D-School - Second Storey - Ablution': '#009099',
+    'UCT D-School - Ground Storey - Toilet': '#FF00FF',
+    'UCT D-School - Ground Storey - Hot Ablution': '#00FFFF',
+    'UCT D-School - Ground Storey - Geyser': '#800000',
+    'UCT D-School - Ground Storey - Cold Ablution': '#008000',
+    'UCT D-School - First Storey - Toilet': '#000080',
+    'UCT D-School - First Storey - Ablution': '#808000'
+  };

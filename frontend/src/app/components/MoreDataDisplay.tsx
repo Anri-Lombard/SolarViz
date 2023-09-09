@@ -6,7 +6,7 @@ import LoadingSpinner from './LoadingSpinner';
 import { PieChartComponent } from './PieChart';
 import { StackedAreaChart } from './StackedAreaChart';
 import { StackedLineChart } from './StackedLineChart';
-import { transformPowerData } from '../utils/dataUtils';
+import { transformPowerData } from '../utils/DataUtils';
 
 import { DataDisplayProps, ChartWrapperProps } from '../types/dataTypes';
 

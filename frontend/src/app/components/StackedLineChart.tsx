@@ -3,7 +3,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 import { StackedLineChartProps } from '../types/chartTypes';
 import { ConsolidatedData } from '../types/dataTypes';
-import { formatWaterDate, colorMapping } from '../utils/dataUtils';
+import { formatWaterDate, colorMapping } from '../utils/DataUtils';
 
 
 export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
@@ -52,7 +52,7 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
                         key={index}
                         type="monotone"
                         dataKey={desc}
-                        stroke={colorMapping[desc as keyof typeof colorMapping]}
+                        stroke={colorMapping[desc as keyof typeof colorMapping] || `#000`}
                         strokeWidth={2}
                         isAnimationActive={true}
                         name={desc}

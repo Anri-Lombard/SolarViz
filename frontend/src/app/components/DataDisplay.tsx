@@ -8,7 +8,7 @@ import { PieChartComponent } from './PieChart';
 import { StackedAreaChart } from './StackedAreaChart';
 import { StackedLineChart } from './StackedLineChart';
 
-import { transformPowerData, aggregateData, formatDate } from '../utils/dataUtils';
+import { transformPowerData, aggregateData, formatDate } from '../utils/DataUtils';
 
 import { ChartTypes } from '../types/chartTypes'
 import { DataDisplayProps } from '../types/dataTypes'
