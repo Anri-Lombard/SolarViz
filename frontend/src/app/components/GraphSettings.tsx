@@ -12,7 +12,7 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
           type="number"
           value={settings[chartType].display ? settings[chartType].sequence : ''}
           onChange={(e) => {
-            const newValue = e.target.value !== '' ? parseInt(e.target.value) : 100;
+            const newValue = e.target.value !== '' ? parseInt(e.target.value) : 0;
             handleGraphSettingsChange(chartType, 'sequence', newValue);
           }}
           disabled={!settings[chartType].display} // Disable if 'Display' is unchecked
