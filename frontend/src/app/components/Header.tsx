@@ -34,7 +34,7 @@ const Header: React.FC = () => {
 
   // Component Render
   return (
-    <header className="header">
+    <div className="header">
 
       <div
         onMouseEnter={() => setIsLogoHovered(true)}
@@ -66,7 +66,7 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-    </header>
+    </div>
   );
 };
 
