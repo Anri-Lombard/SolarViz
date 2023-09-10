@@ -55,7 +55,6 @@
   max-height: 25vh;
   border-radius: 8px;
   cursor: pointer;
-  
   clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
 }
 

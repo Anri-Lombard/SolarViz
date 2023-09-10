@@ -52,7 +52,11 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
         pieChart: { sequence: 1, duration: 10, display: true },
         areaChart: { sequence: 2, duration: 10, display: true },
         lineChart: { sequence: 3, duration: 10, display: true },
-        media: { sequence: 4, display: true, audio: true },
+        media: { 
+            sequence: 4, 
+            display: true, 
+            audio: true 
+        },
       });
       
 
