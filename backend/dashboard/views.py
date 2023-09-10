@@ -267,7 +267,7 @@ def vcom_data(request):
         return JsonResponse({"error": "Unable to get data from VCOM API"}, status=500)
 
 def csv_data(request):
-    data = csv_to_json('data/UCT_Drawing_School_2023_08_02_2023_08_03.csv')
+    data = csv_to_json('data/UCT_Drawing_School_2023_08_01_2023_08_06.csv')
     return JsonResponse(data, safe=False)
 
 def hello(request):
