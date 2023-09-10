@@ -53,6 +53,10 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
     return aggregated;
   }, [powerData, waterData]);
 
+  const handleVideoDuration = (duration: number) => {
+    setVideoDuration(duration);
+  };
+
   const renderChart = (chartType: string) => {
     switch (chartType) {
       case ChartTypes.PIE:
@@ -83,7 +87,11 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
           </>
         );
       case ChartTypes.VIDEO:
-        return <VideoComponent playWithAudio={settings.media.audio} />;
+        return (
+          <>
+            <VideoComponent playWithAudio={settings.media.audio} setVideoDuration={handleVideoDuration} />
+          </>
+        );
       default:
         return null;
     }
@@ -96,16 +104,16 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
       setCurrentChartIndex(index);
       const nextIndex = (index + 1) % charts.length;
       let nextDuration = charts[nextIndex].duration! * 1000;
-    
+
       if (charts[nextIndex].type === 'VIDEO' && videoDuration !== null) {
         nextDuration = settings.media.display ? videoDuration * 1000 : 0;
       }
-    
+
       timeoutId = setTimeout(() => {
         updateChart(nextIndex);
       }, nextDuration);
     };
-    
+
 
     // Start the loop
     updateChart(currentChartIndex);
@@ -115,21 +123,11 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
     };
   }, [settings, videoDuration]);
 
-  useEffect(() => {
-    const video = document.getElementById('video-element') as HTMLVideoElement;
-
-    if (video) {
-      video.addEventListener('loadedmetadata', () => {
-        setVideoDuration(video.duration);
-      });
-    }
-  }, []);
-
   const charts = [
     { type: ChartTypes.PIE, ...settings.pieChart },
     { type: ChartTypes.AREA, ...settings.areaChart },
     { type: ChartTypes.LINE, ...settings.lineChart },
-    ...(settings.media.display ? [{ type: ChartTypes.VIDEO, sequence: settings.media.sequence, display: settings.media.display, duration: videoDuration }] : []),
+    { type: ChartTypes.VIDEO, duration: videoDuration, ...settings.media },
   ]
     .sort((a, b) => a.sequence - b.sequence)
     .filter(chart => chart.display);
