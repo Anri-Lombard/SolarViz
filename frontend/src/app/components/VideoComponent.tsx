@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-export function VideoComponent({ playWithAudio, setVideoDuration }: { playWithAudio: boolean, setVideoDuration: Function }) {
+export function VideoComponent({ playWithAudio, setVideoDuration, style }: { playWithAudio: boolean, setVideoDuration: Function, style: React.CSSProperties }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -8,16 +8,18 @@ export function VideoComponent({ playWithAudio, setVideoDuration }: { playWithAu
     if (video) {
       video.addEventListener('loadedmetadata', () => {
         setVideoDuration(video.duration);
+        video.play().catch((error) => {
+          console.error("Video play failed:", error);
+        });
       });
     }
   }, []);
 
   return (
-    <div>
-      <video ref={videoRef} id="video-element" autoPlay muted={!playWithAudio}>
-        <source src="/Videos/Video.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-    </div>
+    <video width={400} height={400} autoPlay ref={videoRef} controls muted={!playWithAudio} style={style}>
+      <source src="/Videos/video.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
   );
 }
+

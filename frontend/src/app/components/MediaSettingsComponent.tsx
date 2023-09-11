@@ -16,8 +16,13 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({ handleMediaSetti
       Sequence:
       <input
         type="number"
-        value={settings.sequence}
-        onChange={(e) => handleMediaSettingsChange('sequence', parseInt(e.target.value))}
+        value={settings.display ? settings.sequence : ''}
+        onChange={(e) => {
+          const newValue = e.target.value !== '' ? parseInt(e.target.value) : null;
+          handleMediaSettingsChange('sequence', newValue);
+        }
+      }
+      disabled={!settings.display} // Disable if 'Display' is unchecked
       />
     </label>
     <label>
@@ -34,6 +39,7 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({ handleMediaSetti
         type="checkbox"
         checked={settings.audio}
         onChange={(e) => handleMediaSettingsChange('audio', e.target.checked)}
+        disabled={!settings.display} // Disable if 'Display' is unchecked
       />
     </label>
   </div>

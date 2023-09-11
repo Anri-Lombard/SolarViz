@@ -86,12 +86,8 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
             <StackedLineChart data={waterData} />
           </>
         );
-      case ChartTypes.VIDEO:
-        return (
-          <>
-            <VideoComponent playWithAudio={settings.media.audio} setVideoDuration={handleVideoDuration} />
-          </>
-        );
+      // case ChartTypes.VIDEO:
+      //   return <VideoComponent playWithAudio={settings.media.audio} setVideoDuration={handleVideoDuration} />;
       default:
         return null;
     }
@@ -100,12 +96,15 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
   useEffect(() => {
     let timeoutId: any;
 
+
     const updateChart = (index: number) => {
       setCurrentChartIndex(index);
       const nextIndex = (index + 1) % charts.length;
       let nextDuration = charts[nextIndex].duration! * 1000;
 
+
       if (charts[nextIndex].type === 'VIDEO' && videoDuration !== null) {
+        console.log(settings.media)
         nextDuration = settings.media.display ? videoDuration * 1000 : 0;
       }
 
@@ -113,6 +112,8 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
         updateChart(nextIndex);
       }, nextDuration);
     };
+
+    console.log(charts);
 
 
     // Start the loop
@@ -139,6 +140,11 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
       ) : (
         <LoadingSpinner />
       )}
+      <VideoComponent
+        playWithAudio={settings.media.audio}
+        setVideoDuration={handleVideoDuration}
+        style={{ display: currentChartIndex === charts.findIndex(c => c.type === ChartTypes.VIDEO) ? 'block' : 'none' }}
+      />
     </div>
   );
 

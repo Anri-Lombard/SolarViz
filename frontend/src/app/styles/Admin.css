@@ -36,14 +36,6 @@
     flex-direction: column;
 }
 
-.applyMediaButtonContainer {
-    position: relative;
-    float: right;
-    right: 20px;
-    top: 10px;
-    display: flex;
-}
-
 .applyGraphSettingsButton {
     background-color: #f3e9cb;
     border-color: #292827;
@@ -80,6 +72,10 @@ h2 {
     padding-top: 100px;
     padding-bottom: 20px;
     margin: 40px;
+}
+
+.intro a {
+    color: #183d33;
 }
 
 .adminBlock {

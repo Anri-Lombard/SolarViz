@@ -60,6 +60,11 @@ const Admin = () => {
 
   const validateGraphSettings = () => {
     const sequenceNumbers = Object.values(pendingGraphSettings).map(setting => setting.sequence);
+
+    if (pendingMediaSettings.display) {
+      sequenceNumbers.push(pendingMediaSettings.sequence)
+    }
+
     const uniqueSequenceNumbers = new Set(sequenceNumbers);
 
     // Check if a sequence number is chosen twice
@@ -105,7 +110,6 @@ const Admin = () => {
       },
     });
   };
-
 
   useEffect(() => {
     // This will only run on the client-side
@@ -258,6 +262,7 @@ const Admin = () => {
           pieChart: pendingGraphSettings.pieChart,
           areaChart: pendingGraphSettings.areaChart,
           lineChart: pendingGraphSettings.lineChart,
+          media: pendingMediaSettings,
         };
         if (token) {
           setSettings(newSettings, token); // Update global settings
@@ -276,47 +281,30 @@ const Admin = () => {
     });
   };
 
-
-  const applyMediaChanges = () => {
-    if (window.confirm("Are you sure you want to apply media changes?")) {
-      const newSettings = {
-        ...settings,
-        media: pendingMediaSettings,
-      };
-      if (token) {
-        setSettings(newSettings, token); // Update global settings
-      } else {
-        // TODO: Handle unauthorized access
-      }
-    }
-  };
-
-
   return (
     <div>
 
       <div className='intro'>
         <p>Welcome to the administration page. Adjust the colour schemes of the graphs displayed,
-          select the content to be displayed on the main dashboard, or manage the administrators. Select one of the options below.</p>
+          select the content to be displayed on the main dashboard, or manage the administrators. Select one of the options below:</p>
 
         <nav>
           <ul className='hover=underline' style={{ paddingTop: '10px' }}>
-            <li><a href="#select-content">Select dashboard content</a></li>
-            <li><a href="#select-media">Select media</a></li>
+            <li><a href="#select-content-and-media">Select dashboard content</a></li>
             <li><a href="#adjust-colours">Adjust Colours</a></li>
             <li><a href="#manage-admins">Manage Administrators</a></li>
           </ul>
         </nav>
       </div>
 
-      <div id="select-content" className='mb-5 adminBlock'>
+      <div id="select-content-and-media" className='mb-5 adminBlock'>
         <h2> Select graphs to be displayed on the main dashboard</h2>
 
         <div
           onClick={applyGraphSettingsChanges}
           className='applyGraphSettingsButtonContainer'
         >
-          <div className='applyGraphSettingsButton'>Apply Graph Settings Changes</div>
+          <div className='applyGraphSettingsButton'>Apply Graph Settings</div>
         </div>
 
         <div className='selectionBlock'>
@@ -332,19 +320,12 @@ const Admin = () => {
           ))}
 
         </div>
-      </div>
-
-      <div id="select-media" className='mb-5 adminBlock'>
-        <h2>Select media</h2>
-
-        <div onClick={applyMediaChanges} className='applyMediaButtonContainer'>
-          <div className='applyButton'>Apply Media Changes</div>
-        </div>
 
         <MediaSettingsComponent
           handleMediaSettingsChange={handleMediaSettingsChange}
           settings={pendingMediaSettings}
         />
+        
       </div>
 
       <div id="adjust-colours" className='mb-5 adminBlock'>
