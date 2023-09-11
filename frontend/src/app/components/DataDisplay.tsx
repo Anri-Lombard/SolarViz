@@ -102,18 +102,10 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
       const nextIndex = (index + 1) % charts.length;
       let nextDuration = charts[nextIndex].duration! * 1000;
 
-      console.log("here")
-      console.log(index)
-      console.log(charts[index].type)
-      console.log(videoDuration)
-
 
       if (charts[nextIndex].type === 'VIDEO' && videoDuration !== null) {
         console.log(settings.media)
         nextDuration = settings.media.display ? videoDuration * 1000 : 0;
-
-        // FIXME: just using now
-        // nextDuration = 6;
       }
 
       timeoutId = setTimeout(() => {
@@ -136,25 +128,23 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
     { type: ChartTypes.PIE, ...settings.pieChart },
     { type: ChartTypes.AREA, ...settings.areaChart },
     { type: ChartTypes.LINE, ...settings.lineChart },
-    // FIXME: just for now
     { type: ChartTypes.VIDEO, duration: videoDuration, ...settings.media },
   ]
     .sort((a, b) => a.sequence - b.sequence)
     .filter(chart => chart.display);
 
-  console.log(charts)
   return (
     <div className='graphContainer'>
-      <VideoComponent 
-        playWithAudio={settings.media.audio} 
-        setVideoDuration={handleVideoDuration} 
-        style={{ visibility: currentChartIndex === charts.findIndex(c => c.type === ChartTypes.VIDEO) ? 'visible' : 'hidden' }}
-      />
       {transformedData && aggregatedData && waterData && powerData ? (
         renderChart(charts[currentChartIndex].type)
       ) : (
         <LoadingSpinner />
       )}
+      <VideoComponent
+        playWithAudio={settings.media.audio}
+        setVideoDuration={handleVideoDuration}
+        style={{ display: currentChartIndex === charts.findIndex(c => c.type === ChartTypes.VIDEO) ? 'block' : 'none' }}
+      />
     </div>
   );
 
