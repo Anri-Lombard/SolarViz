@@ -26,6 +26,7 @@ export default function Manual() {
         <a href='#administration' className='text-blue-500 hover:underline mb-2' onClick={(e) => handleScroll(e, 'administration')}>Administration</a>
         <a href='#contribution' className='text-blue-500 hover:underline mb-2' onClick={(e) => handleScroll(e, 'contribution')}>Contribution</a>
       </div>
+
       <div className='content'>
 
         <div id='about'>

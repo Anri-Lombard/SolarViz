@@ -19,7 +19,19 @@
     margin-bottom: 10px;
     text-decoration: none;
     color: #183d33;
+    cursor: pointer; /* Change cursor to hand */
+    padding: 5px; /* Add some padding for a better hover effect */
+    border-radius: 3px; /* Rounded corners for background */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
 }
+
+.tableOfContents a:hover {
+    text-decoration: underline; /* Add underline */
+    background-color: #f3e9cb; /* Add background color */
+    color: #292827; /* Change text color */
+    font-weight: bold; /* Make text bold */
+}
+
 
 .content {
     margin-left: 200px;

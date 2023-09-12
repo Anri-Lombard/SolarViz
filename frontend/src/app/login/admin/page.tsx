@@ -281,6 +281,18 @@ const Admin = () => {
     });
   };
 
+  const handleScroll = (event: React.MouseEvent, sectionId: string, offset = -100) => {
+    event.preventDefault();
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const position = element.offsetTop + offset;
+      window.scrollTo({
+        top: position,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <div>
 
@@ -290,9 +302,9 @@ const Admin = () => {
 
         <nav>
           <ul className='hover=underline' style={{ paddingTop: '10px' }}>
-            <li><a href="#select-content-and-media">Select dashboard content</a></li>
-            <li><a href="#adjust-colours">Adjust Colours</a></li>
-            <li><a href="#manage-admins">Manage Administrators</a></li>
+            <li><a href="#select-content-and-media" onClick={(e) => handleScroll(e, 'select-content-and-media')}>Select dashboard content</a></li>
+            <li><a href="#adjust-colours" onClick={(e) => handleScroll(e, 'adjust-colours')}>Adjust Colours</a></li>
+            <li><a href="#manage-admins" onClick={(e) => handleScroll(e, 'manage-admins')}>Manage Administrators</a></li>
           </ul>
         </nav>
       </div>
