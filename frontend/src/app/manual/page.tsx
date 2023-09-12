@@ -4,14 +4,26 @@ import React from 'react';
 import '../styles/Manual.css';
 
 export default function Manual() {
+
+  const handleScroll = (sectionId: string, offset = -50) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const position = element.offsetTop + offset;
+      window.scrollTo({
+        top: position,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <div className='manualContainer'>
       <div className='tableOfContents'>
         <h2 className='text-xl font-bold mb-4'>Table of Contents</h2>
-        <a href='#about' className='text-blue-500 hover:underline mb-2'>About</a>
-        <a href='#moreData' className='text-blue-500 hover:underline mb-2'>More Data</a>
-        <a href='#administration' className='text-blue-500 hover:underline mb-2'>Administration</a>
-        <a href='#contribution' className='text-blue-500 hover:underline mb-2'>Contribution</a>
+        <a href='#about' className='text-blue-500 hover:underline mb-2' onClick={() => handleScroll('about')}>About</a>
+        <a href='#moreData' className='text-blue-500 hover:underline mb-2' onClick={() => handleScroll('moreData')}>More Data</a>
+        <a href='#administration' className='text-blue-500 hover:underline mb-2' onClick={() => handleScroll('administration')}>Administration</a>
+        <a href='#contribution' className='text-blue-500 hover:underline mb-2' onClick={() => handleScroll('contribution')}>Contribution</a>
       </div>
       <div className='content'>
 
