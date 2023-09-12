@@ -82,10 +82,10 @@ const Admin = () => {
       }
     }
 
-    // Check if at least one graph is displayed
-    const isAnyGraphDisplayed = Object.values(pendingGraphSettings).some(setting => setting.display);
-    if (!isAnyGraphDisplayed) {
-      setGraphSettingsError("At least one graph must be displayed.");
+    // Check if at least more than one graphs are displayed
+    const displayedGraphCount = Object.values(pendingGraphSettings).filter(setting => setting.display).length;
+    if (displayedGraphCount < 2) {
+      setGraphSettingsError("More than one graph must be displayed.");
       return false;
     }
 
