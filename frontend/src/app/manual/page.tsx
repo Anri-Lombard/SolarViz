@@ -5,7 +5,8 @@ import '../styles/Manual.css';
 
 export default function Manual() {
 
-  const handleScroll = (sectionId: string, offset = -50) => {
+  const handleScroll = (event: React.MouseEvent, sectionId: string, offset = -100) => {
+    event.preventDefault();
     const element = document.getElementById(sectionId);
     if (element) {
       const position = element.offsetTop + offset;
@@ -20,10 +21,10 @@ export default function Manual() {
     <div className='manualContainer'>
       <div className='tableOfContents'>
         <h2 className='text-xl font-bold mb-4'>Table of Contents</h2>
-        <a href='#about' className='text-blue-500 hover:underline mb-2' onClick={() => handleScroll('about')}>About</a>
-        <a href='#moreData' className='text-blue-500 hover:underline mb-2' onClick={() => handleScroll('moreData')}>More Data</a>
-        <a href='#administration' className='text-blue-500 hover:underline mb-2' onClick={() => handleScroll('administration')}>Administration</a>
-        <a href='#contribution' className='text-blue-500 hover:underline mb-2' onClick={() => handleScroll('contribution')}>Contribution</a>
+        <a href='#about' className='text-blue-500 hover:underline mb-2' onClick={(e) => handleScroll(e, 'about')}>About</a>
+        <a href='#moreData' className='text-blue-500 hover:underline mb-2' onClick={(e) => handleScroll(e, 'moreData')}>More Data</a>
+        <a href='#administration' className='text-blue-500 hover:underline mb-2' onClick={(e) => handleScroll(e, 'administration')}>Administration</a>
+        <a href='#contribution' className='text-blue-500 hover:underline mb-2' onClick={(e) => handleScroll(e, 'contribution')}>Contribution</a>
       </div>
       <div className='content'>
 
