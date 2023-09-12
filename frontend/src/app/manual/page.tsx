@@ -44,8 +44,6 @@ export default function Manual() {
               <li><strong>Power Visualization</strong>: The dashboard provides a granular view of power consumption, breaking it down into solar and grid contributions. Users can track these metrics over various time frames, and the dashboard also displays the percentage of solar power in the total energy mix.</li>
               <li><strong>Water Data</strong>: SolarViz offers a detailed analysis of water consumption at different points within the building, such as the First Storey Ablution, Ground Storey Geyser, and Second Storey Toilet. Hourly water usage data helps in identifying patterns and implementing water-saving measures.</li>
               <li><strong>Advertisements and Videos</strong>: The dashboard is equipped with a multimedia section that features advertisements and instructional videos. These resources educate users on best practices for energy and water conservation.</li>
-              <li><strong>Custom Alerts</strong>: Users can set up custom alerts for unusual spikes in water or power usage, aiding in quicker issue resolution.</li>
-              <li><strong>Historical Trends</strong>: The dashboard archives past data, allowing users to compare current usage patterns with historical trends, which is crucial for long-term sustainability planning.</li>
             </ul>
 
             <h3>Objective</h3>
@@ -56,11 +54,6 @@ export default function Manual() {
             <h3>Who Can Benefit?</h3>
             <p>
               SolarViz is designed for a wide range of users, including building management, residents, sustainability researchers, and even visitors who are interested in understanding the building's green initiatives. Its user-friendly interface and robust features make it a versatile tool for anyone invested in sustainability.
-            </p>
-
-            <h3>Future Plans</h3>
-            <p>
-              We are continuously working to enhance SolarViz by adding more features, such as predictive analytics, integration with other smart building systems, and a mobile app for on-the-go access. Stay tuned for more updates!
             </p>
           </div>
         </div>
