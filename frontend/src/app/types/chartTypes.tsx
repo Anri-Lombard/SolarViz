@@ -4,6 +4,7 @@ export enum ChartTypes {
     PIE = 'PIE',
     AREA = 'AREA',
     LINE = 'LINE',
+    VIDEO = 'VIDEO',
 }
 
 export interface PieChartComponentProps {
@@ -14,7 +15,6 @@ export interface PieChartComponentProps {
     colors: {
         incomerPower: string;
         solarPower: string;
-        water: string;
     };
 }
 
@@ -23,7 +23,6 @@ export interface StackedAreaChartProps {
     colors: {
         incomerPower: string;
         solarPower: string;
-        water: string;
     }
 }
 

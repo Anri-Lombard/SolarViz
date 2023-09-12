@@ -5,19 +5,7 @@ import MoreDataDisplay from '../components/MoreDataDisplay';
 
 import { useSettings } from '../contexts/SettingsContext';
 
-interface PowerDataType {
-  Timestamp: string;
-  'UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD': string;
-  'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': string;
-  'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': string;
-}
-
-interface WaterDataType {
-  date: string;
-  hour: string;
-  'Meter Description': string;
-  difference_kl: number;
-}
+import { DataType as PowerDataType, WaterDataType } from '../types/dataTypes';
 
 
 export default function Home() {

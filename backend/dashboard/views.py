@@ -37,10 +37,18 @@ def update_global_settings(request):
     # Update the settings based on the request data
     data = request.data
     
-    print("data:", data)
-    settings.incomerPower = data.get('incomerPower', settings.incomerPower)
-    settings.solarPower = data.get('solarPower', settings.solarPower)
-    settings.water = data.get('water', settings.water)
+    colors = data.get('colors', {})
+    settings.incomerPower = colors.get('incomerPower', settings.incomerPower)
+    settings.solarPower = colors.get('solarPower', settings.solarPower)
+    settings.secondary_storey_kitchen = colors.get('Secondary Storey Kitchen', settings.secondary_storey_kitchen)
+    settings.second_storey_toilet = colors.get('Second Storey Toilet', settings.second_storey_toilet)
+    settings.second_storey_ablution = colors.get('Second Storey Ablution', settings.second_storey_ablution)
+    settings.ground_storey_toilet = colors.get('Ground Storey Toilet', settings.ground_storey_toilet)
+    settings.ground_storey_hot_ablution = colors.get('Ground Storey Hot Ablution', settings.ground_storey_hot_ablution)
+    settings.ground_storey_geyser = colors.get('Ground Storey Geyser', settings.ground_storey_geyser)
+    settings.ground_storey_cold_ablution = colors.get('Ground Storey Cold Ablution', settings.ground_storey_cold_ablution)
+    settings.first_storey_toilet = colors.get('First Storey Toilet', settings.first_storey_toilet)
+    settings.first_storey_ablution = colors.get('First Storey Ablution', settings.first_storey_ablution)
 
     pieChart = data.get('pieChart', {})
     settings.pieChart_sequence = pieChart.get('sequence', settings.pieChart_sequence)
@@ -57,11 +65,14 @@ def update_global_settings(request):
     settings.lineChart_duration = lineChart.get('duration', settings.lineChart_duration)
     settings.lineChart_display = lineChart.get('display', settings.lineChart_display)
     
-    print("settings:", settings)
+    media = data.get('media', {})
+    settings.media_sequence = media.get('sequence', settings.media_sequence)
+    settings.media_display = media.get('display', settings.media_display)
+    settings.media_audio = media.get('audio', settings.media_audio)
 
-    # settings.save()
 
-    # FIXME: breaking
+    settings.save()
+
     return Response({"message": "Global settings updated successfully"}, status=status.HTTP_200_OK)
 
 
@@ -69,9 +80,19 @@ def update_global_settings(request):
 def get_global_settings(request):
     settings = GlobalSettings.load()
     transformed_data = {
-        'incomerPower': settings.incomerPower,
-        'solarPower': settings.solarPower,
-        'water': settings.water,
+        'colors': {
+            'incomerPower': settings.incomerPower,
+            'solarPower': settings.solarPower,
+            'Secondary Storey Kitchen': settings.secondary_storey_kitchen,
+            'Second Storey Toilet': settings.second_storey_toilet,
+            'Second Storey Ablution': settings.second_storey_ablution,
+            'Ground Storey Toilet': settings.ground_storey_toilet,
+            'Ground Storey Hot Ablution': settings.ground_storey_hot_ablution,
+            'Ground Storey Geyser': settings.ground_storey_geyser,
+            'Ground Storey Cold Ablution': settings.ground_storey_cold_ablution,
+            'First Storey Toilet': settings.first_storey_toilet,
+            'First Storey Ablution': settings.first_storey_ablution,
+        },
         'pieChart': {
             'sequence': settings.pieChart_sequence,
             'duration': settings.pieChart_duration,
@@ -87,6 +108,12 @@ def get_global_settings(request):
             'duration': settings.lineChart_duration,
             'display': settings.lineChart_display,
         },
+        'media': {
+            'sequence': settings.media_sequence,
+            'display': settings.media_display,
+            'audio': settings.media_audio,
+        },
+
     }
     return Response(transformed_data, status=status.HTTP_200_OK)
 
@@ -125,7 +152,7 @@ def get_vcom_data():
 
 
 def power_data(request):
-    data = csv_to_json('data/UCT_Drawing_School_2023_08_01_2023_08_06.csv', delimiter=";")
+    data = csv_to_json('data/UCT_Drawing_School_2023_08_01_2023_08_31.csv', delimiter=";")
     
     # Replace negative values with 0
     for row in data:
@@ -140,14 +167,53 @@ def power_data(request):
     return JsonResponse(data, safe=False)
 
 
+def standardize_description(meter_description):
+    # Function to standardize the meter description names
+    standardized_mapping = {
+        'Secondary Storey - Kitchen': 'Secondary Storey Kitchen',
+        'Second Storey - Toilet': 'Second Storey Toilet',
+        'Second Storey - Ablution': 'Second Storey Ablution',
+        'Ground Storey - Toilet': 'Ground Storey Toilet',
+        'Ground Storey - Hot Ablution': 'Ground Storey Hot Ablution',
+        'Ground Storey - Geyser': 'Ground Storey Geyser',
+        'Ground Storey - Cold Ablution': 'Ground Storey Cold Ablution',
+        'First Storey - Toilet': 'First Storey Toilet',
+        'First Storey - Ablution': 'First Storey Ablution',
+    }
+    
+    for key in standardized_mapping.keys():
+        if key.lower() in meter_description.lower():
+            return standardized_mapping[key]
+    return meter_description  # return original if no match
+
 def water_data(request):
-    csv_data = csv_to_json('data/University of Cape Town (UCT - School of Design) 01 Aug to 06 Aug 2023 Report Data.csv')  
+    # Mapping of Meter Serial to Meter Description
+    meter_description_mapping = {
+        '8SEN0121279830': 'UCT D-School - Secondary Storey - Kitchen',
+        '8SEN0121100508': 'UCT D-School - Second Storey - Toilet',
+        '8SEN0121077871': 'UCT D-School - Second Storey - Ablution',
+        '8SEN0121208690': 'UCT D-School - Ground Storey - Toilet',
+        '8SEN0121138030': 'UCT D-School - Ground Storey - Hot Ablution',
+        '8SEN0121077881': 'UCT D-School - Ground Storey - Geyser',
+        '8SEN0121160337': 'UCT D-School - Ground Storey - Cold Ablution',
+        '8SEN0120732796': 'UCT D-School - First Storey - Toilet',
+        '8SEN0121077869': 'UCT D-School - First Storey - Ablution',
+    }
+
+    csv_data = csv_to_json('data/University of Cape Town (UCT - School of Design) 01 Aug to 06 Aug 2023 Report Data.csv') 
     
     # Initialize a dictionary to hold the transformed data
     transformed_data = defaultdict(list)
 
     # Iterate through the CSV data and populate the transformed_data dictionary
     for row in csv_data:
+        # Update the Meter Description using the mapping
+        meter_serial = row['Meter Serial']
+        row['Meter Description'] = meter_description_mapping.get(meter_serial, row['Meter Description'])
+        
+        # Standardize the Meter Description
+        row['Meter Description'] = standardize_description(row['Meter Description'])
+        
         timestamp = row['tstamp']
         meter_description = row['Meter Description']
         difference_kl = float(row['difference_kl'])  # Convert to float
@@ -196,7 +262,7 @@ def vcom_data(request):
         return JsonResponse({"error": "Unable to get data from VCOM API"}, status=500)
 
 def csv_data(request):
-    data = csv_to_json('data/UCT_Drawing_School_2023_08_02_2023_08_03.csv')
+    data = csv_to_json('data/UCT_Drawing_School_2023_08_01_2023_08_06.csv')
     return JsonResponse(data, safe=False)
 
 def hello(request):

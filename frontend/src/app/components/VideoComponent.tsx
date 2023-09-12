@@ -1,18 +1,25 @@
-// VideoComponent.tsx
-import React from 'react';
-import { usePlayVideo } from '../contexts/PlayVideoContext';
+import React, { useEffect, useRef } from 'react';
 
-function VideoComponent() {
-  const { playWithAudio } = usePlayVideo();
+export function VideoComponent({ playWithAudio, setVideoDuration, style }: { playWithAudio: boolean, setVideoDuration: Function, style: React.CSSProperties }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.addEventListener('loadedmetadata', () => {
+        setVideoDuration(video.duration);
+        video.play().catch((error) => {
+          console.error("Video play failed:", error);
+        });
+      });
+    }
+  }, []);
 
   return (
-    <div className="video-container">
-      <video controls autoPlay muted={!playWithAudio}>
-        <source src="/Videos/Video.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-    </div>
+    <video width={400} height={400} autoPlay ref={videoRef} controls muted={!playWithAudio} style={style}>
+      <source src="/Videos/video.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
   );
 }
 
-export default VideoComponent;
