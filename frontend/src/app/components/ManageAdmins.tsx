@@ -5,6 +5,16 @@ import { Admin } from '../types/dataTypes';
 
 import { ManageAdminProps } from '../types/dataTypes';
 
+/**
+ * ManageAdmin component manages the list of administrators.
+ *
+ * @param {ManageAdminProps} props                                        The component's props.
+ * @param {Admin[]} props.admins                                          An array of admin objects.
+ * @param {(adminId: number) => void} props.removeAdmin                   A function to remove an admin by ID.
+ * @param {(username: string, password: string) => void} props.addAdmin   A function to add a new admin.
+ * @returns {JSX.Element}                                                 The ManageAdmin component JSX.
+ */
+
 const ManageAdmin: React.FC<ManageAdminProps> = ({ admins, removeAdmin, addAdmin }) => {
   const [newAdminUsername, setNewAdminUsername] = React.useState('');
   const [newAdminPassword, setNewAdminPassword] = React.useState('');

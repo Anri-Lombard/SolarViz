@@ -1,13 +1,34 @@
 import React from 'react';
 
 interface MediaSettingsProps {
+
+  /**
+   * Function to handle changes in media settings.
+   *
+   * @param {string} field - The field to update (e.g., 'sequence', 'display', 'audio').
+   * @param {any} value - The new value for the field.
+   */
+
   handleMediaSettingsChange: (field: string, value: any) => void;
+  
+  
+  // The media settings object.
+
   settings: {
     sequence: number;
     display: boolean;
     audio: boolean;
   };
 }
+
+/**
+ * MediaSettingsComponent displays settings for media playback.
+ *
+ * @param {MediaSettingsProps} props                  The component's props.
+ * @param {Function} props.handleMediaSettingsChange  A function to handle changes in media settings.
+ * @param {Object} props.settings                     The media settings object.
+ * @returns {JSX.Element}                             The MediaSettingsComponent JSX.
+ */
 
 const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({ handleMediaSettingsChange, settings }) => (
   <div className="gridElement">

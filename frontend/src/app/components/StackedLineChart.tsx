@@ -7,19 +7,29 @@ import { formatWaterDate } from '../utils/DataUtils';
 
 import { useSettings } from '../contexts/SettingsContext';
 
+/**
+ * StackedLineChart displays a stacked line chart using Recharts library.
+ *
+ * @param {StackedLineChartProps} props     The component's props.
+ * @param {ConsolidatedData[]} props.data   Data for the stacked line chart.
+ * @returns {JSX.Element}                   The StackedLineChart JSX.
+ */
 
 export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
     const { settings } = useSettings();
 
+    // Extract unique meter descriptions and date-hour combinations
     const meterDescriptions = Array.from(new Set(data.map(item => item['Meter Description'])));
     const dateHourCombinations = Array.from(new Set(data.map(item => `${item.date} ${item.hour}`)));
 
-
+    // Consolidate data for the chart
     const consolidatedData: ConsolidatedData[] = dateHourCombinations.map(dateHour => {
         const [date, hour] = dateHour.split(' ');
         const formattedDate = formatWaterDate(date);
         const formattedDateHour = `${formattedDate} ${hour}`;
         const obj: any = { 'dateHour': formattedDateHour };
+
+        // Calculate the sum of usage for each meter description
         meterDescriptions.forEach(desc => {
             const filteredData = data.filter(item => `${item.date} ${item.hour}` === dateHour && item['Meter Description'] === desc);
             const sum = filteredData.reduce((acc, curr) => acc + (curr.difference_kl * 1000), 0); // Multiply by 1000 to convert to liters

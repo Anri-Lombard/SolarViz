@@ -1,6 +1,16 @@
 import React from 'react';
 import { GraphSettingsProps } from '../types/dataTypes';
 
+/**
+ * GraphSettingsComponent displays settings for a specific chart type.
+ *
+ * @param {GraphSettingsProps} props                  The component's props.
+ * @param {string} props.chartType                    The type of chart.
+ * @param {Function} props.handleGraphSettingsChange  A function to handle changes in graph settings.
+ * @param {Object} props.settings                     The settings for the chart type.
+ * @returns {JSX.Element}                             The GraphSettingsComponent JSX.
+ */
+
 const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handleGraphSettingsChange, settings }) => {
 
   return (

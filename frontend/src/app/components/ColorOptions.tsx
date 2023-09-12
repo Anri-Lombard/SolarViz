@@ -1,8 +1,17 @@
-// ColorOptions.tsx
-
 import React from 'react';
 
 import { ColorOptionsProps } from '../types/dataTypes';
+
+/**
+ * ColorOptions component displays a set of color options and allows the user to select a color.
+ *
+ * @param {ColorOptionsProps} props                                         The component's props.
+ * @param {string} props.type                                               The type of color being displayed (e.g., "Background", "Text").
+ * @param {string[]} props.colors                                           An array of available color options.
+ * @param {(type: string, color: string) => void} props.handleChangeColor   A function to handle color change events.
+ * @param {string} props.currentColor                                       The currently selected color.
+ * @returns {JSX.Element}                                                   The ColorOptions component JSX.
+ */
 
 const ColorOptions: React.FC<ColorOptionsProps> = ({ type, colors, handleChangeColor, currentColor }) => (
   <div className="flex flex-col mb-5">
@@ -26,3 +35,4 @@ const ColorOptions: React.FC<ColorOptionsProps> = ({ type, colors, handleChangeC
 );
 
 export default ColorOptions;
+
