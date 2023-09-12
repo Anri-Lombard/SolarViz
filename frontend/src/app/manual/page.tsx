@@ -31,40 +31,41 @@ export default function Manual() {
 
         <div id='about'>
           <h4>About</h4>
-          <p className='mb-4'>
+          <div className='mb-4'>
             <h2>SolarViz: Powering Sustainability at UCT D-Skool</h2>
+
             <h3>Introduction</h3>
-            <p>SolarViz is an innovative dashboard designed to monitor and visualize the power and water usage of the UCT D-Skool building. As a part of the university's commitment to sustainability, the D-Skool building aims to maintain its 6-star green rating. SolarViz plays a crucial role in achieving this goal by providing real-time insights and actionable data.</p>
-            <h3>1. Visualization of Power Usage</h3>
+            <p>
+              SolarViz is a cutting-edge dashboard developed to meticulously monitor and visualize the power and water consumption of the UCT D-Skool building. As a cornerstone of the university's sustainability initiatives, the D-Skool building is committed to upholding its 6-star green rating. SolarViz is instrumental in this endeavor, offering real-time analytics, historical data, and actionable insights to both the management and the residents.
+            </p>
+
+            <h3>Key Features</h3>
             <ul>
-              <li><strong>Real-Time Monitoring</strong>: SolarViz offers a live view of the building's energy consumption, breaking down the usage by floors, rooms, and individual appliances. This granular view helps in identifying energy-hungry areas and devices.</li>
-              <li><strong>Historical Data Analysis</strong>: Users can access historical data to analyze trends and patterns in energy consumption. This feature assists in forecasting future energy needs and planning accordingly.</li>
-              <li><strong>Renewable Energy Integration</strong>: SolarViz integrates data from solar panels and other renewable energy sources, showcasing how much energy is being generated and consumed from sustainable sources.</li>
-              <li><strong>Energy Efficiency Recommendations</strong>: The dashboard provides personalized recommendations to reduce energy consumption, such as optimizing lighting and HVAC systems.</li>
+              <li><strong>Power Visualization</strong>: The dashboard provides a granular view of power consumption, breaking it down into solar and grid contributions. Users can track these metrics over various time frames, and the dashboard also displays the percentage of solar power in the total energy mix.</li>
+              <li><strong>Water Data</strong>: SolarViz offers a detailed analysis of water consumption at different points within the building, such as the First Storey Ablution, Ground Storey Geyser, and Second Storey Toilet. Hourly water usage data helps in identifying patterns and implementing water-saving measures.</li>
+              <li><strong>Advertisements and Videos</strong>: The dashboard is equipped with a multimedia section that features advertisements and instructional videos. These resources educate users on best practices for energy and water conservation.</li>
+              <li><strong>Custom Alerts</strong>: Users can set up custom alerts for unusual spikes in water or power usage, aiding in quicker issue resolution.</li>
+              <li><strong>Historical Trends</strong>: The dashboard archives past data, allowing users to compare current usage patterns with historical trends, which is crucial for long-term sustainability planning.</li>
             </ul>
-            <h3>2. Visualization of Water Usage</h3>
-            <ul>
-              <li><strong>Water Consumption Tracking</strong>: SolarViz monitors water usage throughout the building, including restrooms, kitchens, and outdoor irrigation systems. This tracking helps in detecting leaks and overuse.</li>
-              <li><strong>Water Recycling Insights</strong>: The dashboard displays information about water recycling and rainwater harvesting, contributing to the building's water conservation efforts.</li>
-              <li><strong>Water Efficiency Goals</strong>: Users can set and track water-saving goals, encouraging responsible water usage across the building.</li>
-            </ul>
-            <h3>3. Collaboration with Building Management Systems</h3>
-            <ul>
-              <li><strong>Integration with Building Controls</strong>: SolarViz seamlessly integrates with existing building management systems, allowing facility managers to control and optimize energy and water usage directly from the dashboard.</li>
-              <li><strong>Alerts and Notifications</strong>: The system sends alerts for unusual consumption patterns or system malfunctions, enabling quick response and minimizing waste.</li>
-              <li><strong>Customizable Reports</strong>: Facility managers can generate customized reports for different stakeholders, ensuring that everyone is aligned with the building's sustainability goals.</li>
-            </ul>
-            <h3>4. User Engagement and Education</h3>
-            <ul>
-              <li><strong>Interactive Interface</strong>: SolarViz offers an engaging and user-friendly interface that encourages occupants to explore and understand their impact on the building's sustainability.</li>
-              <li><strong>Educational Content</strong>: The dashboard includes educational materials about green practices and how individual actions contribute to the building's 6-star rating.</li>
-              <li><strong>Community Engagement</strong>: SolarViz fosters a sense of community by allowing users to share achievements and challenges, promoting a collective effort towards sustainability.</li>
-            </ul>
-            <h3>Conclusion</h3>
-            <p>SolarViz is more than just a monitoring tool; it's a comprehensive platform that empowers the UCT D-Skool building to stay at the forefront of sustainability. By visualizing power and water usage, integrating with building systems, and engaging users, SolarViz ensures that the D-Skool building continues to be a beacon of environmental responsibility.</p>
-            <p>By utilizing SolarViz, the UCT D-Skool building not only maintains its prestigious 6-star green rating but also sets a standard for sustainable practices that can inspire other institutions. It's a step towards a greener future, where technology and awareness go hand in hand to create a sustainable and responsible environment.</p>
-          </p>
+
+            <h3>Objective</h3>
+            <p>
+              The primary objective of SolarViz is to foster a culture of transparency and accountability around sustainability within the UCT D-Skool building. By making power and water usage data easily accessible and understandable, SolarViz empowers residents and management to make informed decisions. This, in turn, aids in the continuous improvement of the building's sustainability metrics, ensuring the maintenance of its 6-star green rating.
+            </p>
+
+            <h3>Who Can Benefit?</h3>
+            <p>
+              SolarViz is designed for a wide range of users, including building management, residents, sustainability researchers, and even visitors who are interested in understanding the building's green initiatives. Its user-friendly interface and robust features make it a versatile tool for anyone invested in sustainability.
+            </p>
+
+            <h3>Future Plans</h3>
+            <p>
+              We are continuously working to enhance SolarViz by adding more features, such as predictive analytics, integration with other smart building systems, and a mobile app for on-the-go access. Stay tuned for more updates!
+            </p>
+          </div>
         </div>
+
+
         <div id='moreData'>
           <h4>More data</h4>
           <p className='mb-4'>

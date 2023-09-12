@@ -27,7 +27,7 @@ const Header: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      const newOpacity = Math.max(1 - scrollY / 400, 0);
+      const newOpacity = Math.max(1 - scrollY / 200, 0);
       setLogoOpacity(newOpacity);
     };
 
