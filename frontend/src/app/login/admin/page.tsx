@@ -44,6 +44,7 @@ const Admin = () => {
     'gold', 'orange'
   ];
 
+
   const defaultColors = {
     incomerPower: settings.colors.incomerPower,
     solarPower: settings.colors.solarPower,
@@ -353,7 +354,7 @@ const Admin = () => {
               </button>
             </div>
           ))}
-
+          <div className='colorGrid'>
           {(Object.keys(pendingChanges.colors) as Array<ColorType | string>).map((type) => (
             <ColorOptions
               key={type}
@@ -363,7 +364,8 @@ const Admin = () => {
               currentColor={(pendingChanges.colors as any)[type]}
             />
           ))}
-
+          </div>
+          
         </div>
       </div>
 

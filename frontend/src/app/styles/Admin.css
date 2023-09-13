@@ -149,7 +149,6 @@ h2 {
 }
 
 .selectionBlock {
-    background-color: #f3e9cb;
     padding: 20px;
     border-radius: 10px;
     border: 2px solid #292827;
@@ -197,4 +196,15 @@ h2 {
 .logoutButton:hover {
     color: #f3e9cb;
     background-color: #292827;
+}
+
+.colorGrid {
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #292827;
+    margin-top: 60px;
+    border-width: 0px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-column-gap: 20px;
 }
