@@ -1,7 +1,18 @@
-import React from 'react';
 import { GraphSettingsProps } from '../types/dataTypes';
+import React, { useState, useEffect } from 'react';
 
 const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handleGraphSettingsChange, settings }) => {
+
+  const [sequenceValue, setSequenceValue] = useState(settings[chartType].sequence); //for managing sequence value changes when display is disabled
+
+  useEffect(() => {
+    // Listen for changes to settings[chartType].display
+    if (!settings[chartType].display) {
+      // If display is unchecked, reset sequence to 0
+      setSequenceValue(0);
+      handleGraphSettingsChange(chartType, 'sequence', 0);
+    }
+  }, [settings[chartType].display]);
 
   return (
     <div className="gridElement">
@@ -10,14 +21,16 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
         Sequence:
         <input
           type="number"
-          value={settings[chartType].display ? settings[chartType].sequence : ''}
+          value={settings[chartType].display ? settings[chartType].sequence : 0}
           onChange={(e) => {
             const newValue = e.target.value !== '' ? parseInt(e.target.value) : 0;
+            setSequenceValue(newValue); //update local state
             handleGraphSettingsChange(chartType, 'sequence', newValue);
           }}
           disabled={!settings[chartType].display} // Disable if 'Display' is unchecked
         />
       </label>
+      <p>{settings[chartType].sequence}</p>
       <label>
         Duration (seconds):
         <input

@@ -61,7 +61,7 @@ const Admin = () => {
   const validateGraphSettings = () => {
     const sequenceNumbers = Object.values(pendingGraphSettings).map(setting => setting.sequence);
 
-    if (pendingMediaSettings.display) {
+    if (pendingMediaSettings.display) { // add media settings sequence to be considered in rotation
       sequenceNumbers.push(pendingMediaSettings.sequence)
     }
 
