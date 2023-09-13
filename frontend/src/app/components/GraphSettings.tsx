@@ -30,7 +30,6 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
           disabled={!settings[chartType].display} // Disable if 'Display' is unchecked
         />
       </label>
-      <p>{settings[chartType].sequence}</p>
       <label>
         Duration (seconds):
         <input
