@@ -75,6 +75,11 @@ h2 {
     text-align: center;
 }
 
+.intro .navContainer {
+    text-align: left;
+    display: inline-block;
+}
+
 .intro a {
     color: #183d33;
     cursor: pointer; /* Change cursor to hand */
@@ -85,7 +90,6 @@ h2 {
 
 .intro a:hover {
     text-decoration: underline; /* Add underline */
-    background-color: #f3e9cb; /* Add background color */
     color: #292827; /* Change text color */
     font-weight: bold; /* Make text bold */
 }

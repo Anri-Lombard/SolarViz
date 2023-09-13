@@ -68,7 +68,7 @@ const Admin = () => {
     const uniqueSequenceNumbers = new Set(sequenceNumbers);
 
     // Check if a sequence number is chosen twice
-    if (sequenceNumbers.length !== uniqueSequenceNumbers.size) {
+    if (sequenceNumbers.length !== uniqueSequenceNumbers.size ) {
       setGraphSettingsError("Sequence numbers must be unique.");
       return false;
     }
@@ -82,10 +82,10 @@ const Admin = () => {
       }
     }
 
-    // Check if at least more than one graphs are displayed
-    const displayedGraphCount = Object.values(pendingGraphSettings).filter(setting => setting.display).length;
-    if (displayedGraphCount < 2) {
-      setGraphSettingsError("More than one graph must be displayed.");
+    // Check if at least one graph is displayed
+    const isAnyGraphDisplayed = Object.values(pendingGraphSettings).some(setting => setting.display);
+    if (!isAnyGraphDisplayed) {
+      setGraphSettingsError("At least one graph must be displayed.");
       return false;
     }
 
@@ -281,18 +281,6 @@ const Admin = () => {
     });
   };
 
-  const handleScroll = (event: React.MouseEvent, sectionId: string, offset = -100) => {
-    event.preventDefault();
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const position = element.offsetTop + offset;
-      window.scrollTo({
-        top: position,
-        behavior: 'smooth'
-      });
-    }
-  };
-
   return (
     <div>
 
@@ -300,11 +288,11 @@ const Admin = () => {
         <p>Welcome to the administration page. Adjust the colour schemes of the graphs displayed,
           select the content to be displayed on the main dashboard, or manage the administrators. Select one of the options below:</p>
 
-        <nav>
-          <ul className='hover=underline' style={{ paddingTop: '10px' }}>
-            <li><a href="#select-content-and-media" onClick={(e) => handleScroll(e, 'select-content-and-media')}>Select dashboard content</a></li>
-            <li><a href="#adjust-colours" onClick={(e) => handleScroll(e, 'adjust-colours')}>Adjust Colours</a></li>
-            <li><a href="#manage-admins" onClick={(e) => handleScroll(e, 'manage-admins')}>Manage Administrators</a></li>
+        <nav className='navContainer'>
+          <ul style={{ paddingTop: '10px' }}>
+            <li><a href="#select-content-and-media">Select dashboard content</a></li>
+            <li><a href="#adjust-colours">Adjust Colours</a></li>
+            <li><a href="#manage-admins">Manage Administrators</a></li>
           </ul>
         </nav>
       </div>
