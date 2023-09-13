@@ -104,7 +104,6 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
 
 
       if (charts[nextIndex].type === 'VIDEO' && videoDuration !== null) {
-        console.log(settings.media)
         nextDuration = settings.media.display ? videoDuration * 1000 : 0;
       }
 

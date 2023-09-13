@@ -72,10 +72,22 @@ h2 {
     padding-top: 100px;
     padding-bottom: 20px;
     margin: 40px;
+    text-align: center;
 }
 
 .intro a {
     color: #183d33;
+    cursor: pointer; /* Change cursor to hand */
+    padding: 5px; /* Add some padding for a better hover effect */
+    border-radius: 3px; /* Rounded corners for background */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.intro a:hover {
+    text-decoration: underline; /* Add underline */
+    background-color: #f3e9cb; /* Add background color */
+    color: #292827; /* Change text color */
+    font-weight: bold; /* Make text bold */
 }
 
 .adminBlock {

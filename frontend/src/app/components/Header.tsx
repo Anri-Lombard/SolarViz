@@ -8,8 +8,8 @@
 "use client"
 
 // Importing dependencies and custom components
-import React, { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import logoImage from '../images/logo.png';
 import lock from '../images/lock.png';
 import unlock from '../images/unlock.png';
@@ -22,6 +22,21 @@ const Header: React.FC = () => {
   const router = useRouter();
   const [isLogoHovered, setIsLogoHovered] = useState(false);
   const { isLoggedIn } = useAuth();
+  const [logoOpacity, setLogoOpacity] = useState(1);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const newOpacity = Math.max(1 - scrollY / 200, 0);
+      setLogoOpacity(newOpacity);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   /**
    * Navigate to a specific page.
@@ -41,7 +56,7 @@ const Header: React.FC = () => {
         onMouseLeave={() => setIsLogoHovered(false)}
         onClick={() => goToPage('/')} className="logoImage"
       >
-        <Image src={logoImage} alt="logo" />
+        <Image src={logoImage} alt="logo" style={{ opacity: logoOpacity }} />
         {isLogoHovered && <div className="hoverText">Return to homepage</div>}
       </div>
 
