@@ -22,7 +22,6 @@
     position: relative;
     float: right;
     right: 20px;
-    top: 100px;
     display: flex;
     flex-direction: column;
 }
@@ -224,4 +223,20 @@ h2 {
     bottom: 0;
     padding: 10px;
     display: flex;
+}
+
+.defaultColorGridElement {
+    height:120px;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.defaultColorGridElement button {
+    height: 60px;
+    right: 0;
+}
+
+.defaultColorGridElement span {
+    word-wrap: break-word;
 }

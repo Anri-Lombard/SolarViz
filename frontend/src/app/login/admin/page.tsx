@@ -342,18 +342,21 @@ const Admin = () => {
           </div>
 
           <h1 className='text-black font-bold'>Default Colours:</h1>
-          {Object.entries(defaultColors).map(([type, color]) => (
-            <div key={type} className="flex items-center mb-2">
-              <span className='text-black mr-2'>{type}: </span>
-              <button
-                onClick={() => handleChangeColor(type as ColorType, color)}
-                className={`p-2`}
-                style={{ backgroundColor: color }}
-              >
-                {color}
-              </button>
-            </div>
-          ))}
+          <div className='colorGrid'>
+            {Object.entries(defaultColors).map(([type, color]) => (
+              <div key={type} className="defaultColorGridElement">
+                <span className='text-black mr-2'>{type}: </span>
+                <button
+                  onClick={() => handleChangeColor(type as ColorType, color)}
+                  className={`p-2`}
+                  style={{ backgroundColor: color }}
+                >
+                  {color}
+                </button>
+              </div>
+            ))}
+          </div>
+          
           <div className='colorGrid'>
           {(Object.keys(pendingChanges.colors) as Array<ColorType | string>).map((type) => (
             <ColorOptions
