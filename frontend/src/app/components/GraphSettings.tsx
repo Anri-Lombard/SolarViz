@@ -35,7 +35,7 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
         <input
           type="number"
           value={settings[chartType].duration}
-          onChange={(e) => handleGraphSettingsChange(chartType,'duration', parseInt(e.target.value))
+          onChange={(e) => handleGraphSettingsChange(chartType, 'duration', parseInt(e.target.value))
           }
           disabled={!settings[chartType].display} // Disable if 'Display' is unchecked
         />
@@ -45,9 +45,7 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
         <input
           type="checkbox"
           checked={settings[chartType].display}
-          onChange={(e) => {
-            handleGraphSettingsChange(chartType, 'display', e.target.checked);
-          }}
+          onChange={(e) => handleGraphSettingsChange(chartType, 'display', e.target.checked)}
         />
       </label>
     </div>

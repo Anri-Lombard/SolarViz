@@ -284,6 +284,21 @@ const Admin = () => {
     });
   };
 
+<<<<<<< HEAD
+=======
+  const handleScroll = (event: React.MouseEvent, sectionId: string, offset = -80) => {
+    event.preventDefault();
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const position = element.offsetTop + offset;
+      window.scrollTo({
+        top: position,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+>>>>>>> main
   return (
     <div>
 
