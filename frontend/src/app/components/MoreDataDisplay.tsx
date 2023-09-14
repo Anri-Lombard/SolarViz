@@ -8,7 +8,7 @@ import { StackedAreaChart } from './StackedAreaChart';
 import { StackedLineChart } from './StackedLineChart';
 import { transformPowerData } from '../utils/DataUtils';
 
-import { DataDisplayProps, ChartWrapperProps, WaterDataType } from '../types/dataTypes';
+import { DataDisplayProps, ChartWrapperProps, WaterDataType, PowerType } from '../types/dataTypes';
 
 export default function MoreDataDisplay({ powerData, waterData, settings }: DataDisplayProps) {
   const [transformedData, setTransformedData] = useState<
@@ -26,6 +26,7 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
   const [showTargetRange, setShowTargetRange] = useState(false);
   const [selectedMetric, setSelectedMetric] = useState('Load Power');
   const [selectedMeterDescription, setSelectedMeterDescription] = useState('All');
+  const [selectedPowerType, setSelectedPowerType] = useState('All');
   const [showPerformanceMetrics, setShowPerformanceMetrics] = useState(false);
   const [filteredWaterData, setFilteredWaterData] = useState<WaterDataType[] | null>(null);
   const [stagedWaterData, setStagedWaterData] = useState<WaterDataType[] | null>(null);
@@ -53,10 +54,11 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
         setShowIrradiance(stagedSettings.pieChart.showIrradiance);
         break;
       case 'areaChart':
-        setDuration(stagedSettings.areaChart.duration);
-        setShowForecast(stagedSettings.areaChart.showForecast);
-        setShowTargetRange(stagedSettings.areaChart.showTargetRange);
-        setShowPerformanceMetrics(stagedSettings.areaChart.showPerformanceMetrics);
+        // setDuration(stagedSettings.areaChart.duration);
+        // setShowForecast(stagedSettings.areaChart.showForecast);
+        // setShowTargetRange(stagedSettings.areaChart.showTargetRange);
+        // setShowPerformanceMetrics(stagedSettings.areaChart.showPerformanceMetrics);
+        setStagedSettings({ ...stagedSettings, areaChart: { ...stagedSettings.areaChart, selectedPowerType: selectedPowerType } })
         break;
       case 'lineChart':
         setStagedSettings({ ...stagedSettings, lineChart: { selectedMeterDescription: selectedMeterDescription } })
@@ -109,7 +111,7 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
           />
           <ChartWrapper
             title="Energy from Solar and Incomer"
-            chart={<StackedAreaChart data={transformedData} colors={settings.colors} />}
+            chart={<StackedAreaChart data={transformedData} colors={settings.colors} selectedPowerType={stagedSettings.areaChart.selectedPowerType} />          }
             filters={
               <>
                 <div>
@@ -130,11 +132,11 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
                 </div>
                 <div>
                   <label>Power Type: </label>
-                  <select onChange={(e) => setSelectedMeterDescription(e.target.value)} value={selectedMeterDescription}>
+                  <select onChange={(e) => setSelectedPowerType(e.target.value)} value={selectedPowerType}>
                     <option value="All">All</option>
-                    <option value="Solar">Solar</option>
-                    <option value="Incomer">Incomer</option>
-                    <option value="Load">Load</option>
+                    <option value="Solar Power">Solar Power</option>
+                    <option value="Incomer Power">Incomer Power</option>
+                    <option value="Load Power">Load Power</option>
                   </select>
                 </div>
                 <button className="applyButton" onClick={() => applyStagedSettings('areaChart')}>Apply</button>
