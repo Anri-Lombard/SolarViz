@@ -1,18 +1,18 @@
-import React from 'react';
 import { GraphSettingsProps } from '../types/dataTypes';
+import React, { useState, useEffect } from 'react';
 
 const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handleGraphSettingsChange, settings }) => {
 
-  const handleDisplayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Update 'display' first
-    handleGraphSettingsChange(chartType, 'display', e.target.checked);
-  
-    // Then, if 'Display' is unchecked, set 'Sequence' to 0
-    if (!e.target.checked) {
+  const [sequenceValue, setSequenceValue] = useState(settings[chartType].sequence); //for managing sequence value changes when display is disabled
+
+  useEffect(() => {
+    // Listen for changes to settings[chartType].display
+    if (!settings[chartType].display) {
+      // If display is unchecked, reset sequence to 0
+      setSequenceValue(0);
       handleGraphSettingsChange(chartType, 'sequence', 0);
     }
-  };
-  
+  }, [settings[chartType].display]);
 
   return (
     <div className="gridElement">
@@ -21,9 +21,10 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
         Sequence:
         <input
           type="number"
-          value={settings[chartType].display ? settings[chartType].sequence : ''}
+          value={settings[chartType].display ? settings[chartType].sequence : 0}
           onChange={(e) => {
             const newValue = e.target.value !== '' ? parseInt(e.target.value) : 0;
+            setSequenceValue(newValue); //update local state
             handleGraphSettingsChange(chartType, 'sequence', newValue);
           }}
           disabled={!settings[chartType].display} // Disable if 'Display' is unchecked
@@ -44,9 +45,7 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
         <input
           type="checkbox"
           checked={settings[chartType].display}
-          onChange={(e) => {
-            handleDisplayChange(e);
-          }}
+          onChange={(e) => handleGraphSettingsChange(chartType, 'display', e.target.checked)}
         />
       </label>
     </div>

@@ -44,6 +44,7 @@ const Admin = () => {
     'gold', 'orange'
   ];
 
+
   const defaultColors = {
     incomerPower: settings.colors.incomerPower,
     solarPower: settings.colors.solarPower,
@@ -59,16 +60,18 @@ const Admin = () => {
   };
 
   const validateGraphSettings = () => {
-    const sequenceNumbers = Object.values(pendingGraphSettings).map(setting => setting.sequence);
+    const sequenceNumbers = Object.values(pendingGraphSettings)
+    .map(setting => setting.sequence)
+    .filter(sequence => sequence !== 0); //filter out zeros (zeros correspond to undisplayed graphs)
 
-    if (pendingMediaSettings.display) {
+    if (pendingMediaSettings.display) { // add media settings sequence to be considered in rotation
       sequenceNumbers.push(pendingMediaSettings.sequence)
     }
 
     const uniqueSequenceNumbers = new Set(sequenceNumbers);
 
     // Check if a sequence number is chosen twice
-    if (sequenceNumbers.length !== uniqueSequenceNumbers.size) {
+    if (sequenceNumbers.length !== uniqueSequenceNumbers.size ) {
       setGraphSettingsError("Sequence numbers must be unique.");
       return false;
     }
@@ -82,10 +85,10 @@ const Admin = () => {
       }
     }
 
-    // Check if at least more than one graphs are displayed
-    const displayedGraphCount = Object.values(pendingGraphSettings).filter(setting => setting.display).length;
-    if (displayedGraphCount < 2) {
-      setGraphSettingsError("More than one graph must be displayed.");
+    // Check if at least one graph is displayed
+    const isAnyGraphDisplayed = Object.values(pendingGraphSettings).some(setting => setting.display);
+    if (!isAnyGraphDisplayed) {
+      setGraphSettingsError("At least one graph must be displayed.");
       return false;
     }
 
@@ -300,11 +303,11 @@ const Admin = () => {
         <p>Welcome to the administration page. Adjust the colour schemes of the graphs displayed,
           select the content to be displayed on the main dashboard, or manage the administrators. Select one of the options below:</p>
 
-        <nav>
-          <ul className='hover=underline' style={{ paddingTop: '10px' }}>
-            <li><a href="#select-content-and-media" onClick={(e) => handleScroll(e, 'select-content-and-media')}>Select dashboard content</a></li>
-            <li><a href="#adjust-colours" onClick={(e) => handleScroll(e, 'adjust-colours')}>Adjust Colours</a></li>
-            <li><a href="#manage-admins" onClick={(e) => handleScroll(e, 'manage-admins')}>Manage Administrators</a></li>
+        <nav className='navContainer'>
+          <ul style={{ paddingTop: '10px' }}>
+            <li><a href="#select-content-and-media">Select dashboard content</a></li>
+            <li><a href="#adjust-colours">Adjust Colours</a></li>
+            <li><a href="#manage-admins">Manage Administrators</a></li>
           </ul>
         </nav>
       </div>
@@ -363,7 +366,7 @@ const Admin = () => {
               </button>
             </div>
           ))}
-
+          <div className='colorGrid'>
           {(Object.keys(pendingChanges.colors) as Array<ColorType | string>).map((type) => (
             <ColorOptions
               key={type}
@@ -373,7 +376,8 @@ const Admin = () => {
               currentColor={(pendingChanges.colors as any)[type]}
             />
           ))}
-
+          </div>
+          
         </div>
       </div>
 

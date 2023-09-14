@@ -75,6 +75,11 @@ h2 {
     text-align: center;
 }
 
+.intro .navContainer {
+    text-align: left;
+    display: inline-block;
+}
+
 .intro a {
     color: #183d33;
     cursor: pointer; /* Change cursor to hand */
@@ -84,10 +89,9 @@ h2 {
 }
 
 .intro a:hover {
-    text-decoration: underline; /* Add underline */
-    background-color: #f3e9cb; /* Add background color */
-    color: #292827; /* Change text color */
-    font-weight: bold; /* Make text bold */
+    text-decoration: underline; 
+    color: #292827; 
+    font-weight: bold; 
 }
 
 .adminBlock {
@@ -145,7 +149,6 @@ h2 {
 }
 
 .selectionBlock {
-    background-color: #f3e9cb;
     padding: 20px;
     border-radius: 10px;
     border: 2px solid #292827;
@@ -193,4 +196,15 @@ h2 {
 .logoutButton:hover {
     color: #f3e9cb;
     background-color: #292827;
+}
+
+.colorGrid {
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #292827;
+    margin-top: 60px;
+    border-width: 0px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-column-gap: 20px;
 }
