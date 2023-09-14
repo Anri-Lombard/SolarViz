@@ -30,12 +30,12 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-screen">
       {powerData && waterData ?
         
         <MoreDataDisplay powerData={powerData} waterData={waterData} settings={settings} />
         : <p>Loading...</p>
       }
-    </main>
+    </div>
   );
 }
