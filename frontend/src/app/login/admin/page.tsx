@@ -356,7 +356,7 @@ const Admin = () => {
               </div>
             ))}
           </div>
-          
+          <h1 className='text-black font-bold'>Choose your graph colours:</h1>
           <div className='colorGrid'>
           {(Object.keys(pendingChanges.colors) as Array<ColorType | string>).map((type) => (
             <ColorOptions

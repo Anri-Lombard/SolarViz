@@ -27,7 +27,6 @@
 
 .tableOfContents a:hover {
     text-decoration: underline; /* Add underline */
-    background-color: #f3e9cb; /* Add background color */
     color: #292827; /* Change text color */
     font-weight: bold; /* Make text bold */
 }
@@ -60,9 +59,14 @@
 .content h4 {
     font-size: x-large;
     font-weight: bold;
+    margin-bottom: 20px;
 }
 
 .content li {
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+.contribution a {
+    display: block;
 }
