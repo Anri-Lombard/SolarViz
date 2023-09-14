@@ -209,11 +209,19 @@ h2 {
 }
 
 .colorGridElement {
+    height:120px;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
 }
 
-.colorDropdown {
-    bottom: 10px;
+.colorGridElement h3 {
+    margin-bottom: auto;
+}
+
+.colorGridElement .colorDropdown {
+    position: absolute;
+    bottom: 0;
     padding: 10px;
     display: flex;
-    flex-wrap: wrap;
-} /* TODO make dropdowns all line up*/
+}
