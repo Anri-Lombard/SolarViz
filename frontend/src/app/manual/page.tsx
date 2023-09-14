@@ -89,7 +89,7 @@ export default function Manual() {
           <h4>Administration</h4>
           <p className='mb-4'>
             Here, you'll discover a range of powerful tools that empower you as an administrator. From selecting and customizing graphs
-            to managing media, adjusting colors, and handling administrators, you have the ability to streamline and optimize your system with ease. 
+            to managing media, adjusting colours, and handling administrators, you have the ability to streamline and optimize your system with ease. 
           </p>
 
           <div className='selectContent'>
@@ -98,7 +98,7 @@ export default function Manual() {
             <ol>
               <li>Graph Display: Pick the graphs you want to see by checking their checkboxes. It's all about having the information that matters most to you.</li>
               <li>Graph Configuration: If you select a graph, you can customize it further. Set the sequence number to control its order and decide how long it stays on the screen by adjusting the duration.</li>
-              <li>Sequence Number Validation: Keep your sequence numbers in order! If they're not consecutive, you will see an error message saying, "Sequence numbers must follow each other."</li>
+              <li>Sequence Number Validation: Keep your sequence numbers in order. If they're not consecutive, you will see an error message saying, "Sequence numbers must follow each other."</li>
               <li>Unique Sequence Numbers: Each graph needs its own special sequence number. Avoid duplicates to prevent an error message saying, "Sequence numbers must be unique."</li>
               <li>Duration Requirement: Make sure each graph is visible for more than 10 seconds. This gives viewers enough time to absorb the information and grasp its meaning.</li>
               <li>Selecting Media: This function works similarly to selecting graphs. You can also choose whether videos play with sound or without sound, giving you control over your media experience.</li>
@@ -111,16 +111,13 @@ export default function Manual() {
             <Image src={defaultColours} alt = "defaultColours"/>
             <ol>
               <li>Default Colours: In this section, the default colours for all graph variables are displayed.
-                If you wish to revert back to the default colours, simply click on one of the provided buttons. 
-                This allows for easy restoration of the original colour scheme.</li>
+                If you wish to revert back to the default colours, simply click on one of the provided buttons.</li>
             </ol>
 
             <Image src={customColours} alt = "customColours"/>
             <ol>
-              <li>Custom Colours: Users can also select custom colours for each variable. 
-                To do this, use the drop-down menus associated with each variable. As you make colour selections,
-                a preview of the chosen colour will be displayed next to the respective drop-down menu. This helps 
-                you visualise how the new colours will appear.</li>
+              <li>Custom Colours: Select custom colours for each variable using the drop-down menus associated with each variable. As you make colour selections,
+                a preview of the chosen colour will be displayed next to the respective drop-down menu.</li>
               <li>Once you are happy with the selection, click the "Apply Changes" button. This will implement the
                  new colour scheme for the graph variables.</li>
             </ol>
