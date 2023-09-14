@@ -2,7 +2,7 @@ import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { StackedAreaChartProps } from '../types/chartTypes';
 
-export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors }) => {
+export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors, selectedPowerType }) => {
     // Convert power data to kWh assuming the data is already aggregated per hour
     const convertedData = data.map(item => ({
         Timestamp: item.Timestamp,
@@ -35,11 +35,10 @@ export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors
                     }}
                 />
                 <Legend layout="horizontal" verticalAlign="top" align="center" />
-                <Area type="monotone" dataKey="Load Power" stackId="1" stroke="#000" fill="none" strokeWidth={2} />
-                <Area type="monotone" dataKey="Incomer Power" stackId="2" stroke={colors.incomerPower} fill={colors.incomerPower} />
-                <Area type="monotone" dataKey="Solar Power" stackId="3" stroke={colors.solarPower} fill={colors.solarPower} />
+                {selectedPowerType === 'All' || selectedPowerType === 'Load Power' ? <Area type="monotone" dataKey="Load Power" stackId="1" stroke="#000" fill="none" strokeWidth={2} /> : null}
+                {selectedPowerType === 'All' || selectedPowerType === 'Incomer Power' ? <Area type="monotone" dataKey="Incomer Power" stackId="2" stroke={colors.incomerPower} fill={colors.incomerPower} /> : null}
+                {selectedPowerType === 'All' || selectedPowerType === 'Solar Power' ? <Area type="monotone" dataKey="Solar Power" stackId="3" stroke={colors.solarPower} fill={colors.solarPower} /> : null}
             </AreaChart>
         </ResponsiveContainer>
     );
 };
-
