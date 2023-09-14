@@ -284,8 +284,6 @@ const Admin = () => {
     });
   };
 
-<<<<<<< HEAD
-=======
   const handleScroll = (event: React.MouseEvent, sectionId: string, offset = -80) => {
     event.preventDefault();
     const element = document.getElementById(sectionId);
@@ -298,7 +296,6 @@ const Admin = () => {
     }
   };
 
->>>>>>> main
   return (
     <div>
 
