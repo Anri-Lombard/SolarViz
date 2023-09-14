@@ -8,7 +8,7 @@ import { StackedAreaChart } from './StackedAreaChart';
 import { StackedLineChart } from './StackedLineChart';
 import { transformPowerData } from '../utils/DataUtils';
 
-import { DataDisplayProps, ChartWrapperProps } from '../types/dataTypes';
+import { DataDisplayProps, ChartWrapperProps, WaterDataType } from '../types/dataTypes';
 
 export default function MoreDataDisplay({ powerData, waterData, settings }: DataDisplayProps) {
   const [transformedData, setTransformedData] = useState<
@@ -27,6 +27,8 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
   const [selectedMetric, setSelectedMetric] = useState('Load Power');
   const [selectedMeterDescription, setSelectedMeterDescription] = useState('All');
   const [showPerformanceMetrics, setShowPerformanceMetrics] = useState(false);
+  const [filteredWaterData, setFilteredWaterData] = useState<WaterDataType[] | null>(null);
+  const [stagedWaterData, setStagedWaterData] = useState<WaterDataType[] | null>(null);
 
 
   const [stagedSettings, setStagedSettings] = useState({
@@ -41,7 +43,6 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
       showPerformanceMetrics: false,
     },
     lineChart: {
-      selectedMetric: 'Load Power',
       selectedMeterDescription: 'All',
     },
   });
@@ -58,18 +59,12 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
         setShowPerformanceMetrics(stagedSettings.areaChart.showPerformanceMetrics);
         break;
       case 'lineChart':
-        setSelectedMetric(stagedSettings.lineChart.selectedMetric);
-        setSelectedMeterDescription(stagedSettings.lineChart.selectedMeterDescription);
+        setStagedSettings({ ...stagedSettings, lineChart: { selectedMeterDescription: selectedMeterDescription } })
         break;
       default:
         break;
     }
   };
-
-  // TODO: implement
-  useEffect(() => {
-    // Apply filters here and update transformedData
-  }, [stagedSettings]);
 
   const aggregatedData = useMemo(() => {
     if (!powerData || powerData.length === 0) return null;
@@ -91,6 +86,7 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
       'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': totalIncomerPower,
     };
   }, [powerData]);
+  
 
 
 
@@ -147,22 +143,22 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
           />
           <ChartWrapper
             title="Daily Water Consumption Over July 2023 for Different Storeys"
-            chart={<StackedLineChart data={waterData /* or filteredWaterData */} />}
+            chart={<StackedLineChart data={stagedSettings.lineChart.selectedMeterDescription === 'All' ? waterData : waterData?.filter(item => item['Meter Description'] === stagedSettings.lineChart.selectedMeterDescription)} />}
             filters={
               <>
                 <div>
                   <label>Meter Description: </label>
                   <select onChange={(e) => setSelectedMeterDescription(e.target.value)} value={selectedMeterDescription}>
                     <option value="All">All</option>
-                    <option value="UCT D-School - Secondary Storey - Kitchen">Secondary Storey - Kitchen</option>
-                    <option value="UCT D-School - Second Storey - Toilet">Second Storey - Toilet</option>
-                    <option value="UCT D-School - Second Storey - Ablution">Second Storey - Ablution</option>
-                    <option value="UCT D-School - Ground Storey - Toilet">Ground Storey - Toilet</option>
-                    <option value="UCT D-School - Ground Storey - Hot Ablution">Ground Storey - Hot Ablution</option>
-                    <option value="UCT D-School - Ground Storey - Geyser">Ground Storey - Geyser</option>
-                    <option value="UCT D-School - Ground Storey - Cold Ablution">Ground Storey - Cold Ablution</option>
-                    <option value="UCT D-School - First Storey - Toilet">First Storey - Toilet</option>
-                    <option value="UCT D-School - First Storey - Ablution">First Storey - Ablution</option>
+                    <option value="Secondary Storey Kitchen">Secondary Storey Kitchen</option>
+                    <option value="Second Storey Toilet">Second Storey Toilet</option>
+                    <option value="Second Storey Ablution">Second Storey Ablution</option>
+                    <option value="Ground Storey Toilet">Ground Storey Toilet</option>
+                    <option value="Ground Storey Hot Ablution">Ground Storey Hot Ablution</option>
+                    <option value="Ground Storey Geyser">Ground Storey Geyser</option>
+                    <option value="Ground Storey Cold Ablution">Ground Storey Cold Ablution</option>
+                    <option value="First Storey Toilet">First Storey Toilet</option>
+                    <option value="First Storey Ablution">First Storey Ablution</option>
                   </select>
                 </div>
                 <button className="applyButton" onClick={() => applyStagedSettings('lineChart')}>Apply</button>
