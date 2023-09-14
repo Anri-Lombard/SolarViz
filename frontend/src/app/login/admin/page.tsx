@@ -305,9 +305,9 @@ const Admin = () => {
 
         <nav className='navContainer'>
           <ul style={{ paddingTop: '10px' }}>
-            <li><a href="#select-content-and-media">Select dashboard content</a></li>
-            <li><a href="#adjust-colours">Adjust Colours</a></li>
-            <li><a href="#manage-admins">Manage Administrators</a></li>
+            <li><a href="#select-content-and-media" onClick={(e) => handleScroll(e, 'select-content-and-media')}>Select dashboard content</a></li>
+            <li><a href="#adjust-colours" onClick={(e) => handleScroll(e, 'adjust-colors')}>Adjust Colours</a></li>
+            <li><a href="#manage-admins" onClick={(e) => handleScroll(e, 'manage-admins')}>Manage Administrators</a></li>
           </ul>
         </nav>
       </div>
