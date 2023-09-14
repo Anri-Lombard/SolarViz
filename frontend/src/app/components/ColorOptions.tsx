@@ -3,9 +3,9 @@ import React from 'react';
 import { ColorOptionsProps } from '../types/dataTypes';
 
 const ColorOptions: React.FC<ColorOptionsProps> = ({ type, colors, handleChangeColor, currentColor }) => (
-  <div className="flex flex-col mb-5">
+  <div className="colorGridElement">
     <h3 className='text-black font-bold '>{type} Colour</h3>
-    <div className="flex flex-wrap">
+    <div className="colorDropdown">
       <div
         className='p-2 m-1'
         style={{ backgroundColor: currentColor, width: '30px', height: '30px' }}
