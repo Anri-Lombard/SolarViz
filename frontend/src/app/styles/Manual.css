@@ -3,7 +3,6 @@
     color: black;
     padding: 30px;
     margin-top: 100px;
-    font-family: 'Ariel', sans-serif;
 }
 
 .tableOfContents {
@@ -43,23 +42,23 @@
 }
 
 .content h1 {
-    margin-bottom: 20px;
+    margin: 20px;
 }
 
 .content h2 {
-    margin-bottom: 20px;
+    margin: 20px;
     font-size: large;
 }
 
 .content h3 {
-    margin-top: 10px;
+    margin: 10px;
     font-size: large;
 }
 
 .content h4 {
     font-size: x-large;
     font-weight: bold;
-    margin-bottom: 20px;
+    margin: 20px;
 }
 
 .content li {
@@ -69,4 +68,8 @@
 
 .contribution a {
     display: block;
+}
+
+.selectContent img {
+    width: 600px;
 }

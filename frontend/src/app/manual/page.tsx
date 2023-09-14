@@ -2,6 +2,12 @@
 
 import React from 'react';
 import '../styles/Manual.css';
+import Image from 'next/image';
+
+//image imports:
+import selectContent from '../images/screenshots/selectDashboardContent.png';
+import defaultColours from '../images/screenshots/defaultColours.png';
+import customColours from '../images/screenshots/customColours.png';
 
 export default function Manual() {
 
@@ -82,26 +88,44 @@ export default function Manual() {
         <div id='administration'>
           <h4>Administration</h4>
           <p className='mb-4'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum. Donec in efficitur leo. In hac habitasse platea dictumst. Sed ullamcorper, nunc et pellentesque facilisis, sapien nisl egestas diam, nec blandit elit metus ac erat. Fusce non bibendum dui. Vivamus commodo, sem et sollicitudin malesuada, est quam ultrices orci, a semper augue mauris ut quam.
-
-            Phasellus finibus, mauris a efficitur aliquet, nulla massa venenatis nisl, id efficitur orci nunc at nulla. Proin non bibendum metus. Aenean non convallis odio. Sed fringilla, ex in ultricies cursus, ipsum dolor interdum nulla, ut commodo sapien nisi quis est. Integer nec odio praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.
-
-            Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor.
-
-            Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit.
-
-            Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam.
-
-            Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna. Quisque cursus, metus vitae pharetra auctor, sem massa mattis sem, at interdum magna augue eget diam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi lacinia molestie dui.
-
-            Praesent blandit dolor. Sed non quam. In vel mi sit amet augue congue elementum. Morbi in ipsum sit amet pede facilisis laoreet. Donec lacus nunc, viverra nec, blandit vel, egestas et, augue. Vestibulum tincidunt malesuada tellus. Ut ultrices ultrices enim. Curabitur sit amet mauris. Morbi in dui quis est pulvinar ullamcorper.
-
-            Nulla facilisi. Integer lacinia sollicitudin massa. Cras metus. Sed aliquet risus a tortor. Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante. Nulla quam. Aenean laoreet. Vestibulum nisi lectus, commodo ac, facilisis ac, ultricies eu, pede.
-
-            Ut orci risus, accumsan porttitor, cursus quis, aliquet eget, justo. Sed pretium blandit orci. Ut eu diam at pede suscipit sodales. Aenean lectus elit, fermentum non, convallis id, sagittis at, neque. Nullam mauris orci, aliquet et, iaculis et, viverra vitae, ligula. Nulla ut felis in purus aliquam imperdiet. Maecenas aliquet mollis lectus.
-
-            Vivamus consectetuer risus et tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla.
+            Here, you'll discover a range of powerful tools that empower you as an administrator. From selecting and customizing graphs
+            to managing media, adjusting colors, and handling administrators, you have the ability to streamline and optimize your system with ease. 
           </p>
+
+          <div className='selectContent'>
+            <h3>Selecting dashboard content</h3>
+            <Image src={selectContent} alt = "selectContent"/>
+            <ol>
+              <li>Graph Display: Pick the graphs you want to see by checking their checkboxes. It's all about having the information that matters most to you.</li>
+              <li>Graph Configuration: If you select a graph, you can customize it further. Set the sequence number to control its order and decide how long it stays on the screen by adjusting the duration.</li>
+              <li>Sequence Number Validation: Keep your sequence numbers in order! If they're not consecutive, you will see an error message saying, "Sequence numbers must follow each other."</li>
+              <li>Unique Sequence Numbers: Each graph needs its own special sequence number. Avoid duplicates to prevent an error message saying, "Sequence numbers must be unique."</li>
+              <li>Duration Requirement: Make sure each graph is visible for more than 10 seconds. This gives viewers enough time to absorb the information and grasp its meaning.</li>
+              <li>Selecting Media: This function works similarly to selecting graphs. You can also choose whether videos play with sound or without sound, giving you control over your media experience.</li>
+              <li>When you're ready to apply all the changes you've made to the graphs and media selections, simply click on the "Apply Changes" button. This will update your dashboard with the new configurations you've chosen.</li>
+            </ol>
+          </div>
+
+          <div className='adjustColours'>
+            <h3>Adjusting colours</h3>
+            <Image src={defaultColours} alt = "defaultColours"/>
+            <ol>
+              <li>Default Colours: In this section, the default colours for all graph variables are displayed.
+                If you wish to revert back to the default colours, simply click on one of the provided buttons. 
+                This allows for easy restoration of the original colour scheme.</li>
+            </ol>
+
+            <Image src={customColours} alt = "customColours"/>
+            <ol>
+              <li>Custom Colours: Users can also select custom colours for each variable. 
+                To do this, use the drop-down menus associated with each variable. As you make colour selections,
+                a preview of the chosen colour will be displayed next to the respective drop-down menu. This helps 
+                you visualise how the new colours will appear.</li>
+              <li>Once you are happy with the selection, click the "Apply Changes" button. This will implement the
+                 new colour scheme for the graph variables.</li>
+            </ol>
+          </div>
+
         </div>
         <div id='contribution'>
           <h4>Contribution</h4>
