@@ -128,6 +128,9 @@ export default function Manual() {
           </p>
         </div>
       </div>
+      <div className='footerText'>
+        <p>© 2023 SolarViz. All rights reserved.</p>
+      </div>
     </div>
   );
 }
