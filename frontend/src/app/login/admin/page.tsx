@@ -281,7 +281,7 @@ const Admin = () => {
     });
   };
 
-  const handleScroll = (event: React.MouseEvent, sectionId: string, offset = -100) => {
+  const handleScroll = (event: React.MouseEvent, sectionId: string, offset = -80) => {
     event.preventDefault();
     const element = document.getElementById(sectionId);
     if (element) {

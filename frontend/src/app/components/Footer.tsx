@@ -21,7 +21,7 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="footer">
+    <div className="footer">
       <div className='footerText'>
         <p>© 2023 SolarViz. All rights reserved.</p>
       </div>
@@ -39,7 +39,7 @@ export const Footer: React.FC = () => {
         </div>
       </div>
 
-    </footer>
+    </div>
   );
 };
 
