@@ -46,17 +46,17 @@ const Admin = () => {
 
 
   const defaultColors = {
-    incomerPower: settings.colors.incomerPower,
-    solarPower: settings.colors.solarPower,
-    'Secondary Storey Kitchen': settings.colors['Secondary Storey Kitchen'],
-    'Second Storey Toilet': settings.colors['Second Storey Toilet'],
-    'Second Storey Ablution': settings.colors['Second Storey Ablution'],
-    'Ground Storey Toilet': settings.colors['Ground Storey Toilet'],
-    'Ground Storey Hot Ablution': settings.colors['Ground Storey Hot Ablution'],
-    'Ground Storey Geyser': settings.colors['Ground Storey Geyser'],
-    'Ground Storey Cold Ablution': settings.colors['Ground Storey Cold Ablution'],
-    'First Storey Toilet': settings.colors['First Storey Toilet'],
-    'First Storey Ablution': settings.colors['First Storey Ablution'],
+    incomerPower: '#183D33',
+    solarPower: '#BD5545',
+    'Secondary Storey Kitchen': '#00FF00',
+    'Second Storey Toilet': '#0000FF',
+    'Second Storey Ablution': '#009099',
+    'Ground Storey Toilet': '#FF00FF',
+    'Ground Storey Hot Ablution': '#00FFFF',
+    'Ground Storey Geyser': '#800000',
+    'Ground Storey Cold Ablution': '#008000',
+    'First Storey Toilet': '#000080',
+    'First Storey Ablution': '#808000',
   };
 
   const validateGraphSettings = () => {
