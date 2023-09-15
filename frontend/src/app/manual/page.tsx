@@ -11,7 +11,7 @@ import customColours from '../images/screenshots/customColours.png';
 
 export default function Manual() {
 
-  const handleScroll = (event: React.MouseEvent, sectionId: string, offset = -110) => {
+  const handleScroll = (event: React.MouseEvent, sectionId: string, offset = -100) => {
     event.preventDefault();
     const element = document.getElementById(sectionId);
     if (element) {
