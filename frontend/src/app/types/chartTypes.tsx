@@ -19,12 +19,14 @@ export interface PieChartComponentProps {
 }
 
 export interface StackedAreaChartProps {
-    data: { Timestamp: string; 'Load Power': string; 'Solar Power': string; 'Incomer Power': string; }[];
+    data: { Timestamp: string; 'Load Power': string; 'Solar Power': string; 'Incomer Power': string; 'Expected Power': string; }[];
     colors: {
         incomerPower: string;
         solarPower: string;
+        expectedPower: string;
     },
     selectedPowerType: string;
+    showForeCast: boolean;
 }
 
 export interface StackedLineChartProps {

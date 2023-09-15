@@ -3,6 +3,15 @@ export interface DataType {
     'UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD': string;
     'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': string;
     'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': string;
+    'UCT - DSchool - Simulation - Expected power [kW]': string;
+}
+
+export interface TransformedDataType {
+    Timestamp: string;
+    'Load Power': string;
+    'Solar Power': string;
+    'Incomer Power': string;
+    'Expected Power': string;
 }
 
 export interface WaterDataType {

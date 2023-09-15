@@ -1,16 +1,4 @@
-interface DataType {
-    Timestamp: string;
-    'UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD': string;
-    'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': string;
-    'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': string;
-}
-
-interface TransformedDataType {
-    Timestamp: string;
-    'Load Power': string;
-    'Solar Power': string;
-    'Incomer Power': string;
-}
+import { DataType, TransformedDataType } from "../types/dataTypes";
 
 interface AggregatedDataType {
     'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': number;
@@ -28,6 +16,7 @@ export const transformPowerData = (powerData: DataType[]): TransformedDataType[]
         'Load Power': item['UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD'],
         'Solar Power': item['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR'],
         'Incomer Power': item['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER'],
+        'Expected Power': (parseFloat(item['UCT - DSchool - Simulation - Expected power [kW]']) * 1000).toString() // Converted to number, then to Watts, and finally to string
     }));
 };
 

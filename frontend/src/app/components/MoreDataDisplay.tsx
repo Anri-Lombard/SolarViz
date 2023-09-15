@@ -58,7 +58,11 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
         // setShowForecast(stagedSettings.areaChart.showForecast);
         // setShowTargetRange(stagedSettings.areaChart.showTargetRange);
         // setShowPerformanceMetrics(stagedSettings.areaChart.showPerformanceMetrics);
-        setStagedSettings({ ...stagedSettings, areaChart: { ...stagedSettings.areaChart, selectedPowerType: selectedPowerType } })
+        setStagedSettings(
+          {
+            ...stagedSettings, areaChart: { ...stagedSettings.areaChart, selectedPowerType: selectedPowerType, showForecast: showForecast }
+          }
+        )
         break;
       case 'lineChart':
         setStagedSettings({ ...stagedSettings, lineChart: { selectedMeterDescription: selectedMeterDescription } })
@@ -88,7 +92,7 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
       'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': totalIncomerPower,
     };
   }, [powerData]);
-  
+
 
 
 
@@ -111,7 +115,7 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
           />
           <ChartWrapper
             title="Energy from Solar and Incomer"
-            chart={<StackedAreaChart data={transformedData} colors={settings.colors} selectedPowerType={stagedSettings.areaChart.selectedPowerType} />          }
+            chart={<StackedAreaChart data={transformedData} colors={settings.colors} selectedPowerType={stagedSettings.areaChart.selectedPowerType} showForecast={stagedSettings.areaChart.showForecast} />}
             filters={
               <>
                 <div>

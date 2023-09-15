@@ -2,13 +2,14 @@ import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { StackedAreaChartProps } from '../types/chartTypes';
 
-export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors, selectedPowerType }) => {
+export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors, selectedPowerType, showForecast }) => {
     // Convert power data to kWh assuming the data is already aggregated per hour
     const convertedData = data.map(item => ({
         Timestamp: item.Timestamp,
         'Load Power': parseFloat(item['Load Power']) / 1000,
         'Solar Power': parseFloat(item['Solar Power']) / 1000,
         'Incomer Power': parseFloat(item['Incomer Power']) / 1000,
+        'Expected Power': parseFloat(item['Expected Power']) / 1000,
     }));
 
     return (
@@ -35,9 +36,10 @@ export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors
                     }}
                 />
                 <Legend layout="horizontal" verticalAlign="top" align="center" />
-                {selectedPowerType === 'All' || selectedPowerType === 'Load Power' ? <Area type="monotone" dataKey="Load Power" stackId="1" stroke="#000" fill="none" strokeWidth={2} /> : null}
-                {selectedPowerType === 'All' || selectedPowerType === 'Incomer Power' ? <Area type="monotone" dataKey="Incomer Power" stackId="2" stroke={colors.incomerPower} fill={colors.incomerPower} /> : null}
+                {!showForecast && (selectedPowerType === 'All' || selectedPowerType === 'Load Power') ? <Area type="monotone" dataKey="Load Power" stackId="1" stroke="#000" fill="none" strokeWidth={2} /> : null}
+                {!showForecast && (selectedPowerType === 'All' || selectedPowerType === 'Incomer Power') ? <Area type="monotone" dataKey="Incomer Power" stackId="2" stroke={colors.incomerPower} fill={colors.incomerPower} /> : null}
                 {selectedPowerType === 'All' || selectedPowerType === 'Solar Power' ? <Area type="monotone" dataKey="Solar Power" stackId="3" stroke={colors.solarPower} fill={colors.solarPower} /> : null}
+                {showForecast ? <Area type="monotone" dataKey="Expected Power" stackId="4" stroke="#000" fill="none" strokeWidth={2} /> : null}
             </AreaChart>
         </ResponsiveContainer>
     );
