@@ -59,10 +59,11 @@ const Admin = () => {
     'First Storey Ablution': '#808000',
   };
 
+
   const validateGraphSettings = () => {
     const sequenceNumbers = Object.values(pendingGraphSettings)
-    .map(setting => setting.sequence)
-    .filter(sequence => sequence !== 0); //filter out zeros (zeros correspond to undisplayed graphs)
+      .map(setting => setting.sequence)
+      .filter(sequence => sequence !== 0); //filter out zeros (zeros correspond to undisplayed graphs)
 
     if (pendingMediaSettings.display) { // add media settings sequence to be considered in rotation
       sequenceNumbers.push(pendingMediaSettings.sequence)
@@ -71,7 +72,7 @@ const Admin = () => {
     const uniqueSequenceNumbers = new Set(sequenceNumbers);
 
     // Check if a sequence number is chosen twice
-    if (sequenceNumbers.length !== uniqueSequenceNumbers.size ) {
+    if (sequenceNumbers.length !== uniqueSequenceNumbers.size) {
       setGraphSettingsError("Sequence numbers must be unique.");
       return false;
     }
@@ -122,7 +123,7 @@ const Admin = () => {
     } else {
       router.push('/login');
     }
-  }, []);
+  }, [router]);
 
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
@@ -132,7 +133,7 @@ const Admin = () => {
     }
   };
 
-  const handleChangeColor = (type: ColorType, color: string) => {
+  const handleChangeColor = (type: string, color: string) => {
     setPendingChanges({
       ...pendingChanges,
       colors: {
@@ -340,7 +341,7 @@ const Admin = () => {
           handleMediaSettingsChange={handleMediaSettingsChange}
           settings={pendingMediaSettings}
         />
-        
+
       </div>
 
       <div id="adjust-colours" className='mb-5 adminBlock'>
@@ -359,7 +360,7 @@ const Admin = () => {
               <div key={type} className="defaultColorGridElement">
                 <span className='text-black mr-2'>{type}: </span>
                 <button
-                  onClick={() => handleChangeColor(type as ColorType, color)}
+                  onClick={() => handleChangeColor(type as string, color)}
                   className={`p-2`}
                   style={{ backgroundColor: color }}
                 >
@@ -370,17 +371,21 @@ const Admin = () => {
           </div>
           <h1 className='text-black font-bold'>Choose your graph colours:</h1>
           <div className='colorGrid'>
-          {(Object.keys(pendingChanges.colors) as Array<ColorType | string>).map((type) => (
-            <ColorOptions
-              key={type}
-              type={type as ColorType}
-              colors={colors}
-              handleChangeColor={handleChangeColor}
-              currentColor={(pendingChanges.colors as any)[type]}
-            />
-          ))}
+            {(Object.keys(pendingChanges.colors) as Array<ColorType | string>).map((type) => {
+              console.log(`Type: ${type}, Current Color: ${(pendingChanges.colors as any)[type]}`);
+              return (
+                <ColorOptions
+                  key={type}
+                  type={type as ColorType}
+                  colors={colors}
+                  handleChangeColor={handleChangeColor}
+                  currentColor={(pendingChanges.colors as any)[type]}
+                />
+              );
+            })}
+
           </div>
-          
+
         </div>
       </div>
 
