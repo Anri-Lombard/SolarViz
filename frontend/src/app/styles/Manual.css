@@ -3,7 +3,6 @@
     color: black;
     padding: 30px;
     margin-top: 100px;
-    font-family: 'Ariel', sans-serif;
 }
 
 .tableOfContents {
@@ -27,7 +26,6 @@
 
 .tableOfContents a:hover {
     text-decoration: underline; /* Add underline */
-    background-color: #f3e9cb; /* Add background color */
     color: #292827; /* Change text color */
     font-weight: bold; /* Make text bold */
 }
@@ -44,25 +42,34 @@
 }
 
 .content h1 {
-    margin-bottom: 20px;
+    margin: 20px;
 }
 
 .content h2 {
-    margin-bottom: 20px;
+    margin: 20px;
     font-size: large;
 }
 
 .content h3 {
-    margin-top: 10px;
+    margin: 10px;
     font-size: large;
 }
 
 .content h4 {
     font-size: x-large;
     font-weight: bold;
+    margin: 20px;
 }
 
 .content li {
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+.contribution a {
+    display: block;
+}
+
+.selectContent img {
+    width: 600px;
 }

@@ -22,7 +22,6 @@
     position: relative;
     float: right;
     right: 20px;
-    top: 100px;
     display: flex;
     flex-direction: column;
 }
@@ -149,18 +148,18 @@ h2 {
 }
 
 .selectionBlock {
-    padding: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
     border-radius: 10px;
     border: 2px solid #292827;
     margin-top: 60px;
     border-width: 0px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(3, minmax(100px, 1fr));
     grid-column-gap: 20px;
 }
 
 .gridElement {
-    padding: 0.2rem;
     border-right: 1px solid #292827;
     border-radius: 0px; 
 }
@@ -199,7 +198,6 @@ h2 {
 }
 
 .colorGrid {
-    padding: 20px;
     border-radius: 10px;
     border: 2px solid #292827;
     margin-top: 60px;
@@ -207,4 +205,44 @@ h2 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-column-gap: 20px;
+    font-size: 14px;
+}
+
+.colorGridElement {
+    height:120px;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.colorGridElement h3 {
+    margin-top: 10px;
+}
+
+.colorGridElement .colorDropdown {
+    position: absolute;
+    bottom: 0;
+    padding: 10px;
+    display: flex;
+}
+
+.defaultColorGridElement {
+    height:120px;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.defaultColorGridElement button {
+    position: absolute;
+    max-width: 100px;
+    height: 60px;
+    right: 0;
+}
+
+.defaultColorGridElement span {
+    margin-right: 100px;
+    position: absolute;
+    left:0;
+    word-wrap: break-word;
 }

@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation';
 import logoImage from '../images/logo.png';
 import lock from '../images/lock.png';
 import unlock from '../images/unlock.png';
+import logoPlain from '../images/logoPlain.png';
 import '../styles/Header.css';
 import Image from 'next/image';
 import { useAuth } from '../contexts/LoginContext';
@@ -59,6 +60,8 @@ const Header: React.FC = () => {
         <Image src={logoImage} alt="logo" style={{ opacity: logoOpacity }} />
         {isLogoHovered && <div className="hoverText">Return to homepage</div>}
       </div>
+
+      {logoOpacity === 0 && <Image src={logoPlain} alt="Plain Logo" className='logoPlain' />}
 
       <div className='menuButtonContainer'>
         <div

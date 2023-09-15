@@ -1,5 +1,10 @@
 import { GraphSettingsProps } from '../types/dataTypes';
 import React, { useState, useEffect } from 'react';
+import '../styles/GraphSettings.css';
+import Image from 'next/image';
+import pie from '../images/piechart.png';
+import line from '../images/linechart.png';
+import area from '../images/areachart.png';
 
 const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handleGraphSettingsChange, settings }) => {
 
@@ -16,7 +21,15 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
 
   return (
     <div className="gridElement">
-      <h3 className="font-bold text-l">{chartType}</h3>
+      <div className="graphHeading">
+        <h3 className="font-bold text-l">{chartType}</h3>
+        <Image
+          src={chartType === 'pieChart' ? pie : chartType === 'lineChart' ? line : area}
+          alt="chartImage"
+          className='chartImage'
+        />
+      </div>
+      
       <label>
         Sequence:
         <input

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface MediaSettingsProps {
   handleMediaSettingsChange: (field: string, value: any) => void;
@@ -10,6 +10,14 @@ interface MediaSettingsProps {
 }
 
 const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({ handleMediaSettingsChange, settings }) => {
+
+  useEffect(() => {
+    // Listen for changes to settings[chartType].display
+    if (!settings.display) {
+      // If display is unchecked, reset sequence to 0
+      handleMediaSettingsChange('audio', false);
+    }
+  }, [settings.display]);
 
   return (
     <div className="gridElement">

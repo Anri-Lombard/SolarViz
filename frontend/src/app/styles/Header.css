@@ -56,6 +56,7 @@
   border-radius: 8px;
   cursor: pointer;
   clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
+  z-index: 1;
 }
 
 .hoverText {
@@ -66,4 +67,10 @@
   background-color: #fff4d9;
   border-radius: 10px;
   font-size: small;
+}
+
+.logoPlain {
+  position: absolute;
+  width: 120px;
+  margin-left: 10px;
 }
