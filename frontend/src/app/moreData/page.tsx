@@ -7,6 +7,11 @@ import { useSettings } from '../contexts/SettingsContext';
 
 import { DataType as PowerDataType, WaterDataType } from '../types/dataTypes';
 
+/**
+ * The Home component displays the main content of the application, including power and water data.
+ *
+ * @returns {JSX.Element} The JSX for the Home component.
+ */
 
 export default function Home() {
   const [powerData, setPowerData] = useState<PowerDataType[]>([]);

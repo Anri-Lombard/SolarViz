@@ -3,6 +3,12 @@
 import React from 'react';
 import '../styles/Manual.css';
 
+/**
+ * The Manual component displays documentation for SolarViz.
+ *
+ * @returns {JSX.Element} The JSX for the Manual component.
+ */
+
 export default function Manual() {
   return (
     <div className='manualContainer'>

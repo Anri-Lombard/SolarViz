@@ -1,67 +1,77 @@
+/* Tailwind CSS Imports */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Root Variables for Color Scheme */
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+    --foreground-rgb: 0, 0, 0; /* RGB values for foreground color */
+    --background-start-rgb: 214, 219, 220; /* RGB values for background start color */
+    --background-end-rgb: 255, 255, 255; /* RGB values for background end color */
 }
 
+/* Dark Mode Media Query */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+    :root {
+        --foreground-rgb: 255, 255, 255; /* RGB values for foreground color in dark mode */
+        --background-start-rgb: 0, 0, 0; /* RGB values for background start color in dark mode */
+        --background-end-rgb: 0, 0, 0; /* RGB values for background end color in dark mode */
+    }
 }
 
+/* Body Styles */
 body {
-  color: rgb(var(--foreground-rgb));
-  background-color: #f9f3e7; 
-  font-family: 'Verdana', sans-serif;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  caret-color: transparent;
+    color: rgb(var(--foreground-rgb)); /* Text color */
+    background-color: #f9f3e7; /* Background color */
+    font-family: 'Verdana', sans-serif; /* Font family */
+    margin: 0; /* Margin */
+    padding: 0; /* Padding */
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    min-height: 100vh; /* Minimum viewport height */
+    caret-color: transparent; /* Transparent caret color (text cursor) */
 }
 
+/* Main Block Styles */
 .mainBlock {
-  position: relative;
-  margin-top: 100px;
-  margin-bottom: 100px;
-  width: 95%;
-  height: 95%;
-  background-color: #f3e9cb;
-  border: 1px solid #2a2928;
-  border-radius: 20px;
-  padding: 30px 20px;
-  box-sizing: border-box;
+    position: relative; /* Relative positioning */
+    margin-top: 100px; /* Top margin */
+    margin-bottom: 100px; /* Bottom margin */
+    width: 95%; /* Width */
+    height: 95%; /* Height */
+    background-color: #f3e9cb; /* Background color */
+    border: 1px solid #2a2928; /* Border style */
+    border-radius: 20px; /* Rounded corners */
+    padding: 30px 20px; /* Padding */
+    box-sizing: border-box; /* Include padding in width/height calculations */
 }
 
+/* Heading Styles */
 h1, h2, h3, h4, h5, h6 {
-  color: rgb(var(--foreground-rgb));
+    color: rgb(var(--foreground-rgb)); /* Text color */
 }
 
+/* Anchor (Link) Styles */
 a {
-  color: rgb(var(--foreground-rgb));
-  text-decoration: none;
+    color: rgb(var(--foreground-rgb)); /* Link text color */
+    text-decoration: none; /* No text decoration (underline) */
 }
 
+/* Hover Effect for Anchor (Link) */
 a:hover {
-  text-decoration: underline;
+    text-decoration: underline; /* Underline on hover */
 }
 
+/* HTML Scroll Behavior */
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth; /* Smooth scrolling behavior */
 }
 
+/* Hover Text Styles */
 .hoverText {
-  position: absolute;
-  color: #292827;
-  background-color: white;
-  border-radius: 2px;
+    position: absolute; /* Absolute positioning */
+    color: #292827; /* Text color */
+    background-color: white; /* Background color */
+    border-radius: 2px; /* Rounded corners */
 }

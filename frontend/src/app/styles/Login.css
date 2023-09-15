@@ -1,16 +1,18 @@
+/* CSS for Login Content */
 .loginContent {
-    width:600px;
-    text-align: center;
+    width: 600px; /* Width of the login content */
+    text-align: center; /* Center-align text */
 }
 
+/* CSS for h2 Headings */
 h2 {
-    font-weight: normal;
-    font-size: x-large;
-    margin: 10px;
+    font-weight: normal; /* Normal font weight */
+    font-size: x-large; /* Font size */
+    margin: 10px; /* Margin around the heading */
 }
 
+/* Login Image */
 .loginImage {
-    width: 30%;
-    margin: 0 auto;
-  }
-  
+    width: 30%; /* Width of the login image */
+    margin: 0 auto; /* Center horizontally within the container */
+}

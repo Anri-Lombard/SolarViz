@@ -1,184 +1,207 @@
+/* CSS for Error Messages */
 .errorMessage {
-    color: red;
-    font-weight: bold;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    color: red; /* Text color */
+    font-weight: bold; /* Bold font */
+    margin-top: 10px; /* Top margin */
+    margin-bottom: 10px; /* Bottom margin */
 }
 
+/* CSS for Apply Button */
 .applyButton {
-    background-color: #f3e9cb;
-    border-color: #292827;
-    border-width: 2px;
-    border-radius: 10px;
-    justify-content: flex-end;
-    padding: 1vh 1vh;
-    color: #292827;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-size: small;
+    background-color: #f3e9cb; /* Background color */
+    border-color: #292827; /* Border color */
+    border-width: 2px; /* Border width */
+    border-radius: 10px; /* Rounded corners */
+    justify-content: flex-end; /* Flexbox alignment */
+    padding: 1vh 1vh; /* Padding */
+    color: #292827; /* Text color */
+    cursor: pointer; /* Cursor type */
+    text-transform: uppercase; /* Uppercase text */
+    font-size: small; /* Font size */
 }
 
+/* Container for Apply Button */
 .applyButtonContainer {
-    position: relative;
-    float: right;
-    right: 20px;
-    top: 100px;
-    display: flex;
-    flex-direction: column;
+    position: relative; /* Relative positioning */
+    float: right; /* Float to the right */
+    right: 20px; /* Right offset */
+    top: 100px; /* Top offset */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Vertical column layout */
 }
 
+/* Container for Apply Graph Settings Button */
 .applyGraphSettingsButtonContainer {
-    position: relative;
-    float: right;
-    right: 10px;
-    top: 0;
-    display: flex;
-    flex-direction: column;
+    position: relative; /* Relative positioning */
+    float: right; /* Float to the right */
+    right: 10px; /* Right offset */
+    top: 0; /* Top offset */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Vertical column layout */
 }
 
+/* CSS for Apply Graph Settings Button */
 .applyGraphSettingsButton {
-    background-color: #f3e9cb;
-    border-color: #292827;
-    border-width: 2px;
-    border-radius: 10px;
-    justify-content: flex-end;
-    padding: 1vh 1vh;
-    color: #292827;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-size: small;
+    background-color: #f3e9cb; /* Background color */
+    border-color: #292827; /* Border color */
+    border-width: 2px; /* Border width */
+    border-radius: 10px; /* Rounded corners */
+    justify-content: flex-end; /* Flexbox alignment */
+    padding: 1vh 1vh; /* Padding */
+    color: #292827; /* Text color */
+    cursor: pointer; /* Cursor type */
+    text-transform: uppercase; /* Uppercase text */
+    font-size: small; /* Font size */
 }
 
+/* Hover effect for Apply Graph Settings Button */
 .applyGraphSettingsButton:hover {
-    color: #f3e9cb;
-    background-color: #292827;
+    color: #f3e9cb; /* Text color on hover */
+    background-color: #292827; /* Background color on hover */
 }
 
+/* Hover effect for Apply Button */
 .applyButton:hover {
-    color: #f3e9cb;
-    background-color: #292827;
+    color: #f3e9cb; /* Text color on hover */
+    background-color: #292827; /* Background color on hover */
 }
 
+/* CSS for h2 Headings */
 h2 {
-    font-size: x-large;
-    font-weight: bold;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    text-align: center;
+    font-size: x-large; /* Font size */
+    font-weight: bold; /* Bold font */
+    padding-top: 20px; /* Top padding */
+    padding-bottom: 20px; /* Bottom padding */
+    text-align: center; /* Center-align text */
 }
 
+/* CSS for Intro Text */
 .intro {
-    font-size: medium;
-    padding-top: 100px;
-    padding-bottom: 20px;
-    margin: 40px;
+    font-size: medium; /* Font size */
+    padding-top: 100px; /* Top padding */
+    padding-bottom: 20px; /* Bottom padding */
+    margin: 40px; /* Margin */
 }
 
+/* CSS for Links in Intro Text */
 .intro a {
-    color: #183d33;
+    color: #183d33; /* Link text color */
 }
 
+/* CSS for Admin Blocks */
 .adminBlock {
-    background-color: #f3e9cb;
-    padding: 30px;
-    border-radius: 10px;
-    border: 2px solid #292827;
-    border-width: 1px;
-    margin: 20px;
+    background-color: #f3e9cb; /* Background color */
+    padding: 30px; /* Padding */
+    border-radius: 10px; /* Rounded corners */
+    border: 2px solid #292827; /* Border */
+    border-width: 1px; /* Border width */
+    margin: 20px; /* Margin */
 }
 
+/* CSS for Lists in Admin Blocks */
 .adminBlock ul {
-    list-style-type: none;
-    padding: 0;
+    list-style-type: none; /* No list bullets */
+    padding: 0; /* No padding */
 }
 
+/* CSS for List Items in Admin Blocks */
 .adminBlock li {
-    padding: 10px;
-    border-bottom: 1px solid #292827;
-    display: flex;
-    justify-content: space-between;
+    padding: 10px; /* Padding */
+    border-bottom: 1px solid #292827; /* Bottom border */
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between elements */
 }
 
+/* CSS for Labels in Admin Blocks */
 .adminBlock label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #292827;
+    display: block; /* Block-level element */
+    margin-bottom: 0.5rem; /* Bottom margin */
+    color: #292827; /* Text color */
 }
 
+/* CSS for Input Fields in Admin Blocks */
 .adminBlock input {
-    padding: 0.5rem;
-    max-width: 200px;
-    margin: 30px;
-    border: 1px solid #292827;
-    border-radius: 5px;
-    caret-color: black
+    padding: 0.5rem; /* Padding */
+    max-width: 200px; /* Maximum width */
+    margin: 30px; /* Margin */
+    border: 1px solid #292827; /* Border */
+    border-radius: 5px; /* Rounded corners */
+    caret-color: black; /* Caret (text cursor) color */
 }
 
+/* CSS for Buttons in Admin Blocks */
 .adminBlock button {
-    background-color: #292827;
-    color: hsl(45, 63%, 87%);
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-size: small;
-    border-color: #292827;
-    border-width: 2px;
-    border-radius: 5px;
+    background-color: #292827; /* Background color */
+    color: hsl(45, 63%, 87%); /* Text color */
+    padding: 10px 20px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Cursor type */
+    text-transform: uppercase; /* Uppercase text */
+    font-size: small; /* Font size */
+    border-color: #292827; /* Border color */
+    border-width: 2px; /* Border width */
+    border-radius: 5px; /* Rounded corners */
 }
 
+/* Hover effect for Buttons in Admin Blocks */
 .adminBlock button:hover {
-    color: #292827;
-    background-color: #f3e9cb;
+    color: #292827; /* Text color on hover */
+    background-color: #f3e9cb; /* Background color on hover */
 }
 
+/* CSS for Selection Blocks */
 .selectionBlock {
-    background-color: #f3e9cb;
-    padding: 20px;
-    border-radius: 10px;
-    border: 2px solid #292827;
-    margin-top: 60px;
-    border-width: 0px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    grid-column-gap: 20px;
+    background-color: #f3e9cb; /* Background color */
+    padding: 20px; /* Padding */
+    border-radius: 10px; /* Rounded corners */
+    border: 2px solid #292827; /* Border */
+    margin-top: 60px; /* Top margin */
+    border-width: 0px; /* Border width */
+    display: grid; /* Use grid layout */
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Dynamic columns */
+    grid-column-gap: 20px; /* Gap between columns */
 }
 
+/* CSS for Grid Elements in Selection Blocks */
 .gridElement {
-    padding: 0.2rem;
-    border-right: 1px solid #292827;
-    border-radius: 0px; 
+    padding: 0.2rem; /* Padding */
+    border-right: 1px solid #292827; /* Right border */
+    border-radius: 0px; /* Rounded corners */
 }
 
+/* CSS for Input Fields in Selection Blocks */
 .selectionBlock input {
-    width: 60px;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
+    width: 60px; /* Width */
+    padding: 0.5rem; /* Padding */
+    margin-bottom: 1rem; /* Bottom margin */
 }
 
+/* CSS for Labels in Selection Blocks */
 .selectionBlock label {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Align items vertically */
+    justify-content: space-between; /* Space between elements */
 }
 
+/* CSS for Logout Button */
 .logoutButton {
-    position: relative;
-    float: right;
-    margin-bottom: 70px;
-    margin-right: 20px;
-    background-color: #f3e9cb;
-    border-color: #292827;
-    border-width: 2px;
-    border-radius: 10px;
-    padding: 1vh 1vh;
-    color: #292827;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-size: small;
+    position: relative; /* Relative positioning */
+    float: right; /* Float to the right */
+    margin-bottom: 70px; /* Bottom margin */
+    margin-right: 20px; /* Right margin */
+    background-color: #f3e9cb; /* Background color */
+    border-color: #292827; /* Border color */
+    border-width: 2px; /* Border width */
+    border-radius: 10px; /* Rounded corners */
+    padding: 1vh 1vh; /* Padding */
+    color: #292827; /* Text color */
+    cursor: pointer; /* Cursor type */
+    text-transform: uppercase; /* Uppercase text */
+    font-size: small; /* Font size */
 }
 
+/* Hover effect for Logout Button */
 .logoutButton:hover {
-    color: #f3e9cb;
-    background-color: #292827;
+    color: #f3e9cb; /* Text color on hover */
+    background-color: #292827; /* Background color on hover */
 }
