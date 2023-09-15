@@ -41,7 +41,8 @@ const Admin = () => {
   const colors = [
     'red', 'blue', 'green', 'yellow', 'purple', 'black', 'white', 'gray', 'cyan',
     'magenta', 'maroon', 'navy', 'olive', 'teal', 'lime', 'aqua', 'fuchsia', 'silver',
-    'gold', 'orange'
+    'gold', 'orange', '#183D33', '#BD5545', '#00FF00', '#0000FF', '#009099', '#FF00FF',
+    '#00FFFF', '#800000', '#008000', '#000080', '#808000'
   ];
 
 
@@ -372,7 +373,6 @@ const Admin = () => {
           <h1 className='text-black font-bold'>Choose your graph colours:</h1>
           <div className='colorGrid'>
             {(Object.keys(pendingChanges.colors) as Array<ColorType | string>).map((type) => {
-              console.log(`Type: ${type}, Current Color: ${(pendingChanges.colors as any)[type]}`);
               return (
                 <ColorOptions
                   key={type}
