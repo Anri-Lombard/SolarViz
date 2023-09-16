@@ -1,10 +1,3 @@
-/**
- * Header Component
- * 
- * This component is responsible for rendering the header of the application.
- * It includes a logo that redirects to the homepage and menu buttons for navigation.
- */
-
 "use client"
 
 // Importing dependencies and custom components
@@ -17,6 +10,13 @@ import logoPlain from '../images/logoPlain.png';
 import '../styles/Header.css';
 import Image from 'next/image';
 import { useAuth } from '../contexts/LoginContext';
+
+/**
+ * Header component renders the header of the application.
+ * It includes a logo that redirects to the homepage and menu buttons for navigation.
+ * 
+ * @returns {JSX.Element} The Header component JSX.
+ */
 
 const Header: React.FC = () => {
   // State and Hooks

@@ -14,6 +14,9 @@ import MediaSettingsComponent from '../../components/MediaSettingsComponent';
 
 import { Admin, ColorType, ChartType } from '../../types/dataTypes'
 
+/**
+ * Component for the administrator dashboard.
+ */
 
 const Admin = () => {
   const { settings, setSettings } = useSettings();
@@ -60,6 +63,10 @@ const Admin = () => {
     'First Storey Ablution': '#808000',
   };
 
+   /**
+   * Function to validate graph settings.
+   * @returns True if graph settings are valid, false otherwise.
+   */
 
   const validateGraphSettings = () => {
     const sequenceNumbers = Object.values(pendingGraphSettings)
@@ -106,6 +113,13 @@ const Admin = () => {
     return true;
   };
 
+  /**
+   * Function to handle graph settings change.
+   * @param chartType   The type of chart (e.g., 'pieChart', 'areaChart').
+   * @param field       The field within the chart settings to change.
+   * @param value       The new value to set.
+   */
+
   const handleGraphSettingsChange = (chartType: ChartType, field: string, value: number | boolean) => {
     setPendingGraphSettings({
       ...pendingGraphSettings,
@@ -133,6 +147,12 @@ const Admin = () => {
       logout();
     }
   };
+
+  /**
+   * Function to handle color change.
+   * @param type    The type of color to change (e.g., 'incomerPower', 'solarPower').
+   * @param color   The new color value.
+   */
 
   const handleChangeColor = (type: string, color: string) => {
     setPendingChanges({
@@ -168,6 +188,12 @@ const Admin = () => {
       fetchAdmins();
     }
   }, [token]);
+
+  /**
+   * Function to add an administrator.
+   * @param username  The username of the administrator.
+   * @param password  The password of the administrator.
+   */
 
   const addAdmin = async (username: string, password: string) => {
     if (window.confirm(`Are you sure you want to add ${username} as an admin?`)) {
@@ -205,6 +231,11 @@ const Admin = () => {
     }
   };
 
+  /**
+   * Function to remove an administrator.
+   * @param id  The ID of the administrator to remove.
+   */
+
   const removeAdmin = async (id: number) => {
     if (window.confirm(`Are you sure you want to remove this admin?`)) {
 
@@ -230,6 +261,10 @@ const Admin = () => {
       }
     }
   };
+
+  /**
+   * Function to apply color changes.
+   */
 
   const applyColorChanges = () => {
     if (window.confirm("Are you sure you want to apply color changes?")) {
@@ -259,6 +294,10 @@ const Admin = () => {
     }
   };
 
+  /**
+   * Function to apply graph settings changes.
+   */
+
   const applyGraphSettingsChanges = () => {
     if (validateGraphSettings()) {
       if (window.confirm("Are you sure you want to apply graph settings changes?")) {
@@ -278,6 +317,12 @@ const Admin = () => {
     }
 
   };
+
+  /**
+   * Function to handle media settings change.
+   * @param field   The field within the media settings to change.
+   * @param value   The new value to set.
+   */
 
   const handleMediaSettingsChange = (field: string, value: number | boolean) => {
     setPendingMediaSettings({

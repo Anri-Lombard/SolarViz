@@ -1,69 +1,75 @@
+/* Footer content at the bottom of the page */
 .footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: #8fbf99;
-    color: black;
-    text-align: center;
-    padding: 5px 0vh;
-    display: flex;
-    justify-content: space-between;
-    caret-color: transparent;
+    position: fixed; /* Fixed position at the bottom */
+    bottom: 0; /* Align to the bottom */
+    width: 100%; /* Full width */
+    background-color: #8fbf99; /* Background color */
+    color: black; /* Text color */
+    text-align: center; /* Center-align text */
+    padding: 5px 0vh; /* Padding */
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between elements */
+    caret-color: transparent; /* Transparent caret color (text cursor) */
 }
 
+/* Text within the footer, centered vertically and horizontally */
 .footerText {
     position: fixed;
     bottom: 0%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    font-size: 16px; 
+    left: 50%; /* Align horizontally at 50% from the left */
+    transform: translate(-50%, -50%); /* Center horizontally and vertically */
+    text-align: center; /* Center-align text */
+    font-size: 16px; /* Font size */
     z-index: 2;
 }
 
+/* Container for footer content, right-aligned and vertically aligned at the top */
 .footerContainer {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-    margin-left: auto;
-    margin-top: 2px;
+    display: flex; /* Use flexbox for layout */
+    justify-content: flex-end; /* Align content to the right */
+    align-items: flex-start; /* Align items to the top */
+    margin-left: auto; /* Auto margin on the left */
+    margin-top: 2px; /* Margin on the top */
 }
 
+/* Help button with specific styling */
 .helpButton {
-    color: #292827;
-    padding: 0.5vh 2vh;
-    border-radius: 8px;
-    border-width: 2px;
-    border-color: #292827;
-    cursor: pointer;
-    margin-right: 5px;
-    margin-left: 5px;
-    display: inline-flex;
+    color: #292827; /* Text color */
+    padding: 0.5vh 2vh; /* Padding */
+    border-radius: 8px; /* Rounded corners */
+    border-width: 2px; /* Border width */
+    border-color: #292827; /* Border color */
+    cursor: pointer; /* Cursor type */
+    margin-right: 5px; /* Margin to the right */
+    margin-left: 5px; /* Margin to the left */
+    display: inline-flex; /* Inline display */
 }
 
+/* Footer image with specific styling */
 .footerImage {
-    max-width: 25px;
-    height: auto;
-    margin-right: 5px;
-    margin-left: 5px;
-  }
+    max-width: 25px; /* Maximum image width */
+    height: auto; /* Auto-adjust height */
+    margin-right: 5px; /* Margin to the right */
+    margin-left: 5px; /* Margin to the left */
+}
 
+/* Hover effect for the help button */
 .helpButton:hover {
-    background-color: #292827;
-    color: #f3e9cb;
-  }
+    background-color: #292827; /* Background color on hover */
+    color: #f3e9cb; /* Text color on hover */
+}
 
+/* Hover text with specific styling */
 .hoverText {
     position: absolute;
-    top:4px;
-    right:50px;
-    color: #292827;
-    background-color: white;
-    border-radius: 2px;
-    padding: 0.5vh 1vh;
-    font-size: small;
-    width: fit-content;
-    white-space: nowrap;
-    z-index: 1;
+    top: 4px; /* Position from the top */
+    right: 50px; /* Position from the right */
+    color: #292827; /* Text color */
+    background-color: white; /* Background color */
+    border-radius: 2px; /* Rounded corners */
+    padding: 0.5vh 1vh; /* Padding */
+    font-size: small; /* Font size */
+    width: fit-content; /* Adjust width to content */
+    white-space: nowrap; /* Prevent line breaks */
+    z-index: 1; /* Stack above other elements */
 }
-  

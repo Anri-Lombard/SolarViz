@@ -1,7 +1,19 @@
 import React, { useEffect } from 'react';
 
 interface MediaSettingsProps {
+
+  /**
+   * Function to handle changes in media settings.
+   *
+   * @param {string} field - The field to update (e.g., 'sequence', 'display', 'audio').
+   * @param {any} value - The new value for the field.
+   */
+
   handleMediaSettingsChange: (field: string, value: any) => void;
+  
+  
+  // The media settings object.
+
   settings: {
     sequence: number;
     display: boolean;

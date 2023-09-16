@@ -1,11 +1,13 @@
+/* CSS for Headings */
 .heading {
-  margin-top: 50px;
-  font-size: 20px;
-  text-align: center;
-  font-family: 'Verdana', sans-serif;
+  margin-top: 50px; /* Top margin */
+  font-size: 20px; /* Font size */
+  text-align: center; /* Center-align text */
+  font-family: 'Verdana', sans-serif; /* Font family */
 }
 
+/* CSS for Graph Container */
 .graphContainer {
-  width: auto;
-  height: auto;
+  width: auto; /* Automatic width */
+  height: auto; /* Automatic height */
 }

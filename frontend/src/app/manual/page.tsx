@@ -9,6 +9,12 @@ import selectContent from '../images/screenshots/selectDashboardContent.png';
 import defaultColours from '../images/screenshots/defaultColours.png';
 import customColours from '../images/screenshots/customColours.png';
 
+/**
+ * The Manual component displays documentation for SolarViz.
+ *
+ * @returns {JSX.Element} The JSX for the Manual component.
+ */
+
 export default function Manual() {
 
   const handleScroll = (event: React.MouseEvent, sectionId: string, offset = -100) => {

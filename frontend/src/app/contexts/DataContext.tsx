@@ -3,6 +3,12 @@ import React, { createContext, useState, useEffect, useContext, ReactNode } from
 import { DataContextProps } from '../types/contextTypes';
 import { DataType, WaterDataType } from '../types/dataTypes';
 
+/**
+ * DataProvider component responsible for providing data to the application.
+ *
+ * @param children    Child components that need access to the data context.
+ */
+
 // Create the context
 export const DataContext = createContext<DataContextProps>({
   powerData: [],

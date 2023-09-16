@@ -1,59 +1,67 @@
+/* CSS for Headings */
 .heading {
-    font-size: 20px;
-    text-align: center;
-    font-family: 'Verdana', sans-serif;
+    font-size: 20px; /* Font size */
+    text-align: center; /* Center-align text */
+    font-family: 'Verdana', sans-serif; /* Font family */
 }
 
+/* CSS for Graph Container */
 .graphContainer {
-    position: absolute;
-    margin-top: 5vh;
-    max-height: 85vh;
-    overflow-y: auto;
-    align-items: center;
+    position: absolute; /* Absolute positioning */
+    margin-top: 5vh; /* Top margin */
+    max-height: 85vh; /* Maximum height */
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
+    align-items: center; /* Align items vertically */
 }
 
+/* CSS for Chart Wrapper */
 .chartWrapper {
-    display: flex;
-    justify-content: space-between;
-    margin: 3rem 0;
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between elements */
+    margin: 3rem 0; /* Margin */
 }
 
+/* CSS for Chart Section */
 .chartSection {
-    width: 100vh;
+    width: 100vh; /* Width */
 }
 
+/* CSS for Text Section */
 .textSection {
-    width: 300px;
-    padding: 20px;
-    margin-left: 2rem;
-    background-color: #f3e9cb;
-    border-color: #292827;
-    border-width: 2px;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
+    width: 300px; /* Width */
+    padding: 20px; /* Padding */
+    margin-left: 2rem; /* Left margin */
+    background-color: #f3e9cb; /* Background color */
+    border-color: #292827; /* Border color */
+    border-width: 2px; /* Border width */
+    border-radius: 20px; /* Rounded corners */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Vertical column layout */
+    align-items: flex-start; /* Align items to the left */
+    justify-content: space-between; /* Space between elements */
 }
 
+/* CSS for Text Section Divs */
 .textSection div {
-    margin-bottom: 1rem;
+    margin-bottom: 1rem; /* Bottom margin */
 }
 
+/* CSS for Apply Button */
 .applyButton {
-    background-color: #f3e9cb;
-    border-color: #292827;
-    border-width: 2px;
-    border-radius: 10px;
-    justify-content: flex-end;
-    padding: 1vh 1vh;
-    color: #292827;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-size: small;
+    background-color: #f3e9cb; /* Background color */
+    border-color: #292827; /* Border color */
+    border-width: 2px; /* Border width */
+    border-radius: 10px; /* Rounded corners */
+    justify-content: flex-end; /* Flexbox alignment */
+    padding: 1vh 1vh; /* Padding */
+    color: #292827; /* Text color */
+    cursor: pointer; /* Cursor type */
+    text-transform: uppercase; /* Uppercase text */
+    font-size: small; /* Font size */
 }
 
+/* Hover effect for Apply Button */
 .applyButton:hover {
-    color: #f3e9cb;
-    background-color: #292827;
+    color: #f3e9cb; /* Text color on hover */
+    background-color: #292827; /* Background color on hover */
 }

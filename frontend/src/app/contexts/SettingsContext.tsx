@@ -4,6 +4,11 @@ import type { Metadata } from 'next'
 import { SettingsContextType } from '../types/contextTypes';
 import { Settings } from '../types/dataTypes';
 
+/**
+ * Authentication provider component responsible for managing user login state.
+ *
+ * @param children      Child components that need access to the authentication context.
+ */
 
 export const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
