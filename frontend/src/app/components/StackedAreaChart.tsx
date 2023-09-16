@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { StackedAreaChartProps } from '../types/chartTypes';
+import { format } from 'date-fns';
+
+const getTickFormatter = (duration: string) => {
+    if (duration === 'day') {
+        return (tick: any) => format(new Date(tick), 'HH:mm');
+    } else if (duration === 'month') {
+        return (tick: any) => format(new Date(tick), 'dd MMM');
+    } else if (duration === 'year') {
+        return (tick: any) => format(new Date(tick), 'MMM yyyy');
+    }
+    return (tick: any) => tick;
+};
 
 export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors, selectedPowerType, showForecast, duration }) => {
+    const tickFormatter = useMemo(() => getTickFormatter(duration), [duration]);
+    
     if (!data || data.length === 0) {
         return <div>No data available</div>;
     }
-    
+
     // Convert power data to kWh assuming the data is already aggregated per hour
     const convertedData = data.map(item => ({
         Timestamp: new Date(item.Timestamp),
@@ -37,6 +51,8 @@ export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors
         return true;
     });
 
+    // FIXME: X-axis
+    
     return (
         <ResponsiveContainer height={600}>
             <AreaChart
@@ -49,7 +65,8 @@ export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors
                 }}
             >
                 <XAxis
-                    dataKey="Timestamp"
+                    dataKey={(d) => d.Timestamp.getTime()}  // Convert Date to timestamp
+                    tickFormatter={tickFormatter}
                     label={{ value: 'Date and Hour', position: 'bottom' }}
                 />
                 <YAxis
