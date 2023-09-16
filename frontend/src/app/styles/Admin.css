@@ -127,6 +127,15 @@ h2 {
     justify-content: space-between; /* Space between elements */
 }
 
+.adminBlock input {
+    margin: 30px;
+    padding: 0.5rem; /* Padding */
+    max-width: 200px; /* Maximum width */
+    border: 1px solid #292827; /* Border */
+    border-radius: 5px; /* Rounded corners */
+    caret-color: black; /* Caret (text cursor) color */
+}
+
 .submitForm {
     display: flex;
     flex-direction: column;
@@ -186,12 +195,15 @@ h2 {
 
 /* CSS for Grid Elements in Selection Blocks */
 .gridElement {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
     border-right: 1px solid #292827; /* Right border */
     border-radius: 0px; /* Rounded corners */
 }
 
 /* CSS for Input Fields in Selection Blocks */
-.selectionBlock input {
+.gridElement input {
     width: 60px; /* Width */
     padding: 0.5rem; /* Padding */
     margin-bottom: 1rem; /* Bottom margin */
@@ -199,7 +211,8 @@ h2 {
 
 /* CSS for Labels in Selection Blocks */
 .selectionBlock label {
-    display: flex; /* Use flexbox for layout */
+    display: grid; /* Use flexbox for layout */
+    grid-template-columns: 10fr 10fr;
     align-items: center; /* Align items vertically */
     justify-content: space-between; /* Space between elements */
 }

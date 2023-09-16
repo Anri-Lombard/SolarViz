@@ -320,14 +320,11 @@ const Admin = () => {
               settings={pendingGraphSettings}
             />
           ))}
-
-        </div>
-
-        <MediaSettingsComponent
+          <MediaSettingsComponent
           handleMediaSettingsChange={handleMediaSettingsChange}
           settings={pendingMediaSettings}
         />
-        
+        </div>
       </div>
 
       <div id="adjust-colours" className='mb-5 adminBlock'>
