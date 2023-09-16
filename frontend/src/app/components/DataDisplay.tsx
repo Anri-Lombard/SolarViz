@@ -67,7 +67,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
         return transformedData ? (
           <>
             <h1 className="heading">
-              Energy from Solar and Incomer from {powerStartTime} to {powerEndTime}
+              Energy from Solar Power and Incomer Power (grid) on {powerEndTime}
             </h1>
             <StackedAreaChart data={transformedData} colors={settings.colors} selectedPowerType='All' showForecast={false} duration="day" />
           </>
@@ -76,9 +76,9 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
         return (
           <>
             <h1 className="heading">
-              Water Consumption from {waterStartTime} to {waterEndTime} for Different Storeys
+              Water Consumption on {waterEndTime} for Different Storeys
             </h1>
-            <StackedLineChart data={waterData} />
+            <StackedLineChart data={waterData} duration="day"/>
           </>
         );
       // case ChartTypes.VIDEO:
@@ -106,8 +106,6 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
         updateChart(nextIndex);
       }, nextDuration);
     };
-
-    console.log(charts);
 
 
     // Start the loop
