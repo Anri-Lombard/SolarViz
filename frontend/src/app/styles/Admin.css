@@ -142,13 +142,13 @@ h2 {
 }
 
 .submitTextAndInput {
-    margin: 20px;
+    margin-top: 20px;
     display: grid;
     grid-template-columns: 30vh 40vh;
 }
 
 .submitTextAndInput input{
-    left:30px;
+    margin-top: 0px;
     padding: 0.5rem; /* Padding */
     max-width: 200px; /* Maximum width */
     border: 1px solid #292827; /* Border */
@@ -156,10 +156,6 @@ h2 {
     caret-color: black; /* Caret (text cursor) color */
 }
 
-/* CSS for Labels in Admin Blocks */
-.submitTextAndInput label {
-    color: #292827; /* Text color */
-}
 
 /* CSS for Buttons in Admin Blocks */
 .adminBlock button {
