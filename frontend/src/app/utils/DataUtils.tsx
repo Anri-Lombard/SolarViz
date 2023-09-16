@@ -1,9 +1,4 @@
-import { DataType, TransformedDataType } from "../types/dataTypes";
-
-interface AggregatedDataType {
-    'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': number;
-    'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': number;
-}
+import { DataType, TransformedDataType, AggregatedDataType } from "../types/dataTypes";
 
 /**
  * Transforms the power data to a more manageable format.
@@ -16,29 +11,35 @@ export const transformPowerData = (powerData: DataType[]): TransformedDataType[]
         'Load Power': item['UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD'],
         'Solar Power': item['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR'],
         'Incomer Power': item['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER'],
+        'Irradiance': item['UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0'],
         'Expected Power': (parseFloat(item['UCT - DSchool - Simulation - Expected power [kW]']) * 1000).toString() // Converted to number, then to Watts, and finally to string
     }));
 };
 
 /**
- * Aggregates the total solar and incomer power from the power data.
+ * Aggregates the total solar, incomer power, and irradiance from the power data.
  * @param {DataType[]} powerData - The original power data.
  * @returns {AggregatedDataType} - The aggregated data.
  */
 export const aggregateData = (powerData: DataType[]): AggregatedDataType => {
     let totalSolar = 0;
     let totalIncomerPower = 0;
+    let totalIrradiance = 0;
 
     powerData.forEach((item) => {
         totalSolar += Number(item['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR']);
         totalIncomerPower += Number(item['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER']);
+        totalIrradiance += Number(item['UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0']);
     });
 
     return {
         'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': totalSolar,
         'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': totalIncomerPower,
+        'UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0': totalIrradiance
     };
 };
+
+
 
 /**
  * Formats a date string to a more readable format.
@@ -74,4 +75,4 @@ export const colorMapping = {
     'UCT D-School - Ground Storey - Cold Ablution': '#008000',
     'UCT D-School - First Storey - Toilet': '#000080',
     'UCT D-School - First Storey - Ablution': '#808000'
-  };
+};

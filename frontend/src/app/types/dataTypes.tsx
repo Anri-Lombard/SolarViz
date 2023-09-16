@@ -4,6 +4,7 @@ export interface DataType {
     'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': string;
     'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': string;
     'UCT - DSchool - Simulation - Expected power [kW]': string;
+    'UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0': string;
 }
 
 export interface TransformedDataType {
@@ -93,6 +94,12 @@ export type ManageAdminProps = {
     removeAdmin: (id: number) => void,
     addAdmin: (username: string, password: string) => void
 };
+
+export interface AggregatedDataType {
+    'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': number;
+    'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': number;
+    'UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0': number;
+}
 
 export interface ChartWrapperProps {
     title: string;

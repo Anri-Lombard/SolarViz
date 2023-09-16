@@ -11,11 +11,13 @@ export interface PieChartComponentProps {
     data: {
         'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': number;
         'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': number;
+        'UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0': number;
     };
     colors: {
         incomerPower: string;
         solarPower: string;
     };
+    showIrradiance: boolean;
 }
 
 export interface StackedAreaChartProps {
@@ -23,10 +25,9 @@ export interface StackedAreaChartProps {
     colors: {
         incomerPower: string;
         solarPower: string;
-        expectedPower: string;
     },
     selectedPowerType: string;
-    showForeCast: boolean;
+    showForecast: boolean;
 }
 
 export interface StackedLineChartProps {

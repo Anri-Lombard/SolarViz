@@ -6,18 +6,13 @@ import LoadingSpinner from './LoadingSpinner';
 import { PieChartComponent } from './PieChart';
 import { StackedAreaChart } from './StackedAreaChart';
 import { StackedLineChart } from './StackedLineChart';
-import { transformPowerData } from '../utils/DataUtils';
+import { aggregateData, transformPowerData } from '../utils/DataUtils';
 
-import { DataDisplayProps, ChartWrapperProps, WaterDataType, PowerType } from '../types/dataTypes';
+import { DataDisplayProps, ChartWrapperProps, WaterDataType, AggregatedDataType, TransformedDataType } from '../types/dataTypes';
 
 export default function MoreDataDisplay({ powerData, waterData, settings }: DataDisplayProps) {
   const [transformedData, setTransformedData] = useState<
-    {
-      Timestamp: string;
-      'Load Power': string;
-      'Solar Power': string;
-      'Incomer Power': string;
-    }[] | null
+    TransformedDataType[] | null
   >(null);
 
   const [duration, setDuration] = useState('day');
@@ -30,6 +25,9 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
   const [showPerformanceMetrics, setShowPerformanceMetrics] = useState(false);
   const [filteredWaterData, setFilteredWaterData] = useState<WaterDataType[] | null>(null);
   const [stagedWaterData, setStagedWaterData] = useState<WaterDataType[] | null>(null);
+  const [aggregatedData, setAggregatedData] = useState<
+    AggregatedDataType | null
+  >(null);
 
 
   const [stagedSettings, setStagedSettings] = useState({
@@ -51,13 +49,9 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
   const applyStagedSettings = (chartType: string) => {
     switch (chartType) {
       case 'pieChart':
-        setShowIrradiance(stagedSettings.pieChart.showIrradiance);
+        setStagedSettings({ ...stagedSettings, pieChart: { ...stagedSettings.pieChart, showIrradiance: showIrradiance } })
         break;
       case 'areaChart':
-        // setDuration(stagedSettings.areaChart.duration);
-        // setShowForecast(stagedSettings.areaChart.showForecast);
-        // setShowTargetRange(stagedSettings.areaChart.showTargetRange);
-        // setShowPerformanceMetrics(stagedSettings.areaChart.showPerformanceMetrics);
         setStagedSettings(
           {
             ...stagedSettings, areaChart: { ...stagedSettings.areaChart, selectedPowerType: selectedPowerType, showForecast: showForecast }
@@ -72,26 +66,20 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
     }
   };
 
-  const aggregatedData = useMemo(() => {
-    if (!powerData || powerData.length === 0) return null;
-
+  useEffect(() => {
     // Transform the data here
     const tData = transformPowerData(powerData);
 
     // Set the transformed data
     setTransformedData(tData);
 
-    let totalSolar = 0;
-    let totalIncomerPower = 0;
-    powerData.forEach((item) => {
-      totalSolar += Number(item['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR']);
-      totalIncomerPower += Number(item['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER']);
-    });
-    return {
-      'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': totalSolar,
-      'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': totalIncomerPower,
-    };
-  }, [powerData]);
+    // Aggregate data
+    const aData = aggregateData(powerData);
+
+    // Set aggregated data
+    setAggregatedData(aData);
+  }, [powerData, setTransformedData]);
+
 
 
 
@@ -102,12 +90,12 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
         <>
           <ChartWrapper
             title="Percentage Energy from Solar and Incomer"
-            chart={<PieChartComponent data={aggregatedData} colors={settings.colors} />}
+            chart={<PieChartComponent data={aggregatedData} colors={settings.colors} showIrradiance={stagedSettings.pieChart.showIrradiance} />}
             filters={
               <>
                 <div>
                   <label>Show Irradiance: </label>
-                  <input type="checkbox" checked={stagedSettings.pieChart.showIrradiance} onChange={() => setStagedSettings({ ...stagedSettings, pieChart: { showIrradiance: !stagedSettings.pieChart.showIrradiance } })} />
+                  <input type="checkbox" checked={showIrradiance} onChange={() => setShowIrradiance(!showIrradiance)} />
                 </div>
                 <button className="applyButton" onClick={() => applyStagedSettings('pieChart')}>Apply</button>
               </>
