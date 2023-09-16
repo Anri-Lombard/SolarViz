@@ -1,6 +1,6 @@
 /* CSS for Headings */
 .heading {
-  margin-top: 50px; /* Top margin */
+  margin-top: 90px;
   font-size: 20px; /* Font size */
   text-align: center; /* Center-align text */
   font-family: 'Verdana', sans-serif; /* Font family */
@@ -8,6 +8,8 @@
 
 /* CSS for Graph Container */
 .graphContainer {
-  width: auto; /* Automatic width */
-  height: auto; /* Automatic height */
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+  margin-bottom: 100px;
 }

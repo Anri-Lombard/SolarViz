@@ -26,14 +26,14 @@ export const PieChartComponent: React.FC<PieChartComponentProps> = ({ data, colo
 
     return (
         <div data-testid="pie-chart-component" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <PieChart width={1000} height={600}>
+            <PieChart width={900} height={500}>
                 <Pie
                     dataKey="value"
                     isAnimationActive={true}
                     data={chartData}
-                    cx={500}
-                    cy={300}
-                    outerRadius={250}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius="90%"
                     fill="#8884d8"
                     labelLine={false}
                     label={renderLabel}
