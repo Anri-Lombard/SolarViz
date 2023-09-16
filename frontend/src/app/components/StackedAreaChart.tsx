@@ -2,20 +2,45 @@ import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { StackedAreaChartProps } from '../types/chartTypes';
 
-export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors, selectedPowerType, showForecast }) => {
+export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors, selectedPowerType, showForecast, duration }) => {
+    if (!data || data.length === 0) {
+        return <div>No data available</div>;
+    }
+    
     // Convert power data to kWh assuming the data is already aggregated per hour
     const convertedData = data.map(item => ({
-        Timestamp: item.Timestamp,
+        Timestamp: new Date(item.Timestamp),
         'Load Power': parseFloat(item['Load Power']) / 1000,
         'Solar Power': parseFloat(item['Solar Power']) / 1000,
         'Incomer Power': parseFloat(item['Incomer Power']) / 1000,
         'Expected Power': parseFloat(item['Expected Power']) / 1000,
     }));
 
+    // Sort data by Timestamp
+    convertedData.sort((a, b) => a.Timestamp.getTime() - b.Timestamp.getTime());
+
+    // Identify the last timestamp
+    const lastTimestamp = new Date(convertedData[convertedData.length - 1].Timestamp);
+
+    // Filter data based on duration and last timestamp
+    const filteredData = convertedData.filter(item => {
+        if (duration === 'day') {
+            return item.Timestamp.getDate() === lastTimestamp.getDate() &&
+                   item.Timestamp.getMonth() === lastTimestamp.getMonth() &&
+                   item.Timestamp.getFullYear() === lastTimestamp.getFullYear();
+        } else if (duration === 'month') {
+            return item.Timestamp.getMonth() === lastTimestamp.getMonth() &&
+                   item.Timestamp.getFullYear() === lastTimestamp.getFullYear();
+        } else if (duration === 'year') {
+            return item.Timestamp.getFullYear() === lastTimestamp.getFullYear();
+        }
+        return true;
+    });
+
     return (
         <ResponsiveContainer height={600}>
             <AreaChart
-                data={convertedData}
+                data={filteredData}
                 margin={{
                     top: 10,
                     right: 30,
@@ -23,12 +48,12 @@ export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors
                     bottom: 20,
                 }}
             >
-                <XAxis 
-                    dataKey="Timestamp" 
+                <XAxis
+                    dataKey="Timestamp"
                     label={{ value: 'Date and Hour', position: 'bottom' }}
                 />
-                <YAxis 
-                    label={{ value: 'Usage (kW)', angle: -90, position: 'insideLeft', offset: -10 }} 
+                <YAxis
+                    label={{ value: 'Usage (kW)', angle: -90, position: 'insideLeft', offset: -10 }}
                 />
                 <Tooltip
                     formatter={(value: number, name: string) => {

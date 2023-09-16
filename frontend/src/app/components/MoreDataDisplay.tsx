@@ -15,16 +15,13 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
     TransformedDataType[] | null
   >(null);
 
-  const [duration, setDuration] = useState('day');
+  const [lineDuration, setLineDuration] = useState('day');
   const [showIrradiance, setShowIrradiance] = useState(false);
   const [showForecast, setShowForecast] = useState(false);
   const [showTargetRange, setShowTargetRange] = useState(false);
-  const [selectedMetric, setSelectedMetric] = useState('Load Power');
   const [selectedMeterDescription, setSelectedMeterDescription] = useState('All');
   const [selectedPowerType, setSelectedPowerType] = useState('All');
   const [showPerformanceMetrics, setShowPerformanceMetrics] = useState(false);
-  const [filteredWaterData, setFilteredWaterData] = useState<WaterDataType[] | null>(null);
-  const [stagedWaterData, setStagedWaterData] = useState<WaterDataType[] | null>(null);
   const [aggregatedData, setAggregatedData] = useState<
     AggregatedDataType | null
   >(null);
@@ -54,7 +51,12 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
       case 'areaChart':
         setStagedSettings(
           {
-            ...stagedSettings, areaChart: { ...stagedSettings.areaChart, selectedPowerType: selectedPowerType, showForecast: showForecast }
+            ...stagedSettings, areaChart: { 
+              ...stagedSettings.areaChart, 
+              selectedPowerType: selectedPowerType, 
+              showForecast: showForecast,
+              duration: lineDuration,
+            }
           }
         )
         break;
@@ -103,12 +105,17 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
           />
           <ChartWrapper
             title="Energy from Solar and Incomer"
-            chart={<StackedAreaChart data={transformedData} colors={settings.colors} selectedPowerType={stagedSettings.areaChart.selectedPowerType} showForecast={stagedSettings.areaChart.showForecast} />}
+            chart={<StackedAreaChart 
+              data={transformedData} 
+              colors={settings.colors} 
+              selectedPowerType={stagedSettings.areaChart.selectedPowerType} 
+              showForecast={stagedSettings.areaChart.showForecast} 
+              duration={stagedSettings.areaChart.duration} />}
             filters={
               <>
                 <div>
                   <label>Duration: </label>
-                  <select onChange={(e) => setDuration(e.target.value)} value={duration}>
+                  <select onChange={(e) => setLineDuration(e.target.value)} value={lineDuration}>
                     <option value="day">Day</option>
                     <option value="month">Month</option>
                     <option value="year">Year</option>

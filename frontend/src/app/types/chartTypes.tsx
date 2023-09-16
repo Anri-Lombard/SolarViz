@@ -28,6 +28,7 @@ export interface StackedAreaChartProps {
     },
     selectedPowerType: string;
     showForecast: boolean;
+    duration: string;
 }
 
 export interface StackedLineChartProps {

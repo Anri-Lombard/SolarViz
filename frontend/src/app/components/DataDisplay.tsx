@@ -69,7 +69,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
             <h1 className="heading">
               Energy from Solar and Incomer from {powerStartTime} to {powerEndTime}
             </h1>
-            <StackedAreaChart data={transformedData} colors={settings.colors} selectedPowerType='All' showForecast={false} />
+            <StackedAreaChart data={transformedData} colors={settings.colors} selectedPowerType='All' showForecast={false} duration="day" />
           </>
         ) : null;
       case ChartTypes.LINE:
