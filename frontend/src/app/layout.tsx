@@ -1,4 +1,4 @@
-
+"use client"
 // Imports required modules and components.
 
 import './globals.css';
