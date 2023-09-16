@@ -6,16 +6,6 @@ import pie from '../images/piechart.png';
 import line from '../images/linechart.png';
 import area from '../images/areachart.png';
 
-/**
- * GraphSettingsComponent displays settings for a specific chart type.
- *
- * @param {GraphSettingsProps} props                  The component's props.
- * @param {string} props.chartType                    The type of chart.
- * @param {Function} props.handleGraphSettingsChange  A function to handle changes in graph settings.
- * @param {Object} props.settings                     The settings for the chart type.
- * @returns {JSX.Element}                             The GraphSettingsComponent JSX.
- */
-
 const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handleGraphSettingsChange, settings }) => {
 
   const [sequenceValue, setSequenceValue] = useState(settings[chartType].sequence); //for managing sequence value changes when display is disabled
@@ -51,6 +41,7 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
             handleGraphSettingsChange(chartType, 'sequence', newValue);
           }}
           disabled={!settings[chartType].display} // Disable if 'Display' is unchecked
+          min={1}
         />
       </label>
       <label>
@@ -58,7 +49,7 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
         <input
           type="number"
           value={settings[chartType].duration}
-          onChange={(e) => handleGraphSettingsChange(chartType, 'duration', parseInt(e.target.value))
+          onChange={(e) => handleGraphSettingsChange(chartType,'duration', parseInt(e.target.value))
           }
           disabled={!settings[chartType].display} // Disable if 'Display' is unchecked
         />
@@ -68,7 +59,9 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
         <input
           type="checkbox"
           checked={settings[chartType].display}
-          onChange={(e) => handleGraphSettingsChange(chartType, 'display', e.target.checked)}
+          onChange={(e) => {
+            handleGraphSettingsChange(chartType, 'display', e.target.checked);
+          }}
         />
       </label>
     </div>
