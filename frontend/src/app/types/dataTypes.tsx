@@ -6,6 +6,16 @@ export interface DataType {
     'UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD': string;
     'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': string;
     'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': string;
+    'UCT - DSchool - Simulation - Expected power [kW]': string;
+    'UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0': string;
+}
+
+export interface TransformedDataType {
+    Timestamp: string;
+    'Load Power': string;
+    'Solar Power': string;
+    'Incomer Power': string;
+    'Expected Power': string;
 }
 
 
@@ -101,10 +111,10 @@ export type ChartType = 'pieChart' | 'areaChart' | 'lineChart';
 // Props interface for the ColorOptions component.
 
 export type ColorOptionsProps = {
-    type: string;
-    colors: string[];
-    handleChangeColor: (type: ColorType, color: string) => void;
-    currentColor: string;
+    type: string,
+    colors: string[],
+    handleChangeColor: (type: string, color: string) => void,
+    currentColor: string
 };
 
 // Props interface for the GraphSettings component.
@@ -123,8 +133,13 @@ export type ManageAdminProps = {
     addAdmin: (username: string, password: string) => void;
 };
 
-// Props interface for the ChartWrapper component.
+export interface AggregatedDataType {
+    'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': number;
+    'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': number;
+    'UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0': number;
+}
 
+// Props interface for the ChartWrapper component.
 export interface ChartWrapperProps {
     title: string;
     chart: React.ReactNode;
