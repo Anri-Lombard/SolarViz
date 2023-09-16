@@ -127,21 +127,29 @@ h2 {
     justify-content: space-between; /* Space between elements */
 }
 
-/* CSS for Labels in Admin Blocks */
-.adminBlock label {
-    display: block; /* Block-level element */
-    margin-bottom: 0.5rem; /* Bottom margin */
-    color: #292827; /* Text color */
+.submitForm {
+    display: flex;
+    flex-direction: column;
 }
 
-/* CSS for Input Fields in Admin Blocks */
-.adminBlock input {
+.submitTextAndInput {
+    margin: 20px;
+    display: grid;
+    grid-template-columns: 30vh 40vh;
+}
+
+.submitTextAndInput input{
+    left:30px;
     padding: 0.5rem; /* Padding */
     max-width: 200px; /* Maximum width */
-    margin: 30px; /* Margin */
     border: 1px solid #292827; /* Border */
     border-radius: 5px; /* Rounded corners */
     caret-color: black; /* Caret (text cursor) color */
+}
+
+/* CSS for Labels in Admin Blocks */
+.submitTextAndInput label {
+    color: #292827; /* Text color */
 }
 
 /* CSS for Buttons in Admin Blocks */
