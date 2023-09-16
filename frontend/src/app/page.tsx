@@ -1,4 +1,4 @@
-
+"use client"
 // Imports required modules, components, and hooks.
 
 import React from 'react';
