@@ -10,6 +10,16 @@ import { transformPowerData } from '../utils/DataUtils';
 
 import { DataDisplayProps, ChartWrapperProps, WaterDataType, PowerType } from '../types/dataTypes';
 
+/**
+ * MoreDataDisplay component displays additional data charts and filters.
+ *
+ * @param {DataDisplayProps} props  The component's props.
+ * @param {Array} props.powerData   An array of power data.
+ * @param {Array} props.waterData   An array of water data.
+ * @param {Object} props.settings   The settings object.
+ * @returns {JSX.Element}           The MoreDataDisplay component JSX.
+ */
+
 export default function MoreDataDisplay({ powerData, waterData, settings }: DataDisplayProps) {
   const [transformedData, setTransformedData] = useState<
     {

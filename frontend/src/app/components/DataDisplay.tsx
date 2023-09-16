@@ -13,6 +13,16 @@ import { transformPowerData, aggregateData, formatDate } from '../utils/DataUtil
 import { ChartTypes } from '../types/chartTypes'
 import { DataDisplayProps } from '../types/dataTypes'
 
+/**
+ * DataDisplay component displays various charts and data visualizations based on power and water data.
+ *
+ * @param {DataDisplayProps} props          The component's props.
+ * @param {Array<Object>} props.powerData   An array of power data.
+ * @param {Array<Object>} props.waterData   An array of water data.
+ * @param {Object} props.settings           Configuration settings.
+ * @returns {JSX.Element}                   The DataDisplay component JSX.
+ */
+
 export default function DataDisplay({ powerData, waterData, settings }: DataDisplayProps) {
   const [currentChartIndex, setCurrentChartIndex] = useState(0);
   const [transformedData, setTransformedData] = useState<

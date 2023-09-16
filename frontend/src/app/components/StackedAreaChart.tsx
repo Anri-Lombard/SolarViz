@@ -2,7 +2,16 @@ import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { StackedAreaChartProps } from '../types/chartTypes';
 
-export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors, selectedPowerType }) => {
+/**
+ * StackedAreaChart displays a stacked area chart using Recharts library.
+ *
+ * @param {StackedAreaChartProps} props     The component's props.
+ * @param {Object[]} props.data             Data for the stacked area chart.
+ * @param {Object} props.colors             Colors for chart areas.
+ * @returns {JSX.Element}                   The StackedAreaChart JSX.
+ */
+
+export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors, selectedPowerType}) => {
     // Convert power data to kWh assuming the data is already aggregated per hour
     const convertedData = data.map(item => ({
         Timestamp: item.Timestamp,

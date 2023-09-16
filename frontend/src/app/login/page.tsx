@@ -8,12 +8,20 @@ import Image from 'next/image';
 import loginImage from '../images/d-skool.png';
 import '../styles/Login.css';
 
+/**
+ * Component for rendering the login page.
+ */
+
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error,setError] = useState('');// state for error message
   const router = useRouter();
   const { login } = useAuth(); // get login function
+
+  /**
+   * Function to handle the login process.
+   */
 
   const handleLogin = async () => {
     try {
@@ -28,6 +36,11 @@ const LoginPage = () => {
       setError('Incorrect username or password. Try again.')
     }
   };
+
+  /**
+   * Function to handle key press events, specifically Enter key.
+   * @param e   Key press event object.
+   */
 
   const handleKeyDown = (e: { key: string; }) => {
     if (e.key === 'Enter') {

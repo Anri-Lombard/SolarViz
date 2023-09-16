@@ -1,23 +1,26 @@
+/* CSS for Manual Container */
 .manualContainer {
-    display: flex;
-    color: black;
-    padding: 30px;
-    margin-top: 100px;
+    display: flex; /* Use flexbox for layout */
+    color: black; /* Text color */
+    padding: 30px; /* Padding */
+    margin-top: 100px; /* Top margin */
 }
 
+/* Table of Contents */
 .tableOfContents {
-    position: fixed;
-    width: 200px;
-    height: 70%;
-    padding: 10px;
-    border-right: 1px solid #ccc;
+    position: fixed; /* Fixed position */
+    width: 200px; /* Width */
+    height: 70%; /* Height */
+    padding: 10px; /* Padding */
+    border-right: 1px solid #ccc; /* Right border */
 }
 
+/* Table of Contents Links */
 .tableOfContents a {
-    display: block;
-    margin-bottom: 10px;
-    text-decoration: none;
-    color: #183d33;
+    display: block; /* Block-level element */
+    margin-bottom: 10px; /* Bottom margin */
+    text-decoration: none; /* No text decoration (underline) */
+    color: #183d33; /* Link text color */
     cursor: pointer; /* Change cursor to hand */
     padding: 5px; /* Add some padding for a better hover effect */
     border-radius: 3px; /* Rounded corners for background */
@@ -32,38 +35,44 @@
 
 
 .content {
-    margin-left: 200px;
-    flex-grow: 1;
-    padding: 20px;
+    margin-left: 200px; /* Left margin to accommodate the table of contents */
+    flex-grow: 1; /* Allow content to grow within the flex container */
+    padding: 20px; /* Padding */
 }
 
+/* Content Paragraphs */
 .content p {
-    margin-top: 20px;
+    margin-top: 20px; /* Top margin for paragraphs */
 }
 
+/* Content Level 1 Headings */
 .content h1 {
     margin: 20px;
 }
 
+/* Content Level 2 Headings */
 .content h2 {
     margin: 20px;
     font-size: large;
 }
 
+/* Content Level 3 Headings */
 .content h3 {
     margin: 10px;
     font-size: large;
 }
 
+/* Content Level 4 Headings */
 .content h4 {
-    font-size: x-large;
-    font-weight: bold;
+    font-size: x-large; /* Font size for h4 headings */
+    font-weight: bold; /* Bold font for h4 headings */
     margin: 20px;
 }
 
+/* Content List Items */
 .content li {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 20px; /* Top margin for list items */
+    margin-bottom: 20px; /* Bottom margin for list items */
 }
 
 .contribution a {
