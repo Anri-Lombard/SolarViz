@@ -12,9 +12,7 @@ index fc1fc3c2..2693762f 100644
      
      # Replace negative values with 0
      for row in data:
-diff --git a/backend/db.sqlite3 b/backend/db.sqlite3
-index 7bb859ae..9a0495e7 100644
-Binary files a/backend/db.sqlite3 and b/backend/db.sqlite3 differ
+
 diff --git a/frontend/package-lock.json b/frontend/package-lock.json
 index 52dcdd81..086eca94 100644
 --- a/frontend/package-lock.json
