@@ -102,7 +102,7 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
 
 
 
-
+  // TODO: main should look like this
   return (
     <div className='graphContainer'>
       {aggregatedData && waterData && transformedData ? (
