@@ -1,0 +1,1258 @@
+diff --git a/backend/dashboard/views.py b/backend/dashboard/views.py
+index fc1fc3c2..2693762f 100644
+--- a/backend/dashboard/views.py
++++ b/backend/dashboard/views.py
+@@ -152,7 +152,8 @@ def get_vcom_data():
+ 
+ 
+ def power_data(request):
+-    data = csv_to_json('data/UCT_Drawing_School_2023_08_01_2023_08_31.csv', delimiter=";")
++    # data = csv_to_json('data/UCT_Drawing_School_2023_08_01_2023_08_31.csv', delimiter=";")
++    data = csv_to_json('data/Export_2023_09_01_2023_09_13.csv', delimiter=";")
+     
+     # Replace negative values with 0
+     for row in data:
+diff --git a/backend/db.sqlite3 b/backend/db.sqlite3
+index 7bb859ae..9a0495e7 100644
+Binary files a/backend/db.sqlite3 and b/backend/db.sqlite3 differ
+diff --git a/frontend/package-lock.json b/frontend/package-lock.json
+index 52dcdd81..086eca94 100644
+--- a/frontend/package-lock.json
++++ b/frontend/package-lock.json
+@@ -13,6 +13,7 @@
+         "@types/react-dom": "18.2.7",
+         "autoprefixer": "10.4.14",
+         "axios": "^1.4.0",
++        "date-fns": "^2.30.0",
+         "eslint": "8.46.0",
+         "eslint-config-next": "13.4.12",
+         "next": "^13.4.12",
+@@ -4052,6 +4053,21 @@
+         "node": ">=0.10"
+       }
+     },
++    "node_modules/date-fns": {
++      "version": "2.30.0",
++      "resolved": "https://registry.npmjs.org/date-fns/-/date-fns-2.30.0.tgz",
++      "integrity": "sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==",
++      "dependencies": {
++        "@babel/runtime": "^7.21.0"
++      },
++      "engines": {
++        "node": ">=0.11"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/date-fns"
++      }
++    },
+     "node_modules/dayjs": {
+       "version": "1.11.9",
+       "resolved": "https://registry.npmjs.org/dayjs/-/dayjs-1.11.9.tgz",
+diff --git a/frontend/package.json b/frontend/package.json
+index 776424c7..739b59c6 100644
+--- a/frontend/package.json
++++ b/frontend/package.json
+@@ -16,6 +16,7 @@
+     "@types/react-dom": "18.2.7",
+     "autoprefixer": "10.4.14",
+     "axios": "^1.4.0",
++    "date-fns": "^2.30.0",
+     "eslint": "8.46.0",
+     "eslint-config-next": "13.4.12",
+     "next": "^13.4.12",
+diff --git a/frontend/src/app/components/DataDisplay.tsx b/frontend/src/app/components/DataDisplay.tsx
+index 42ece32a..1720977c 100644
+--- a/frontend/src/app/components/DataDisplay.tsx
++++ b/frontend/src/app/components/DataDisplay.tsx
+@@ -11,7 +11,7 @@ import { StackedLineChart } from './StackedLineChart';
+ import { transformPowerData, aggregateData, formatDate } from '../utils/DataUtils';
+ 
+ import { ChartTypes } from '../types/chartTypes'
+-import { DataDisplayProps } from '../types/dataTypes'
++import { DataDisplayProps, TransformedDataType } from '../types/dataTypes'
+ 
+ /**
+  * DataDisplay component displays various charts and data visualizations based on power and water data.
+@@ -26,12 +26,7 @@ import { DataDisplayProps } from '../types/dataTypes'
+ export default function DataDisplay({ powerData, waterData, settings }: DataDisplayProps) {
+   const [currentChartIndex, setCurrentChartIndex] = useState(0);
+   const [transformedData, setTransformedData] = useState<
+-    {
+-      Timestamp: string;
+-      'Load Power': string;
+-      'Solar Power': string;
+-      'Incomer Power': string;
+-    }[] | null
++    TransformedDataType[] | null
+   >(null);
+   const [powerStartTime, setPowerStartTime] = useState("0");
+   const [powerEndTime, setPowerEndTime] = useState("0");
+@@ -75,25 +70,25 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
+             <h1 className="heading">
+               Percentage Energy from Solar and Incomer from {powerStartTime} to {powerEndTime}
+             </h1>
+-            <PieChartComponent data={aggregatedData} colors={settings.colors} />
++            <PieChartComponent data={aggregatedData} colors={settings.colors} showIrradiance={false} />
+           </>
+         ) : null;
+       case ChartTypes.AREA:
+         return transformedData ? (
+           <>
+             <h1 className="heading">
+-              Energy from Solar and Incomer from {powerStartTime} to {powerEndTime}
++              Energy from Solar Power and Incomer Power (grid) on {powerEndTime}
+             </h1>
+-            <StackedAreaChart data={transformedData} colors={settings.colors} selectedPowerType='All' />
++            <StackedAreaChart data={transformedData} colors={settings.colors} selectedPowerType='All' showForecast={false} duration="day" />
+           </>
+         ) : null;
+       case ChartTypes.LINE:
+         return (
+           <>
+             <h1 className="heading">
+-              Water Consumption from {waterStartTime} to {waterEndTime} for Different Storeys
++              Water Consumption on {waterEndTime} for Different Storeys
+             </h1>
+-            <StackedLineChart data={waterData} />
++            <StackedLineChart data={waterData} duration="day"/>
+           </>
+         );
+       // case ChartTypes.VIDEO:
+@@ -122,8 +117,6 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
+       }, nextDuration);
+     };
+ 
+-    console.log(charts);
+-
+ 
+     // Start the loop
+     updateChart(currentChartIndex);
+diff --git a/frontend/src/app/components/ManageAdmins.tsx b/frontend/src/app/components/ManageAdmins.tsx
+index cf34c606..b0677ac4 100644
+--- a/frontend/src/app/components/ManageAdmins.tsx
++++ b/frontend/src/app/components/ManageAdmins.tsx
+@@ -18,21 +18,6 @@ import { ManageAdminProps } from '../types/dataTypes';
+ const ManageAdmin: React.FC<ManageAdminProps> = ({ admins, removeAdmin, addAdmin }) => {
+   const [newAdminUsername, setNewAdminUsername] = React.useState('');
+   const [newAdminPassword, setNewAdminPassword] = React.useState('');
+-  const [confirmPassword, setConfirmPassword] = React.useState('');
+-  const [passwordsMatch, setPasswordsMatch] = React.useState(true);
+-
+-  const handleFormSubmit = (e: React.FormEvent) => {
+-    e.preventDefault();
+-    if (newAdminPassword === confirmPassword) {
+-      addAdmin(newAdminUsername, newAdminPassword);
+-      setNewAdminUsername('');
+-      setNewAdminPassword('');
+-      setConfirmPassword('');
+-      setPasswordsMatch(true);
+-    } else {
+-      setPasswordsMatch(false);
+-    }
+-  };
+ 
+   return (
+     <div>
+@@ -44,41 +29,34 @@ const ManageAdmin: React.FC<ManageAdminProps> = ({ admins, removeAdmin, addAdmin
+           </li>
+         ))}
+       </ul>
+-      <form onSubmit={handleFormSubmit}>
+-        <div className='submitForm'>
+-          <label className='submitTextAndInput'>
+-            Username:
+-            <input
+-              type="text"
+-              value={newAdminUsername}
+-              onChange={(e) => setNewAdminUsername(e.target.value)}
+-              placeholder="New admin username"
+-            />
+-          </label>
+-          <label className='submitTextAndInput'>
+-            Password:
+-            <input
+-              type="password"
+-              value={newAdminPassword}
+-              onChange={(e) => setNewAdminPassword(e.target.value)}
+-              placeholder="New admin password"
+-            />
+-          </label>
+-          <label className='submitTextAndInput'>
+-            Confirm Password:
+-            <input
+-              type="password"
+-              value={confirmPassword}
+-              onChange={(e) => setConfirmPassword(e.target.value)}
+-              placeholder="Confirm password"
+-            />
+-          </label>
+-          {!passwordsMatch && <div>Passwords should match</div>}
+-        </div>
++      <form onSubmit={(e) => {
++        e.preventDefault();
++        addAdmin(newAdminUsername, newAdminPassword);
++        setNewAdminUsername(''); // Clear the form
++        setNewAdminPassword(''); // Clear the form
++      }}>
++        <label>
++          Username:
++          <input
++            type="text"
++            value={newAdminUsername}
++            onChange={(e) => setNewAdminUsername(e.target.value)}
++            placeholder="New admin username"
++          />
++        </label>
++        <label>
++          Password:
++          <input
++            type="password"
++            value={newAdminPassword}
++            onChange={(e) => setNewAdminPassword(e.target.value)}
++            placeholder="New admin password"
++          />
++        </label>
+         <button type="submit">Add Admin</button>
+       </form>
+     </div>
+   );
+ };
+ 
+-export default ManageAdmin;
+\ No newline at end of file
++export default ManageAdmin;
+diff --git a/frontend/src/app/components/MediaSettingsComponent.tsx b/frontend/src/app/components/MediaSettingsComponent.tsx
+index f2297348..de50ddd6 100644
+--- a/frontend/src/app/components/MediaSettingsComponent.tsx
++++ b/frontend/src/app/components/MediaSettingsComponent.tsx
+@@ -24,9 +24,9 @@ interface MediaSettingsProps {
+ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({ handleMediaSettingsChange, settings }) => {
+ 
+   useEffect(() => {
+-    // Listen for changes to settings.display
++    // Listen for changes to settings[chartType].display
+     if (!settings.display) {
+-      // If display is unchecked, reset audio to false
++      // If display is unchecked, reset sequence to 0
+       handleMediaSettingsChange('audio', false);
+     }
+   }, [settings.display]);
+diff --git a/frontend/src/app/components/MoreDataDisplay.tsx b/frontend/src/app/components/MoreDataDisplay.tsx
+index 29939bd9..6abd06e3 100644
+--- a/frontend/src/app/components/MoreDataDisplay.tsx
++++ b/frontend/src/app/components/MoreDataDisplay.tsx
+@@ -6,9 +6,9 @@ import LoadingSpinner from './LoadingSpinner';
+ import { PieChartComponent } from './PieChart';
+ import { StackedAreaChart } from './StackedAreaChart';
+ import { StackedLineChart } from './StackedLineChart';
+-import { transformPowerData } from '../utils/DataUtils';
++import { aggregateData, transformPowerData } from '../utils/DataUtils';
+ 
+-import { DataDisplayProps, ChartWrapperProps, WaterDataType, PowerType } from '../types/dataTypes';
++import { DataDisplayProps, ChartWrapperProps, WaterDataType, AggregatedDataType, TransformedDataType } from '../types/dataTypes';
+ 
+ /**
+  * MoreDataDisplay component displays additional data charts and filters.
+@@ -22,24 +22,19 @@ import { DataDisplayProps, ChartWrapperProps, WaterDataType, PowerType } from '.
+ 
+ export default function MoreDataDisplay({ powerData, waterData, settings }: DataDisplayProps) {
+   const [transformedData, setTransformedData] = useState<
+-    {
+-      Timestamp: string;
+-      'Load Power': string;
+-      'Solar Power': string;
+-      'Incomer Power': string;
+-    }[] | null
++    TransformedDataType[] | null
+   >(null);
+ 
+-  const [duration, setDuration] = useState('day');
++  const [lineDuration, setLineDuration] = useState('day');
++  const [areaDuration, setAreaDuration] = useState('day');
+   const [showIrradiance, setShowIrradiance] = useState(false);
+   const [showForecast, setShowForecast] = useState(false);
+   const [showTargetRange, setShowTargetRange] = useState(false);
+-  const [selectedMetric, setSelectedMetric] = useState('Load Power');
+   const [selectedMeterDescription, setSelectedMeterDescription] = useState('All');
+   const [selectedPowerType, setSelectedPowerType] = useState('All');
+-  const [showPerformanceMetrics, setShowPerformanceMetrics] = useState(false);
+-  const [filteredWaterData, setFilteredWaterData] = useState<WaterDataType[] | null>(null);
+-  const [stagedWaterData, setStagedWaterData] = useState<WaterDataType[] | null>(null);
++  const [aggregatedData, setAggregatedData] = useState<
++    AggregatedDataType | null
++  >(null);
+ 
+ 
+   const [stagedSettings, setStagedSettings] = useState({
+@@ -55,50 +50,55 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
+     },
+     lineChart: {
+       selectedMeterDescription: 'All',
++      duration: 'day',
+     },
+   });
+ 
+   const applyStagedSettings = (chartType: string) => {
+     switch (chartType) {
+       case 'pieChart':
+-        setShowIrradiance(stagedSettings.pieChart.showIrradiance);
++        setStagedSettings({ ...stagedSettings, pieChart: { ...stagedSettings.pieChart, showIrradiance: showIrradiance } })
+         break;
+       case 'areaChart':
+-        // setDuration(stagedSettings.areaChart.duration);
+-        // setShowForecast(stagedSettings.areaChart.showForecast);
+-        // setShowTargetRange(stagedSettings.areaChart.showTargetRange);
+-        // setShowPerformanceMetrics(stagedSettings.areaChart.showPerformanceMetrics);
+-        setStagedSettings({ ...stagedSettings, areaChart: { ...stagedSettings.areaChart, selectedPowerType: selectedPowerType } })
++        setStagedSettings(
++          {
++            ...stagedSettings, areaChart: {
++              ...stagedSettings.areaChart,
++              selectedPowerType: selectedPowerType,
++              showForecast: showForecast,
++              duration: areaDuration,
++            }
++          }
++        )
+         break;
+       case 'lineChart':
+-        setStagedSettings({ ...stagedSettings, lineChart: { selectedMeterDescription: selectedMeterDescription } })
++        setStagedSettings({
++          ...stagedSettings, lineChart: {
++            selectedMeterDescription: selectedMeterDescription,
++            duration: lineDuration,
++          }
++        })
+         break;
+       default:
+         break;
+     }
+   };
+ 
+-  const aggregatedData = useMemo(() => {
+-    if (!powerData || powerData.length === 0) return null;
+-
++  useEffect(() => {
+     // Transform the data here
+     const tData = transformPowerData(powerData);
+ 
+     // Set the transformed data
+     setTransformedData(tData);
+ 
+-    let totalSolar = 0;
+-    let totalIncomerPower = 0;
+-    powerData.forEach((item) => {
+-      totalSolar += Number(item['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR']);
+-      totalIncomerPower += Number(item['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER']);
+-    });
+-    return {
+-      'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': totalSolar,
+-      'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': totalIncomerPower,
+-    };
+-  }, [powerData]);
+-  
++    // Aggregate data
++    const aData = aggregateData(powerData);
++
++    // Set aggregated data
++    setAggregatedData(aData);
++  }, [powerData, setTransformedData]);
++
++
+ 
+ 
+ 
+@@ -108,25 +108,30 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
+         <>
+           <ChartWrapper
+             title="Percentage Energy from Solar and Incomer"
+-            chart={<PieChartComponent data={aggregatedData} colors={settings.colors} />}
++            chart={<PieChartComponent data={aggregatedData} colors={settings.colors} showIrradiance={stagedSettings.pieChart.showIrradiance} />}
+             filters={
+               <>
+                 <div>
+                   <label>Show Irradiance: </label>
+-                  <input type="checkbox" checked={stagedSettings.pieChart.showIrradiance} onChange={() => setStagedSettings({ ...stagedSettings, pieChart: { showIrradiance: !stagedSettings.pieChart.showIrradiance } })} />
++                  <input type="checkbox" checked={showIrradiance} onChange={() => setShowIrradiance(!showIrradiance)} />
+                 </div>
+                 <button className="applyButton" onClick={() => applyStagedSettings('pieChart')}>Apply</button>
+               </>
+             }
+           />
+           <ChartWrapper
+-            title="Energy from Solar and Incomer"
+-            chart={<StackedAreaChart data={transformedData} colors={settings.colors} selectedPowerType={stagedSettings.areaChart.selectedPowerType} />          }
++            title="Energy from Solar and Incomer for Chosen Duration"
++            chart={<StackedAreaChart
++              data={transformedData}
++              colors={settings.colors}
++              selectedPowerType={stagedSettings.areaChart.selectedPowerType}
++              showForecast={stagedSettings.areaChart.showForecast}
++              duration={stagedSettings.areaChart.duration} />}
+             filters={
+               <>
+                 <div>
+                   <label>Duration: </label>
+-                  <select onChange={(e) => setDuration(e.target.value)} value={duration}>
++                  <select onChange={(e) => setAreaDuration(e.target.value)} value={areaDuration}>
+                     <option value="day">Day</option>
+                     <option value="month">Month</option>
+                     <option value="year">Year</option>
+@@ -154,10 +159,18 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
+             }
+           />
+           <ChartWrapper
+-            title="Daily Water Consumption Over July 2023 for Different Storeys"
+-            chart={<StackedLineChart data={stagedSettings.lineChart.selectedMeterDescription === 'All' ? waterData : waterData?.filter(item => item['Meter Description'] === stagedSettings.lineChart.selectedMeterDescription)} />}
++            title="Daily Water Consumption for Chosen Storeys and  Duration"
++            chart={<StackedLineChart data={stagedSettings.lineChart.selectedMeterDescription === 'All' ? waterData : waterData?.filter(item => item['Meter Description'] === stagedSettings.lineChart.selectedMeterDescription)} duration={stagedSettings.lineChart.duration} />}
+             filters={
+               <>
++                <div>
++                  <label>Duration: </label>
++                  <select onChange={(e) => setLineDuration(e.target.value)} value={lineDuration}>
++                    <option value="day">Day</option>
++                    <option value="month">Month</option>
++                    <option value="year">Year</option>
++                  </select>
++                </div>
+                 <div>
+                   <label>Meter Description: </label>
+                   <select onChange={(e) => setSelectedMeterDescription(e.target.value)} value={selectedMeterDescription}>
+diff --git a/frontend/src/app/components/PieChart.tsx b/frontend/src/app/components/PieChart.tsx
+index 0b9770da..736c637b 100644
+--- a/frontend/src/app/components/PieChart.tsx
++++ b/frontend/src/app/components/PieChart.tsx
+@@ -13,14 +13,19 @@ import { PieChartComponentProps } from '../types/chartTypes';
+  * @returns {JSX.Element}                   The PieChartComponent JSX.
+  */
+ 
+-export const PieChartComponent: React.FC<PieChartComponentProps> = ({ data, colors }) => {
++export const PieChartComponent: React.FC<PieChartComponentProps> = ({ data, colors, showIrradiance }) => {
+ 
+     // Prepare data for the pie chart
+-    const chartData = [
++    let chartData = [
+         { name: 'Solar [W]', value: data['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR'], color: colors.solarPower },
+         { name: 'Incomer Power [W]', value: data['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER'], color: colors.incomerPower },
++        { name: 'Irradiance [W/m²]', value: data['UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0'], color: '#000'}
+     ];
+ 
++    if (!showIrradiance) {
++        chartData = chartData.filter(item => item.name !== 'Irradiance [W/m²]');
++    }
++
+     // Custom label rendering for chart segments
+     const renderLabel = (entry: { percent: number }) => `${(entry.percent * 100).toFixed(0)}%`;
+ 
+diff --git a/frontend/src/app/components/StackedAreaChart.tsx b/frontend/src/app/components/StackedAreaChart.tsx
+index bfda1534..6f88d6a6 100644
+--- a/frontend/src/app/components/StackedAreaChart.tsx
++++ b/frontend/src/app/components/StackedAreaChart.tsx
+@@ -1,6 +1,9 @@
+-import React from 'react';
++import React, { useMemo } from 'react';
+ import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+ import { StackedAreaChartProps } from '../types/chartTypes';
++import { getTickFormatter } from '../utils/DataUtils';
++
++import LoadingSpinner from './LoadingSpinner';
+ 
+ /**
+  * StackedAreaChart displays a stacked area chart using Recharts library.
+@@ -10,20 +13,49 @@ import { StackedAreaChartProps } from '../types/chartTypes';
+  * @param {Object} props.colors             Colors for chart areas.
+  * @returns {JSX.Element}                   The StackedAreaChart JSX.
+  */
+-
+-export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors, selectedPowerType}) => {
++export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors, selectedPowerType, showForecast, duration }) => {
++    const tickFormatter = useMemo(() => getTickFormatter(duration), [duration]);
++    
++    if (!data || data.length === 0) {
++        return <LoadingSpinner />;
++    }
++    
+     // Convert power data to kWh assuming the data is already aggregated per hour
+     const convertedData = data.map(item => ({
+-        Timestamp: item.Timestamp,
++        Timestamp: new Date(item.Timestamp),
+         'Load Power': parseFloat(item['Load Power']) / 1000,
+         'Solar Power': parseFloat(item['Solar Power']) / 1000,
+         'Incomer Power': parseFloat(item['Incomer Power']) / 1000,
++        'Expected Power': parseFloat(item['Expected Power']) / 1000,
+     }));
+ 
++    // Sort data by Timestamp
++    convertedData.sort((a, b) => a.Timestamp.getTime() - b.Timestamp.getTime());
++
++    // Identify the last timestamp
++    const lastTimestamp = new Date(convertedData[convertedData.length - 1].Timestamp);
++
++    // Filter data based on duration and last timestamp
++    const filteredData = convertedData.filter(item => {
++        if (duration === 'day') {
++            return item.Timestamp.getDate() === lastTimestamp.getDate() &&
++                   item.Timestamp.getMonth() === lastTimestamp.getMonth() &&
++                   item.Timestamp.getFullYear() === lastTimestamp.getFullYear();
++        } else if (duration === 'month') {
++            return item.Timestamp.getMonth() === lastTimestamp.getMonth() &&
++                   item.Timestamp.getFullYear() === lastTimestamp.getFullYear();
++        } else if (duration === 'year') {
++            return item.Timestamp.getFullYear() === lastTimestamp.getFullYear();
++        }
++        return true;
++    });
++
++    // FIXME: X-axis
++    
+     return (
+         <ResponsiveContainer height={600}>
+             <AreaChart
+-                data={convertedData}
++                data={filteredData}
+                 margin={{
+                     top: 10,
+                     right: 30,
+@@ -31,12 +63,13 @@ export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors
+                     bottom: 20,
+                 }}
+             >
+-                <XAxis 
+-                    dataKey="Timestamp" 
++                <XAxis
++                    dataKey={(d) => d.Timestamp.getTime()}  // Convert Date to timestamp
++                    tickFormatter={tickFormatter}
+                     label={{ value: 'Date and Hour', position: 'bottom' }}
+                 />
+-                <YAxis 
+-                    label={{ value: 'Usage (kW)', angle: -90, position: 'insideLeft', offset: -10 }} 
++                <YAxis
++                    label={{ value: 'Usage (kW)', angle: -90, position: 'insideLeft', offset: -10 }}
+                 />
+                 <Tooltip
+                     formatter={(value: number, name: string) => {
+@@ -47,6 +80,7 @@ export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors
+                 {selectedPowerType === 'All' || selectedPowerType === 'Load Power' ? <Area type="monotone" dataKey="Load Power" stackId="1" stroke="#000" fill="none" strokeWidth={2} /> : null}
+                 {selectedPowerType === 'All' || selectedPowerType === 'Incomer Power' ? <Area type="monotone" dataKey="Incomer Power" stackId="2" stroke={colors.incomerPower} fill={colors.incomerPower} /> : null}
+                 {selectedPowerType === 'All' || selectedPowerType === 'Solar Power' ? <Area type="monotone" dataKey="Solar Power" stackId="3" stroke={colors.solarPower} fill={colors.solarPower} /> : null}
++                {showForecast ? <Area type="monotone" dataKey="Expected Power" stackId="4" stroke="#999" fill="#fff" strokeWidth={2} /> : null}
+             </AreaChart>
+         </ResponsiveContainer>
+     );
+diff --git a/frontend/src/app/components/StackedLineChart.tsx b/frontend/src/app/components/StackedLineChart.tsx
+index c196f372..04f95ec3 100644
+--- a/frontend/src/app/components/StackedLineChart.tsx
++++ b/frontend/src/app/components/StackedLineChart.tsx
+@@ -1,5 +1,5 @@
+ import React from 'react';
+-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
++import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+ 
+ import { StackedLineChartProps } from '../types/chartTypes';
+ import { ConsolidatedData } from '../types/dataTypes';
+@@ -7,6 +7,7 @@ import { formatWaterDate } from '../utils/DataUtils';
+ 
+ import { useSettings } from '../contexts/SettingsContext';
+ 
++import { parse, format } from 'date-fns';
+ /**
+  * StackedLineChart displays a stacked line chart using Recharts library.
+  *
+@@ -15,9 +16,48 @@ import { useSettings } from '../contexts/SettingsContext';
+  * @returns {JSX.Element}                   The StackedLineChart JSX.
+  */
+ 
+-export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
++
++export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, duration }) => {
+     const { settings } = useSettings();
+ 
++    if (!data || data.length === 0) {
++        return <div>No data available</div>;
++    }
++
++    // Convert your date and hour strings to Date objects
++    // Convert your data to have Date objects
++    const convertedData = data.map(item => {
++        const formattedDate = formatWaterDate(item.date);
++        const parsedDate = format(parse(formattedDate, 'd MMM yyyy', new Date()), 'yyyy-MM-dd');
++        const dateHour = new Date(parsedDate + 'T' + item.hour + ':00');
++        return {
++            ...item,
++            dateHour: dateHour,
++        };
++    });
++
++
++    // Sort data by dateHour
++    convertedData.sort((a, b) => a.dateHour.getTime() - b.dateHour.getTime());
++
++    // Identify the last timestamp
++    const lastTimestamp = new Date(convertedData[convertedData.length - 1].dateHour);
++
++    // Filter data based on duration and last timestamp
++    const filteredData = convertedData.filter(item => {
++        if (duration === 'day') {
++            return item.dateHour.getDate() === lastTimestamp.getDate() &&
++                item.dateHour.getMonth() === lastTimestamp.getMonth() &&
++                item.dateHour.getFullYear() === lastTimestamp.getFullYear();
++        } else if (duration === 'month') {
++            return item.dateHour.getMonth() === lastTimestamp.getMonth() &&
++                item.dateHour.getFullYear() === lastTimestamp.getFullYear();
++        } else if (duration === 'year') {
++            return item.dateHour.getFullYear() === lastTimestamp.getFullYear();
++        }
++        return true;
++    });
++
+     // Extract unique meter descriptions and date-hour combinations
+     const meterDescriptions = Array.from(new Set(data.map(item => item['Meter Description'])));
+     const dateHourCombinations = Array.from(new Set(data.map(item => `${item.date} ${item.hour}`)));
+@@ -31,8 +71,8 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
+ 
+         // Calculate the sum of usage for each meter description
+         meterDescriptions.forEach(desc => {
+-            const filteredData = data.filter(item => `${item.date} ${item.hour}` === dateHour && item['Meter Description'] === desc);
+-            const sum = filteredData.reduce((acc, curr) => acc + (curr.difference_kl * 1000), 0); // Multiply by 1000 to convert to liters
++            const sum = filteredData.filter(item => `${item.date} ${item.hour}` === dateHour && item['Meter Description'] === desc)
++                .reduce((acc, curr) => acc + (curr.difference_kl * 1000), 0);
+             obj[desc] = sum;
+         });
+         return obj;
+@@ -49,7 +89,6 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
+                     bottom: 20,
+                 }}
+             >
+-                {/* <CartesianGrid strokeDasharray="3 3" /> */}
+                 <XAxis
+                     dataKey="dateHour"
+                     type="category"
+diff --git a/frontend/src/app/login/admin/page.tsx b/frontend/src/app/login/admin/page.tsx
+index 0220169b..4d2c11db 100644
+--- a/frontend/src/app/login/admin/page.tsx
++++ b/frontend/src/app/login/admin/page.tsx
+@@ -14,6 +14,9 @@ import MediaSettingsComponent from '../../components/MediaSettingsComponent';
+ 
+ import { Admin, ColorType, ChartType } from '../../types/dataTypes'
+ 
++/**
++ * Component for the administrator dashboard.
++ */
+ 
+ const Admin = () => {
+   const { settings, setSettings } = useSettings();
+@@ -22,8 +25,6 @@ const Admin = () => {
+   });
+   const [admins, setAdmins] = useState<Admin[]>([]);
+   const [token, setToken] = useState<string | null>(null);
+-
+-
+   const [pendingGraphSettings, setPendingGraphSettings] = useState({
+     pieChart: settings.pieChart,
+     areaChart: settings.areaChart,
+@@ -35,33 +36,42 @@ const Admin = () => {
+     audio: settings.media.audio,
+   });
+ 
++
+   const [graphSettingsError, setGraphSettingsError] = useState<string | null>(null);
+ 
+   const router = useRouter();
+   const { logout } = useAuth(); // get login function
+   const colors = [
+     'red', 'blue', 'green', 'yellow', 'purple', 'black', 'white', 'gray', 'cyan',
+-    'magenta', 'maroon', 'navy', 'olive', 'teal', 'lime', 'gold', 'orange'
++    'magenta', 'maroon', 'navy', 'olive', 'teal', 'lime', 'aqua', 'fuchsia', 'silver',
++    'gold', 'orange', '#183D33', '#BD5545', '#00FF00', '#0000FF', '#009099', '#FF00FF',
++    '#00FFFF', '#800000', '#008000', '#000080', '#808000'
+   ];
+ 
++
+   const defaultColors = {
+-    incomerPower: settings.colors.incomerPower,
+-    solarPower: settings.colors.solarPower,
+-    'Secondary Storey Kitchen': settings.colors['Secondary Storey Kitchen'],
+-    'Second Storey Toilet': settings.colors['Second Storey Toilet'],
+-    'Second Storey Ablution': settings.colors['Second Storey Ablution'],
+-    'Ground Storey Toilet': settings.colors['Ground Storey Toilet'],
+-    'Ground Storey Hot Ablution': settings.colors['Ground Storey Hot Ablution'],
+-    'Ground Storey Geyser': settings.colors['Ground Storey Geyser'],
+-    'Ground Storey Cold Ablution': settings.colors['Ground Storey Cold Ablution'],
+-    'First Storey Toilet': settings.colors['First Storey Toilet'],
+-    'First Storey Ablution': settings.colors['First Storey Ablution'],
++    incomerPower: '#183D33',
++    solarPower: '#BD5545',
++    'Secondary Storey Kitchen': '#00FF00',
++    'Second Storey Toilet': '#0000FF',
++    'Second Storey Ablution': '#009099',
++    'Ground Storey Toilet': '#FF00FF',
++    'Ground Storey Hot Ablution': '#00FFFF',
++    'Ground Storey Geyser': '#800000',
++    'Ground Storey Cold Ablution': '#008000',
++    'First Storey Toilet': '#000080',
++    'First Storey Ablution': '#808000',
+   };
+ 
++   /**
++   * Function to validate graph settings.
++   * @returns True if graph settings are valid, false otherwise.
++   */
++
+   const validateGraphSettings = () => {
+     const sequenceNumbers = Object.values(pendingGraphSettings)
+-    .map(setting => setting.sequence)
+-    .filter(sequence => sequence !== 0); //filter out zeros (zeros correspond to undisplayed graphs)
++      .map(setting => setting.sequence)
++      .filter(sequence => sequence !== 0); //filter out zeros (zeros correspond to undisplayed graphs)
+ 
+     if (pendingMediaSettings.display) { // add media settings sequence to be considered in rotation
+       sequenceNumbers.push(pendingMediaSettings.sequence)
+@@ -70,7 +80,7 @@ const Admin = () => {
+     const uniqueSequenceNumbers = new Set(sequenceNumbers);
+ 
+     // Check if a sequence number is chosen twice
+-    if (sequenceNumbers.length !== uniqueSequenceNumbers.size ) {
++    if (sequenceNumbers.length !== uniqueSequenceNumbers.size) {
+       setGraphSettingsError("Sequence numbers must be unique.");
+       return false;
+     }
+@@ -103,6 +113,13 @@ const Admin = () => {
+     return true;
+   };
+ 
++  /**
++   * Function to handle graph settings change.
++   * @param chartType   The type of chart (e.g., 'pieChart', 'areaChart').
++   * @param field       The field within the chart settings to change.
++   * @param value       The new value to set.
++   */
++
+   const handleGraphSettingsChange = (chartType: ChartType, field: string, value: number | boolean) => {
+     setPendingGraphSettings({
+       ...pendingGraphSettings,
+@@ -121,7 +138,7 @@ const Admin = () => {
+     } else {
+       router.push('/login');
+     }
+-  }, []);
++  }, [router]);
+ 
+   const handleLogout = () => {
+     if (window.confirm("Are you sure you want to logout?")) {
+@@ -131,7 +148,13 @@ const Admin = () => {
+     }
+   };
+ 
+-  const handleChangeColor = (type: ColorType, color: string) => {
++  /**
++   * Function to handle color change.
++   * @param type    The type of color to change (e.g., 'incomerPower', 'solarPower').
++   * @param color   The new color value.
++   */
++
++  const handleChangeColor = (type: string, color: string) => {
+     setPendingChanges({
+       ...pendingChanges,
+       colors: {
+@@ -166,6 +189,12 @@ const Admin = () => {
+     }
+   }, [token]);
+ 
++  /**
++   * Function to add an administrator.
++   * @param username  The username of the administrator.
++   * @param password  The password of the administrator.
++   */
++
+   const addAdmin = async (username: string, password: string) => {
+     if (window.confirm(`Are you sure you want to add ${username} as an admin?`)) {
+ 
+@@ -202,6 +231,11 @@ const Admin = () => {
+     }
+   };
+ 
++  /**
++   * Function to remove an administrator.
++   * @param id  The ID of the administrator to remove.
++   */
++
+   const removeAdmin = async (id: number) => {
+     if (window.confirm(`Are you sure you want to remove this admin?`)) {
+ 
+@@ -228,6 +262,10 @@ const Admin = () => {
+     }
+   };
+ 
++  /**
++   * Function to apply color changes.
++   */
++
+   const applyColorChanges = () => {
+     if (window.confirm("Are you sure you want to apply color changes?")) {
+       const newSettings = {
+@@ -256,6 +294,10 @@ const Admin = () => {
+     }
+   };
+ 
++  /**
++   * Function to apply graph settings changes.
++   */
++
+   const applyGraphSettingsChanges = () => {
+     if (validateGraphSettings()) {
+       if (window.confirm("Are you sure you want to apply graph settings changes?")) {
+@@ -276,6 +318,12 @@ const Admin = () => {
+ 
+   };
+ 
++  /**
++   * Function to handle media settings change.
++   * @param field   The field within the media settings to change.
++   * @param value   The new value to set.
++   */
++
+   const handleMediaSettingsChange = (field: string, value: number | boolean) => {
+     setPendingMediaSettings({
+       ...pendingMediaSettings,
+@@ -283,6 +331,18 @@ const Admin = () => {
+     });
+   };
+ 
++  const handleScroll = (event: React.MouseEvent, sectionId: string, offset = -80) => {
++    event.preventDefault();
++    const element = document.getElementById(sectionId);
++    if (element) {
++      const position = element.offsetTop + offset;
++      window.scrollTo({
++        top: position,
++        behavior: 'smooth'
++      });
++    }
++  };
++
+   return (
+     <div>
+ 
+@@ -292,9 +352,9 @@ const Admin = () => {
+ 
+         <nav className='navContainer'>
+           <ul style={{ paddingTop: '10px' }}>
+-            <li><a href="#select-content-and-media">Select dashboard content</a></li>
+-            <li><a href="#adjust-colours">Adjust Colours</a></li>
+-            <li><a href="#manage-admins">Manage Administrators</a></li>
++            <li><a href="#select-content-and-media" onClick={(e) => handleScroll(e, 'select-content-and-media')}>Select dashboard content</a></li>
++            <li><a href="#adjust-colours" onClick={(e) => handleScroll(e, 'adjust-colors')}>Adjust Colours</a></li>
++            <li><a href="#manage-admins" onClick={(e) => handleScroll(e, 'manage-admins')}>Manage Administrators</a></li>
+           </ul>
+         </nav>
+       </div>
+@@ -320,11 +380,14 @@ const Admin = () => {
+               settings={pendingGraphSettings}
+             />
+           ))}
+-          <MediaSettingsComponent
++
++        </div>
++
++        <MediaSettingsComponent
+           handleMediaSettingsChange={handleMediaSettingsChange}
+           settings={pendingMediaSettings}
+         />
+-        </div>
++
+       </div>
+ 
+       <div id="adjust-colours" className='mb-5 adminBlock'>
+@@ -343,7 +406,7 @@ const Admin = () => {
+               <div key={type} className="defaultColorGridElement">
+                 <span className='text-black mr-2'>{type}: </span>
+                 <button
+-                  onClick={() => handleChangeColor(type as ColorType, color)}
++                  onClick={() => handleChangeColor(type as string, color)}
+                   className={`p-2`}
+                   style={{ backgroundColor: color }}
+                 >
+@@ -354,17 +417,20 @@ const Admin = () => {
+           </div>
+           <h1 className='text-black font-bold'>Choose your graph colours:</h1>
+           <div className='colorGrid'>
+-          {(Object.keys(pendingChanges.colors) as Array<ColorType | string>).map((type) => (
+-            <ColorOptions
+-              key={type}
+-              type={type as ColorType}
+-              colors={colors}
+-              handleChangeColor={handleChangeColor}
+-              currentColor={(pendingChanges.colors as any)[type]}
+-            />
+-          ))}
++            {(Object.keys(pendingChanges.colors) as Array<ColorType | string>).map((type) => {
++              return (
++                <ColorOptions
++                  key={type}
++                  type={type as ColorType}
++                  colors={colors}
++                  handleChangeColor={handleChangeColor}
++                  currentColor={(pendingChanges.colors as any)[type]}
++                />
++              );
++            })}
++
+           </div>
+-          
++
+         </div>
+       </div>
+ 
+@@ -372,6 +438,7 @@ const Admin = () => {
+       <div id="manage-admins" className='mb-5 adminBlock'>
+         <h2>Manage Administrators</h2>
+         <ManageAdmin admins={admins} removeAdmin={removeAdmin} addAdmin={addAdmin} />
++
+       </div>
+ 
+       <button onClick={handleLogout} className='logoutButton'>Logout</button>
+diff --git a/frontend/src/app/manual/page.tsx b/frontend/src/app/manual/page.tsx
+index eec56351..f2ecf8bd 100644
+--- a/frontend/src/app/manual/page.tsx
++++ b/frontend/src/app/manual/page.tsx
+@@ -43,7 +43,7 @@ export default function Manual() {
+ 
+         <div id='about'>
+           <h4>About</h4>
+-          <div>
++          <div className='mb-4'>
+             <h2>SolarViz: Powering Sustainability at UCT D-Skool</h2>
+             <p>
+               SolarViz is a cutting-edge dashboard developed to meticulously monitor and visualize the power and water consumption of the UCT D-Skool building. As a cornerstone of the university's sustainability initiatives, the D-Skool building is committed to upholding its 6-star green rating. SolarViz is instrumental in this endeavor, offering real-time analytics, historical data, and actionable insights to both the management and the residents.
+@@ -112,12 +112,12 @@ export default function Manual() {
+             <h3>Selecting dashboard content</h3>
+             <Image src={selectContent} alt = "selectContent"/>
+             <ol>
+-              <li><strong>Graph Display:</strong> Pick the graphs you want to see by checking their checkboxes. It's all about having the information that matters most to you.</li>
+-              <li><strong>Graph Configuration:</strong> If you select a graph, you can customize it further. Set the sequence number to control its order and decide how long it stays on the screen by adjusting the duration.</li>
+-              <li><strong>Sequence Number Validation:</strong> Keep your sequence numbers in order. If they're not consecutive, you will see an error message saying, "Sequence numbers must follow each other."</li>
+-              <li><strong>Unique Sequence Numbers:</strong> Each graph needs its own special sequence number. Avoid duplicates to prevent an error message saying, "Sequence numbers must be unique."</li>
+-              <li><strong>Duration Requirement:</strong> Make sure each graph is visible for more than 10 seconds. This gives viewers enough time to absorb the information and grasp its meaning.</li>
+-              <li><strong>Selecting Media:</strong> This function works similarly to selecting graphs. You can also choose whether videos play with sound or without sound, giving you control over your media experience.</li>
++              <li>Graph Display: Pick the graphs you want to see by checking their checkboxes. It's all about having the information that matters most to you.</li>
++              <li>Graph Configuration: If you select a graph, you can customize it further. Set the sequence number to control its order and decide how long it stays on the screen by adjusting the duration.</li>
++              <li>Sequence Number Validation: Keep your sequence numbers in order. If they're not consecutive, you will see an error message saying, "Sequence numbers must follow each other."</li>
++              <li>Unique Sequence Numbers: Each graph needs its own special sequence number. Avoid duplicates to prevent an error message saying, "Sequence numbers must be unique."</li>
++              <li>Duration Requirement: Make sure each graph is visible for more than 10 seconds. This gives viewers enough time to absorb the information and grasp its meaning.</li>
++              <li>Selecting Media: This function works similarly to selecting graphs. You can also choose whether videos play with sound or without sound, giving you control over your media experience.</li>
+               <li>When you're ready to apply all the changes you've made to the graphs and media selections, simply click on the "Apply Changes" button. This will update your dashboard with the new configurations you've chosen.</li>
+             </ol>
+           </div>
+@@ -126,13 +126,13 @@ export default function Manual() {
+             <h3>Adjusting colours</h3>
+             <Image src={defaultColours} alt = "defaultColours"/>
+             <ol>
+-              <li><strong>Default Colours:</strong> In this section, the default colours for all graph variables are displayed.
++              <li>Default Colours: In this section, the default colours for all graph variables are displayed.
+                 If you wish to revert back to the default colours, simply click on one of the provided buttons.</li>
+             </ol>
+ 
+             <Image src={customColours} alt = "customColours"/>
+             <ol>
+-              <li><strong>Custom Colours:</strong> Select custom colours for each variable using the drop-down menus associated with each variable. As you make colour selections,
++              <li>Custom Colours: Select custom colours for each variable using the drop-down menus associated with each variable. As you make colour selections,
+                 a preview of the chosen colour will be displayed next to the respective drop-down menu.</li>
+               <li>Once you are happy with the selection, click the "Apply Changes" button. This will implement the
+                  new colour scheme for the graph variables.</li>
+diff --git a/frontend/src/app/styles/Admin.css b/frontend/src/app/styles/Admin.css
+index 4c0a0e97..a909b2b8 100644
+--- a/frontend/src/app/styles/Admin.css
++++ b/frontend/src/app/styles/Admin.css
+@@ -127,40 +127,23 @@ h2 {
+     justify-content: space-between; /* Space between elements */
+ }
+ 
+-.adminBlock input {
+-    margin: 30px;
+-    padding: 0.5rem; /* Padding */
+-    max-width: 200px; /* Maximum width */
+-    border: 1px solid #292827; /* Border */
+-    border-radius: 5px; /* Rounded corners */
+-    caret-color: black; /* Caret (text cursor) color */
+-}
+-
+-.submitForm {
+-    display: flex;
+-    flex-direction: column;
+-}
+-
+-.submitTextAndInput {
+-    margin: 20px;
+-    display: grid;
+-    grid-template-columns: 30vh 40vh;
++/* CSS for Labels in Admin Blocks */
++.adminBlock label {
++    display: block; /* Block-level element */
++    margin-bottom: 0.5rem; /* Bottom margin */
++    color: #292827; /* Text color */
+ }
+ 
+-.submitTextAndInput input{
+-    left:30px;
++/* CSS for Input Fields in Admin Blocks */
++.adminBlock input {
+     padding: 0.5rem; /* Padding */
+     max-width: 200px; /* Maximum width */
++    margin: 30px; /* Margin */
+     border: 1px solid #292827; /* Border */
+     border-radius: 5px; /* Rounded corners */
+     caret-color: black; /* Caret (text cursor) color */
+ }
+ 
+-/* CSS for Labels in Admin Blocks */
+-.submitTextAndInput label {
+-    color: #292827; /* Text color */
+-}
+-
+ /* CSS for Buttons in Admin Blocks */
+ .adminBlock button {
+     background-color: #292827; /* Background color */
+@@ -195,15 +178,12 @@ h2 {
+ 
+ /* CSS for Grid Elements in Selection Blocks */
+ .gridElement {
+-    margin-top: 10px;
+-    display: flex;
+-    flex-direction: column;
+     border-right: 1px solid #292827; /* Right border */
+     border-radius: 0px; /* Rounded corners */
+ }
+ 
+ /* CSS for Input Fields in Selection Blocks */
+-.gridElement input {
++.selectionBlock input {
+     width: 60px; /* Width */
+     padding: 0.5rem; /* Padding */
+     margin-bottom: 1rem; /* Bottom margin */
+@@ -211,8 +191,7 @@ h2 {
+ 
+ /* CSS for Labels in Selection Blocks */
+ .selectionBlock label {
+-    display: grid; /* Use flexbox for layout */
+-    grid-template-columns: 10fr 10fr;
++    display: flex; /* Use flexbox for layout */
+     align-items: center; /* Align items vertically */
+     justify-content: space-between; /* Space between elements */
+ }
+@@ -288,4 +267,4 @@ h2 {
+     position: absolute;
+     left:0;
+     word-wrap: break-word;
+-}
++}
+\ No newline at end of file
+diff --git a/frontend/src/app/styles/MangeAdmins.css b/frontend/src/app/styles/MangeAdmins.css
+deleted file mode 100644
+index e69de29b..00000000
+diff --git a/frontend/src/app/styles/Manual.css b/frontend/src/app/styles/Manual.css
+index 4360eb9d..6baf8a1f 100644
+--- a/frontend/src/app/styles/Manual.css
++++ b/frontend/src/app/styles/Manual.css
+@@ -47,20 +47,18 @@
+ 
+ /* Content Level 1 Headings */
+ .content h1 {
+-    margin-top: 20px;
++    margin: 20px;
+ }
+ 
+ /* Content Level 2 Headings */
+ .content h2 {
+-    margin-top: 20px;
++    margin: 20px;
+     font-size: large;
+-    text-align: left;
+ }
+ 
+ /* Content Level 3 Headings */
+ .content h3 {
+-    margin-top: 20px;
+-    margin-bottom: 20px;
++    margin: 10px;
+     font-size: large;
+ }
+ 
+@@ -68,7 +66,7 @@
+ .content h4 {
+     font-size: x-large; /* Font size for h4 headings */
+     font-weight: bold; /* Bold font for h4 headings */
+-    margin-top: 20px;
++    margin: 20px;
+ }
+ 
+ /* Content List Items */
+diff --git a/frontend/src/app/types/chartTypes.tsx b/frontend/src/app/types/chartTypes.tsx
+index 6ff4ed55..67395c18 100644
+--- a/frontend/src/app/types/chartTypes.tsx
++++ b/frontend/src/app/types/chartTypes.tsx
+@@ -21,28 +21,33 @@ export interface PieChartComponentProps {
+     data: {
+         'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': number;
+         'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': number;
++        'UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0': number;
+     };
+     colors: {
+         incomerPower: string;
+         solarPower: string;
+     };
++    showIrradiance: boolean;
+ }
+ 
+ 
+ // Props interface for the StackedAreaChart component.
+ 
+ export interface StackedAreaChartProps {
+-    data: { Timestamp: string; 'Load Power': string; 'Solar Power': string; 'Incomer Power': string; }[];
++    data: { Timestamp: string; 'Load Power': string; 'Solar Power': string; 'Incomer Power': string; 'Expected Power': string; }[];
+     colors: {
+         incomerPower: string;
+         solarPower: string;
+     },
+     selectedPowerType: string;
++    showForecast: boolean;
++    duration: string;
+ }
+ 
+ 
+ // Props interface for the StackedLineChart component.
+ 
+ export interface StackedLineChartProps {
++    duration: string;
+     data: WaterDataType[];
+ }
+diff --git a/frontend/src/app/types/dataTypes.tsx b/frontend/src/app/types/dataTypes.tsx
+index f91c4988..637c7402 100644
+--- a/frontend/src/app/types/dataTypes.tsx
++++ b/frontend/src/app/types/dataTypes.tsx
+@@ -6,6 +6,16 @@ export interface DataType {
+     'UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD': string;
+     'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': string;
+     'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': string;
++    'UCT - DSchool - Simulation - Expected power [kW]': string;
++    'UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0': string;
++}
++
++export interface TransformedDataType {
++    Timestamp: string;
++    'Load Power': string;
++    'Solar Power': string;
++    'Incomer Power': string;
++    'Expected Power': string;
+ }
+ 
+ 
+@@ -101,10 +111,10 @@ export type ChartType = 'pieChart' | 'areaChart' | 'lineChart';
+ // Props interface for the ColorOptions component.
+ 
+ export type ColorOptionsProps = {
+-    type: string;
+-    colors: string[];
+-    handleChangeColor: (type: ColorType, color: string) => void;
+-    currentColor: string;
++    type: string,
++    colors: string[],
++    handleChangeColor: (type: string, color: string) => void,
++    currentColor: string
+ };
+ 
+ // Props interface for the GraphSettings component.
+@@ -123,8 +133,13 @@ export type ManageAdminProps = {
+     addAdmin: (username: string, password: string) => void;
+ };
+ 
+-// Props interface for the ChartWrapper component.
++export interface AggregatedDataType {
++    'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': number;
++    'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': number;
++    'UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0': number;
++}
+ 
++// Props interface for the ChartWrapper component.
+ export interface ChartWrapperProps {
+     title: string;
+     chart: React.ReactNode;
+diff --git a/frontend/src/app/utils/DataUtils.tsx b/frontend/src/app/utils/DataUtils.tsx
+index 58869f1e..55106ee0 100644
+--- a/frontend/src/app/utils/DataUtils.tsx
++++ b/frontend/src/app/utils/DataUtils.tsx
+@@ -1,28 +1,16 @@
++import { DataType, TransformedDataType, AggregatedDataType } from "../types/dataTypes";
++import { format } from 'date-fns';
+ 
+-// Represents the original data type for power-related information.
+-
+-interface DataType {
+-    Timestamp: string;
+-    'UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD': string;
+-    'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': string;
+-    'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': string;
+-}
+-
+-// Represents the transformed data type for power-related information.
+-
+-interface TransformedDataType {
+-    Timestamp: string;
+-    'Load Power': string;
+-    'Solar Power': string;
+-    'Incomer Power': string;
+-}
+-
+-// Represents the aggregated data type for power-related information.
+-
+-interface AggregatedDataType {
+-    'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': number;
+-    'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': number;
+-}
++export const getTickFormatter = (duration: string) => {
++    if (duration === 'day') {
++        return (tick: any) => format(new Date(tick), 'HH:mm');
++    } else if (duration === 'month') {
++        return (tick: any) => format(new Date(tick), 'dd MMM');
++    } else if (duration === 'year') {
++        return (tick: any) => format(new Date(tick), 'MMM yyyy');
++    }
++    return (tick: any) => tick;
++};
+ 
+ /**
+  * Transforms the power data to a more manageable format.
+@@ -35,6 +23,8 @@ export const transformPowerData = (powerData: DataType[]): TransformedDataType[]
+         'Load Power': item['UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD'],
+         'Solar Power': item['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR'],
+         'Incomer Power': item['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER'],
++        'Irradiance': item['UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0'],
++        'Expected Power': (parseFloat(item['UCT - DSchool - Simulation - Expected power [kW]']) * 1000).toString() // Converted to number, then to Watts, and finally to string
+     }));
+ };
+ 
+@@ -46,18 +36,23 @@ export const transformPowerData = (powerData: DataType[]): TransformedDataType[]
+ export const aggregateData = (powerData: DataType[]): AggregatedDataType => {
+     let totalSolar = 0;
+     let totalIncomerPower = 0;
++    let totalIrradiance = 0;
+ 
+     powerData.forEach((item) => {
+         totalSolar += Number(item['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR']);
+         totalIncomerPower += Number(item['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER']);
++        totalIrradiance += Number(item['UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0']);
+     });
+ 
+     return {
+         'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': totalSolar,
+         'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': totalIncomerPower,
++        'UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0': totalIrradiance
+     };
+ };
+ 
++
++
+ /**
+  * Formats a date string to a more readable format.
+  * @param {string} dateString   The original date string.
