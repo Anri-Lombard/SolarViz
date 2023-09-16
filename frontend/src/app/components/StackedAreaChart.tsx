@@ -3,11 +3,13 @@ import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } f
 import { StackedAreaChartProps } from '../types/chartTypes';
 import { getTickFormatter } from '../utils/DataUtils';
 
+import LoadingSpinner from './LoadingSpinner';
+
 export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors, selectedPowerType, showForecast, duration }) => {
     const tickFormatter = useMemo(() => getTickFormatter(duration), [duration]);
     
     if (!data || data.length === 0) {
-        return <div>No data available</div>;
+        return <LoadingSpinner />;
     }
 
     // Convert power data to kWh assuming the data is already aggregated per hour
