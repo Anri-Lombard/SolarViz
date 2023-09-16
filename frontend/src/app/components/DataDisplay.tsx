@@ -11,7 +11,7 @@ import { StackedLineChart } from './StackedLineChart';
 import { transformPowerData, aggregateData, formatDate } from '../utils/DataUtils';
 
 import { ChartTypes } from '../types/chartTypes'
-import { DataDisplayProps, TransformedDataType } from '../types/dataTypes'
+import { DataDisplayProps } from '../types/dataTypes'
 
 /**
  * DataDisplay component displays various charts and data visualizations based on power and water data.
@@ -26,7 +26,12 @@ import { DataDisplayProps, TransformedDataType } from '../types/dataTypes'
 export default function DataDisplay({ powerData, waterData, settings }: DataDisplayProps) {
   const [currentChartIndex, setCurrentChartIndex] = useState(0);
   const [transformedData, setTransformedData] = useState<
-    TransformedDataType[] | null
+    {
+      Timestamp: string;
+      'Load Power': string;
+      'Solar Power': string;
+      'Incomer Power': string;
+    }[] | null
   >(null);
   const [powerStartTime, setPowerStartTime] = useState("0");
   const [powerEndTime, setPowerEndTime] = useState("0");
@@ -70,25 +75,25 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
             <h1 className="heading">
               Percentage Energy from Solar and Incomer from {powerStartTime} to {powerEndTime}
             </h1>
-            <PieChartComponent data={aggregatedData} colors={settings.colors} showIrradiance={false} />
+            <PieChartComponent data={aggregatedData} colors={settings.colors} />
           </>
         ) : null;
       case ChartTypes.AREA:
         return transformedData ? (
           <>
             <h1 className="heading">
-              Energy from Solar Power and Incomer Power (grid) on {powerEndTime}
+              Energy from Solar and Incomer from {powerStartTime} to {powerEndTime}
             </h1>
-            <StackedAreaChart data={transformedData} colors={settings.colors} selectedPowerType='All' showForecast={false} duration="day" />
+            <StackedAreaChart data={transformedData} colors={settings.colors} selectedPowerType='All' />
           </>
         ) : null;
       case ChartTypes.LINE:
         return (
           <>
             <h1 className="heading">
-              Water Consumption on {waterEndTime} for Different Storeys
+              Water Consumption from {waterStartTime} to {waterEndTime} for Different Storeys
             </h1>
-            <StackedLineChart data={waterData} duration="day"/>
+            <StackedLineChart data={waterData} />
           </>
         );
       // case ChartTypes.VIDEO:
@@ -116,6 +121,8 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
         updateChart(nextIndex);
       }, nextDuration);
     };
+
+    console.log(charts);
 
 
     // Start the loop
