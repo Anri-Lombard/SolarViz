@@ -47,18 +47,20 @@
 
 /* Content Level 1 Headings */
 .content h1 {
-    margin: 20px;
+    margin-top: 20px;
 }
 
 /* Content Level 2 Headings */
 .content h2 {
-    margin: 20px;
+    margin-top: 20px;
     font-size: large;
+    text-align: left;
 }
 
 /* Content Level 3 Headings */
 .content h3 {
-    margin: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     font-size: large;
 }
 
@@ -66,7 +68,7 @@
 .content h4 {
     font-size: x-large; /* Font size for h4 headings */
     font-weight: bold; /* Bold font for h4 headings */
-    margin: 20px;
+    margin-top: 20px;
 }
 
 /* Content List Items */
