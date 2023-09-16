@@ -1,0 +1,9 @@
+.graphHeading {
+    display: flex;
+    justify-content: space-between;
+}
+
+.chartImage {
+    width:40px;
+    margin-right: 20px;
+}

@@ -36,7 +36,8 @@ export interface StackedAreaChartProps {
     colors: {
         incomerPower: string;
         solarPower: string;
-    };
+    },
+    selectedPowerType: string;
 }
 
 

@@ -47,18 +47,19 @@ const Admin = () => {
     'gold', 'orange'
   ];
 
+
   const defaultColors = {
-    incomerPower: settings.colors.incomerPower,
-    solarPower: settings.colors.solarPower,
-    'Secondary Storey Kitchen': settings.colors['Secondary Storey Kitchen'],
-    'Second Storey Toilet': settings.colors['Second Storey Toilet'],
-    'Second Storey Ablution': settings.colors['Second Storey Ablution'],
-    'Ground Storey Toilet': settings.colors['Ground Storey Toilet'],
-    'Ground Storey Hot Ablution': settings.colors['Ground Storey Hot Ablution'],
-    'Ground Storey Geyser': settings.colors['Ground Storey Geyser'],
-    'Ground Storey Cold Ablution': settings.colors['Ground Storey Cold Ablution'],
-    'First Storey Toilet': settings.colors['First Storey Toilet'],
-    'First Storey Ablution': settings.colors['First Storey Ablution'],
+    incomerPower: '#183D33',
+    solarPower: '#BD5545',
+    'Secondary Storey Kitchen': '#00FF00',
+    'Second Storey Toilet': '#0000FF',
+    'Second Storey Ablution': '#009099',
+    'Ground Storey Toilet': '#FF00FF',
+    'Ground Storey Hot Ablution': '#00FFFF',
+    'Ground Storey Geyser': '#800000',
+    'Ground Storey Cold Ablution': '#008000',
+    'First Storey Toilet': '#000080',
+    'First Storey Ablution': '#808000',
   };
 
    /**
@@ -67,16 +68,18 @@ const Admin = () => {
    */
 
   const validateGraphSettings = () => {
-    const sequenceNumbers = Object.values(pendingGraphSettings).map(setting => setting.sequence);
+    const sequenceNumbers = Object.values(pendingGraphSettings)
+    .map(setting => setting.sequence)
+    .filter(sequence => sequence !== 0); //filter out zeros (zeros correspond to undisplayed graphs)
 
-    if (pendingMediaSettings.display) {
+    if (pendingMediaSettings.display) { // add media settings sequence to be considered in rotation
       sequenceNumbers.push(pendingMediaSettings.sequence)
     }
 
     const uniqueSequenceNumbers = new Set(sequenceNumbers);
 
     // Check if a sequence number is chosen twice
-    if (sequenceNumbers.length !== uniqueSequenceNumbers.size) {
+    if (sequenceNumbers.length !== uniqueSequenceNumbers.size ) {
       setGraphSettingsError("Sequence numbers must be unique.");
       return false;
     }
@@ -327,6 +330,18 @@ const Admin = () => {
     });
   };
 
+  const handleScroll = (event: React.MouseEvent, sectionId: string, offset = -80) => {
+    event.preventDefault();
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const position = element.offsetTop + offset;
+      window.scrollTo({
+        top: position,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <div>
 
@@ -334,11 +349,11 @@ const Admin = () => {
         <p>Welcome to the administration page. Adjust the colour schemes of the graphs displayed,
           select the content to be displayed on the main dashboard, or manage the administrators. Select one of the options below:</p>
 
-        <nav>
-          <ul className='hover=underline' style={{ paddingTop: '10px' }}>
-            <li><a href="#select-content-and-media">Select dashboard content</a></li>
-            <li><a href="#adjust-colours">Adjust Colours</a></li>
-            <li><a href="#manage-admins">Manage Administrators</a></li>
+        <nav className='navContainer'>
+          <ul style={{ paddingTop: '10px' }}>
+            <li><a href="#select-content-and-media" onClick={(e) => handleScroll(e, 'select-content-and-media')}>Select dashboard content</a></li>
+            <li><a href="#adjust-colours" onClick={(e) => handleScroll(e, 'adjust-colors')}>Adjust Colours</a></li>
+            <li><a href="#manage-admins" onClick={(e) => handleScroll(e, 'manage-admins')}>Manage Administrators</a></li>
           </ul>
         </nav>
       </div>
@@ -385,19 +400,22 @@ const Admin = () => {
           </div>
 
           <h1 className='text-black font-bold'>Default Colours:</h1>
-          {Object.entries(defaultColors).map(([type, color]) => (
-            <div key={type} className="flex items-center mb-2">
-              <span className='text-black mr-2'>{type}: </span>
-              <button
-                onClick={() => handleChangeColor(type as ColorType, color)}
-                className={`p-2`}
-                style={{ backgroundColor: color }}
-              >
-                {color}
-              </button>
-            </div>
-          ))}
-
+          <div className='colorGrid'>
+            {Object.entries(defaultColors).map(([type, color]) => (
+              <div key={type} className="defaultColorGridElement">
+                <span className='text-black mr-2'>{type}: </span>
+                <button
+                  onClick={() => handleChangeColor(type as ColorType, color)}
+                  className={`p-2`}
+                  style={{ backgroundColor: color }}
+                >
+                  {color}
+                </button>
+              </div>
+            ))}
+          </div>
+          <h1 className='text-black font-bold'>Choose your graph colours:</h1>
+          <div className='colorGrid'>
           {(Object.keys(pendingChanges.colors) as Array<ColorType | string>).map((type) => (
             <ColorOptions
               key={type}
@@ -407,7 +425,8 @@ const Admin = () => {
               currentColor={(pendingChanges.colors as any)[type]}
             />
           ))}
-
+          </div>
+          
         </div>
       </div>
 

@@ -8,7 +8,7 @@ import { StackedAreaChart } from './StackedAreaChart';
 import { StackedLineChart } from './StackedLineChart';
 import { transformPowerData } from '../utils/DataUtils';
 
-import { DataDisplayProps, ChartWrapperProps } from '../types/dataTypes';
+import { DataDisplayProps, ChartWrapperProps, WaterDataType, PowerType } from '../types/dataTypes';
 
 /**
  * MoreDataDisplay component displays additional data charts and filters.
@@ -36,7 +36,10 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
   const [showTargetRange, setShowTargetRange] = useState(false);
   const [selectedMetric, setSelectedMetric] = useState('Load Power');
   const [selectedMeterDescription, setSelectedMeterDescription] = useState('All');
+  const [selectedPowerType, setSelectedPowerType] = useState('All');
   const [showPerformanceMetrics, setShowPerformanceMetrics] = useState(false);
+  const [filteredWaterData, setFilteredWaterData] = useState<WaterDataType[] | null>(null);
+  const [stagedWaterData, setStagedWaterData] = useState<WaterDataType[] | null>(null);
 
 
   const [stagedSettings, setStagedSettings] = useState({
@@ -51,7 +54,6 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
       showPerformanceMetrics: false,
     },
     lineChart: {
-      selectedMetric: 'Load Power',
       selectedMeterDescription: 'All',
     },
   });
@@ -62,24 +64,19 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
         setShowIrradiance(stagedSettings.pieChart.showIrradiance);
         break;
       case 'areaChart':
-        setDuration(stagedSettings.areaChart.duration);
-        setShowForecast(stagedSettings.areaChart.showForecast);
-        setShowTargetRange(stagedSettings.areaChart.showTargetRange);
-        setShowPerformanceMetrics(stagedSettings.areaChart.showPerformanceMetrics);
+        // setDuration(stagedSettings.areaChart.duration);
+        // setShowForecast(stagedSettings.areaChart.showForecast);
+        // setShowTargetRange(stagedSettings.areaChart.showTargetRange);
+        // setShowPerformanceMetrics(stagedSettings.areaChart.showPerformanceMetrics);
+        setStagedSettings({ ...stagedSettings, areaChart: { ...stagedSettings.areaChart, selectedPowerType: selectedPowerType } })
         break;
       case 'lineChart':
-        setSelectedMetric(stagedSettings.lineChart.selectedMetric);
-        setSelectedMeterDescription(stagedSettings.lineChart.selectedMeterDescription);
+        setStagedSettings({ ...stagedSettings, lineChart: { selectedMeterDescription: selectedMeterDescription } })
         break;
       default:
         break;
     }
   };
-
-  // TODO: implement
-  useEffect(() => {
-    // Apply filters here and update transformedData
-  }, [stagedSettings]);
 
   const aggregatedData = useMemo(() => {
     if (!powerData || powerData.length === 0) return null;
@@ -101,6 +98,7 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
       'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': totalIncomerPower,
     };
   }, [powerData]);
+  
 
 
 
@@ -123,7 +121,7 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
           />
           <ChartWrapper
             title="Energy from Solar and Incomer"
-            chart={<StackedAreaChart data={transformedData} colors={settings.colors} />}
+            chart={<StackedAreaChart data={transformedData} colors={settings.colors} selectedPowerType={stagedSettings.areaChart.selectedPowerType} />          }
             filters={
               <>
                 <div>
@@ -144,11 +142,11 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
                 </div>
                 <div>
                   <label>Power Type: </label>
-                  <select onChange={(e) => setSelectedMeterDescription(e.target.value)} value={selectedMeterDescription}>
+                  <select onChange={(e) => setSelectedPowerType(e.target.value)} value={selectedPowerType}>
                     <option value="All">All</option>
-                    <option value="Solar">Solar</option>
-                    <option value="Incomer">Incomer</option>
-                    <option value="Load">Load</option>
+                    <option value="Solar Power">Solar Power</option>
+                    <option value="Incomer Power">Incomer Power</option>
+                    <option value="Load Power">Load Power</option>
                   </select>
                 </div>
                 <button className="applyButton" onClick={() => applyStagedSettings('areaChart')}>Apply</button>
@@ -157,22 +155,22 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
           />
           <ChartWrapper
             title="Daily Water Consumption Over July 2023 for Different Storeys"
-            chart={<StackedLineChart data={waterData /* or filteredWaterData */} />}
+            chart={<StackedLineChart data={stagedSettings.lineChart.selectedMeterDescription === 'All' ? waterData : waterData?.filter(item => item['Meter Description'] === stagedSettings.lineChart.selectedMeterDescription)} />}
             filters={
               <>
                 <div>
                   <label>Meter Description: </label>
                   <select onChange={(e) => setSelectedMeterDescription(e.target.value)} value={selectedMeterDescription}>
                     <option value="All">All</option>
-                    <option value="UCT D-School - Secondary Storey - Kitchen">Secondary Storey - Kitchen</option>
-                    <option value="UCT D-School - Second Storey - Toilet">Second Storey - Toilet</option>
-                    <option value="UCT D-School - Second Storey - Ablution">Second Storey - Ablution</option>
-                    <option value="UCT D-School - Ground Storey - Toilet">Ground Storey - Toilet</option>
-                    <option value="UCT D-School - Ground Storey - Hot Ablution">Ground Storey - Hot Ablution</option>
-                    <option value="UCT D-School - Ground Storey - Geyser">Ground Storey - Geyser</option>
-                    <option value="UCT D-School - Ground Storey - Cold Ablution">Ground Storey - Cold Ablution</option>
-                    <option value="UCT D-School - First Storey - Toilet">First Storey - Toilet</option>
-                    <option value="UCT D-School - First Storey - Ablution">First Storey - Ablution</option>
+                    <option value="Secondary Storey Kitchen">Secondary Storey Kitchen</option>
+                    <option value="Second Storey Toilet">Second Storey Toilet</option>
+                    <option value="Second Storey Ablution">Second Storey Ablution</option>
+                    <option value="Ground Storey Toilet">Ground Storey Toilet</option>
+                    <option value="Ground Storey Hot Ablution">Ground Storey Hot Ablution</option>
+                    <option value="Ground Storey Geyser">Ground Storey Geyser</option>
+                    <option value="Ground Storey Cold Ablution">Ground Storey Cold Ablution</option>
+                    <option value="First Storey Toilet">First Storey Toilet</option>
+                    <option value="First Storey Ablution">First Storey Ablution</option>
                   </select>
                 </div>
                 <button className="applyButton" onClick={() => applyStagedSettings('lineChart')}>Apply</button>

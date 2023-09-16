@@ -4,7 +4,6 @@
     color: black; /* Text color */
     padding: 30px; /* Padding */
     margin-top: 100px; /* Top margin */
-    font-family: 'Ariel', sans-serif; /* Font family */
 }
 
 /* Table of Contents */
@@ -22,9 +21,19 @@
     margin-bottom: 10px; /* Bottom margin */
     text-decoration: none; /* No text decoration (underline) */
     color: #183d33; /* Link text color */
+    cursor: pointer; /* Change cursor to hand */
+    padding: 5px; /* Add some padding for a better hover effect */
+    border-radius: 3px; /* Rounded corners for background */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
 }
 
-/* Content Section */
+.tableOfContents a:hover {
+    text-decoration: underline; /* Add underline */
+    color: #292827; /* Change text color */
+    font-weight: bold; /* Make text bold */
+}
+
+
 .content {
     margin-left: 200px; /* Left margin to accommodate the table of contents */
     flex-grow: 1; /* Allow content to grow within the flex container */
@@ -38,29 +47,38 @@
 
 /* Content Level 1 Headings */
 .content h1 {
-    margin-bottom: 20px; /* Bottom margin for h1 headings */
+    margin: 20px;
 }
 
 /* Content Level 2 Headings */
 .content h2 {
-    margin-bottom: 20px; /* Bottom margin for h2 headings */
-    font-size: large; /* Font size for h2 headings */
+    margin: 20px;
+    font-size: large;
 }
 
 /* Content Level 3 Headings */
 .content h3 {
-    margin-top: 10px; /* Top margin for h3 headings */
-    font-size: large; /* Font size for h3 headings */
+    margin: 10px;
+    font-size: large;
 }
 
 /* Content Level 4 Headings */
 .content h4 {
     font-size: x-large; /* Font size for h4 headings */
     font-weight: bold; /* Bold font for h4 headings */
+    margin: 20px;
 }
 
 /* Content List Items */
 .content li {
     margin-top: 20px; /* Top margin for list items */
     margin-bottom: 20px; /* Bottom margin for list items */
+}
+
+.contribution a {
+    display: block;
+}
+
+.selectContent img {
+    width: 600px;
 }

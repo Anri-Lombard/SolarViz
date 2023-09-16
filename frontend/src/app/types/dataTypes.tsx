@@ -130,3 +130,5 @@ export interface ChartWrapperProps {
     chart: React.ReactNode;
     filters?: React.ReactNode;
 }
+
+export type PowerType = 'All' | 'Solar' | 'Incomer' | 'Load';

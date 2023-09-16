@@ -25,7 +25,6 @@
     position: relative; /* Relative positioning */
     float: right; /* Float to the right */
     right: 20px; /* Right offset */
-    top: 100px; /* Top offset */
     display: flex; /* Use flexbox for layout */
     flex-direction: column; /* Vertical column layout */
 }
@@ -81,11 +80,27 @@ h2 {
     padding-top: 100px; /* Top padding */
     padding-bottom: 20px; /* Bottom padding */
     margin: 40px; /* Margin */
+    text-align: center;
+}
+
+.intro .navContainer {
+    text-align: left;
+    display: inline-block;
 }
 
 /* CSS for Links in Intro Text */
 .intro a {
     color: #183d33; /* Link text color */
+    cursor: pointer; /* Change cursor to hand */
+    padding: 5px; /* Add some padding for a better hover effect */
+    border-radius: 3px; /* Rounded corners for background */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.intro a:hover {
+    text-decoration: underline; 
+    color: #292827; 
+    font-weight: bold; 
 }
 
 /* CSS for Admin Blocks */
@@ -151,20 +166,18 @@ h2 {
 
 /* CSS for Selection Blocks */
 .selectionBlock {
-    background-color: #f3e9cb; /* Background color */
     padding: 20px; /* Padding */
     border-radius: 10px; /* Rounded corners */
     border: 2px solid #292827; /* Border */
     margin-top: 60px; /* Top margin */
     border-width: 0px; /* Border width */
     display: grid; /* Use grid layout */
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Dynamic columns */
+    grid-template-columns: repeat(3, minmax(100px, 1fr)); /* Dynamic columns */
     grid-column-gap: 20px; /* Gap between columns */
 }
 
 /* CSS for Grid Elements in Selection Blocks */
 .gridElement {
-    padding: 0.2rem; /* Padding */
     border-right: 1px solid #292827; /* Right border */
     border-radius: 0px; /* Rounded corners */
 }
@@ -204,4 +217,54 @@ h2 {
 .logoutButton:hover {
     color: #f3e9cb; /* Text color on hover */
     background-color: #292827; /* Background color on hover */
+}
+
+.colorGrid {
+    border-radius: 10px;
+    border: 2px solid #292827;
+    margin-top: 60px;
+    border-width: 0px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-column-gap: 20px;
+    font-size: 14px;
+}
+
+.colorGridElement {
+    height:120px;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.colorGridElement h3 {
+    margin-top: 10px;
+}
+
+.colorGridElement .colorDropdown {
+    position: absolute;
+    bottom: 0;
+    padding: 10px;
+    display: flex;
+}
+
+.defaultColorGridElement {
+    height:120px;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.defaultColorGridElement button {
+    position: absolute;
+    max-width: 100px;
+    height: 60px;
+    right: 0;
+}
+
+.defaultColorGridElement span {
+    margin-right: 100px;
+    position: absolute;
+    left:0;
+    word-wrap: break-word;
 }

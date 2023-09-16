@@ -18,7 +18,7 @@ export default function Home() {
   const { settings } = useSettings();
 
   return (
-    <main className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-screen">
       {powerData && waterData ? (
         <>
           <DataDisplay powerData={powerData} waterData={waterData} settings={settings} />
@@ -26,6 +26,6 @@ export default function Home() {
       ) : (
         <p>Loading...</p>
       )}
-    </main>
+    </div>
   );
 }

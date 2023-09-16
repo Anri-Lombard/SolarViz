@@ -14,12 +14,13 @@
 
 /* Text within the footer, centered vertically and horizontally */
 .footerText {
-    position: absolute; /* Absolute positioning */
-    top: 50%; /* Align vertically at 50% from the top */
+    position: fixed;
+    bottom: 0%;
     left: 50%; /* Align horizontally at 50% from the left */
     transform: translate(-50%, -50%); /* Center horizontally and vertically */
     text-align: center; /* Center-align text */
     font-size: 16px; /* Font size */
+    z-index: 2;
 }
 
 /* Container for footer content, right-aligned and vertically aligned at the top */

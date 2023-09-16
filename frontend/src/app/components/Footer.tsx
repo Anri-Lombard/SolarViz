@@ -24,9 +24,6 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="footer">
-      <div className='footerText'>
-        <p>© 2023 SolarViz. All rights reserved.</p>
-      </div>
 
       <div className='footerContainer'>
         <Image src={footerImage} alt="Footer Image" className='footerImage' />

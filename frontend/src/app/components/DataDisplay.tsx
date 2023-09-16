@@ -84,7 +84,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
             <h1 className="heading">
               Energy from Solar and Incomer from {powerStartTime} to {powerEndTime}
             </h1>
-            <StackedAreaChart data={transformedData} colors={settings.colors} />
+            <StackedAreaChart data={transformedData} colors={settings.colors} selectedPowerType='All' />
           </>
         ) : null;
       case ChartTypes.LINE:
@@ -114,7 +114,6 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
 
 
       if (charts[nextIndex].type === 'VIDEO' && videoDuration !== null) {
-        console.log(settings.media)
         nextDuration = settings.media.display ? videoDuration * 1000 : 0;
       }
 

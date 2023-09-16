@@ -28,11 +28,19 @@ export function VideoComponent({ playWithAudio, setVideoDuration, style }: { pla
     }
   }, []);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video && style.display === 'block') {
+      video.play().catch((error) => {
+        console.error("Video play failed:", error);
+      });
+    }
+  }, [style]);
+
   return (
-    <video width={400} height={400} autoPlay ref={videoRef} controls muted={!playWithAudio} style={style}>
+    <video width={400} height={400} ref={videoRef} controls muted={!playWithAudio} style={style}>
       <source src="/Videos/video.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
   );
 }
-
