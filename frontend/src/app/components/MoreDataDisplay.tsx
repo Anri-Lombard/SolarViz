@@ -111,7 +111,7 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
             }
           />
           <ChartWrapper
-            title="Energy from Solar and Incomer"
+            title="Energy from Solar and Incomer for Chosen Duration"
             chart={<StackedAreaChart
               data={transformedData}
               colors={settings.colors}
@@ -150,7 +150,7 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
             }
           />
           <ChartWrapper
-            title="Daily Water Consumption Over July 2023 for Different Storeys"
+            title="Daily Water Consumption Over July 2023 for Chosen Storeys and  Duration"
             chart={<StackedLineChart data={stagedSettings.lineChart.selectedMeterDescription === 'All' ? waterData : waterData?.filter(item => item['Meter Description'] === stagedSettings.lineChart.selectedMeterDescription)} duration={stagedSettings.lineChart.duration} />}
             filters={
               <>
