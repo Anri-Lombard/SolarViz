@@ -32,7 +32,6 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
   const [showTargetRange, setShowTargetRange] = useState(false);
   const [selectedMeterDescription, setSelectedMeterDescription] = useState('All');
   const [selectedPowerType, setSelectedPowerType] = useState('All');
-  const [showPerformanceMetrics, setShowPerformanceMetrics] = useState(false);
   const [aggregatedData, setAggregatedData] = useState<
     AggregatedDataType | null
   >(null);
