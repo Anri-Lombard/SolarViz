@@ -1,4 +1,16 @@
 import { DataType, TransformedDataType, AggregatedDataType } from "../types/dataTypes";
+import { format } from 'date-fns';
+
+export const getTickFormatter = (duration: string) => {
+    if (duration === 'day') {
+        return (tick: any) => format(new Date(tick), 'HH:mm');
+    } else if (duration === 'month') {
+        return (tick: any) => format(new Date(tick), 'dd MMM');
+    } else if (duration === 'year') {
+        return (tick: any) => format(new Date(tick), 'MMM yyyy');
+    }
+    return (tick: any) => tick;
+};
 
 /**
  * Transforms the power data to a more manageable format.

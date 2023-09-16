@@ -32,5 +32,6 @@ export interface StackedAreaChartProps {
 }
 
 export interface StackedLineChartProps {
+    duration: string;
     data: WaterDataType[];
 }

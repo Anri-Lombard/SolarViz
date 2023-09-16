@@ -1,18 +1,7 @@
 import React, { useMemo } from 'react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { StackedAreaChartProps } from '../types/chartTypes';
-import { format } from 'date-fns';
-
-const getTickFormatter = (duration: string) => {
-    if (duration === 'day') {
-        return (tick: any) => format(new Date(tick), 'HH:mm');
-    } else if (duration === 'month') {
-        return (tick: any) => format(new Date(tick), 'dd MMM');
-    } else if (duration === 'year') {
-        return (tick: any) => format(new Date(tick), 'MMM yyyy');
-    }
-    return (tick: any) => tick;
-};
+import { getTickFormatter } from '../utils/DataUtils';
 
 export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors, selectedPowerType, showForecast, duration }) => {
     const tickFormatter = useMemo(() => getTickFormatter(duration), [duration]);

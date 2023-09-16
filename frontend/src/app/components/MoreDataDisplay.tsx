@@ -16,6 +16,7 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
   >(null);
 
   const [lineDuration, setLineDuration] = useState('day');
+  const [areaDuration, setAreaDuration] = useState('day');
   const [showIrradiance, setShowIrradiance] = useState(false);
   const [showForecast, setShowForecast] = useState(false);
   const [showTargetRange, setShowTargetRange] = useState(false);
@@ -40,6 +41,7 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
     },
     lineChart: {
       selectedMeterDescription: 'All',
+      duration: 'day',
     },
   });
 
@@ -51,17 +53,22 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
       case 'areaChart':
         setStagedSettings(
           {
-            ...stagedSettings, areaChart: { 
-              ...stagedSettings.areaChart, 
-              selectedPowerType: selectedPowerType, 
+            ...stagedSettings, areaChart: {
+              ...stagedSettings.areaChart,
+              selectedPowerType: selectedPowerType,
               showForecast: showForecast,
-              duration: lineDuration,
+              duration: areaDuration,
             }
           }
         )
         break;
       case 'lineChart':
-        setStagedSettings({ ...stagedSettings, lineChart: { selectedMeterDescription: selectedMeterDescription } })
+        setStagedSettings({
+          ...stagedSettings, lineChart: {
+            selectedMeterDescription: selectedMeterDescription,
+            duration: lineDuration,
+          }
+        })
         break;
       default:
         break;
@@ -105,17 +112,17 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
           />
           <ChartWrapper
             title="Energy from Solar and Incomer"
-            chart={<StackedAreaChart 
-              data={transformedData} 
-              colors={settings.colors} 
-              selectedPowerType={stagedSettings.areaChart.selectedPowerType} 
-              showForecast={stagedSettings.areaChart.showForecast} 
+            chart={<StackedAreaChart
+              data={transformedData}
+              colors={settings.colors}
+              selectedPowerType={stagedSettings.areaChart.selectedPowerType}
+              showForecast={stagedSettings.areaChart.showForecast}
               duration={stagedSettings.areaChart.duration} />}
             filters={
               <>
                 <div>
                   <label>Duration: </label>
-                  <select onChange={(e) => setLineDuration(e.target.value)} value={lineDuration}>
+                  <select onChange={(e) => setAreaDuration(e.target.value)} value={areaDuration}>
                     <option value="day">Day</option>
                     <option value="month">Month</option>
                     <option value="year">Year</option>
@@ -144,9 +151,17 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
           />
           <ChartWrapper
             title="Daily Water Consumption Over July 2023 for Different Storeys"
-            chart={<StackedLineChart data={stagedSettings.lineChart.selectedMeterDescription === 'All' ? waterData : waterData?.filter(item => item['Meter Description'] === stagedSettings.lineChart.selectedMeterDescription)} />}
+            chart={<StackedLineChart data={stagedSettings.lineChart.selectedMeterDescription === 'All' ? waterData : waterData?.filter(item => item['Meter Description'] === stagedSettings.lineChart.selectedMeterDescription)} duration={stagedSettings.lineChart.duration} />}
             filters={
               <>
+                <div>
+                  <label>Duration: </label>
+                  <select onChange={(e) => setLineDuration(e.target.value)} value={lineDuration}>
+                    <option value="day">Day</option>
+                    <option value="month">Month</option>
+                    <option value="year">Year</option>
+                  </select>
+                </div>
                 <div>
                   <label>Meter Description: </label>
                   <select onChange={(e) => setSelectedMeterDescription(e.target.value)} value={selectedMeterDescription}>
