@@ -14,9 +14,6 @@ import MediaSettingsComponent from '../../components/MediaSettingsComponent';
 
 import { Admin, ColorType, ChartType } from '../../types/dataTypes'
 
-/**
- * Component for the administrator dashboard.
- */
 
 const Admin = () => {
   const { settings, setSettings } = useSettings();
@@ -25,6 +22,8 @@ const Admin = () => {
   });
   const [admins, setAdmins] = useState<Admin[]>([]);
   const [token, setToken] = useState<string | null>(null);
+
+
   const [pendingGraphSettings, setPendingGraphSettings] = useState({
     pieChart: settings.pieChart,
     areaChart: settings.areaChart,
@@ -36,42 +35,33 @@ const Admin = () => {
     audio: settings.media.audio,
   });
 
-
   const [graphSettingsError, setGraphSettingsError] = useState<string | null>(null);
 
   const router = useRouter();
   const { logout } = useAuth(); // get login function
   const colors = [
     'red', 'blue', 'green', 'yellow', 'purple', 'black', 'white', 'gray', 'cyan',
-    'magenta', 'maroon', 'navy', 'olive', 'teal', 'lime', 'aqua', 'fuchsia', 'silver',
-    'gold', 'orange', '#183D33', '#BD5545', '#00FF00', '#0000FF', '#009099', '#FF00FF',
-    '#00FFFF', '#800000', '#008000', '#000080', '#808000'
+    'magenta', 'maroon', 'navy', 'olive', 'teal', 'lime', 'gold', 'orange'
   ];
 
-
   const defaultColors = {
-    incomerPower: '#183D33',
-    solarPower: '#BD5545',
-    'Secondary Storey Kitchen': '#00FF00',
-    'Second Storey Toilet': '#0000FF',
-    'Second Storey Ablution': '#009099',
-    'Ground Storey Toilet': '#FF00FF',
-    'Ground Storey Hot Ablution': '#00FFFF',
-    'Ground Storey Geyser': '#800000',
-    'Ground Storey Cold Ablution': '#008000',
-    'First Storey Toilet': '#000080',
-    'First Storey Ablution': '#808000',
+    incomerPower: settings.colors.incomerPower,
+    solarPower: settings.colors.solarPower,
+    'Secondary Storey Kitchen': settings.colors['Secondary Storey Kitchen'],
+    'Second Storey Toilet': settings.colors['Second Storey Toilet'],
+    'Second Storey Ablution': settings.colors['Second Storey Ablution'],
+    'Ground Storey Toilet': settings.colors['Ground Storey Toilet'],
+    'Ground Storey Hot Ablution': settings.colors['Ground Storey Hot Ablution'],
+    'Ground Storey Geyser': settings.colors['Ground Storey Geyser'],
+    'Ground Storey Cold Ablution': settings.colors['Ground Storey Cold Ablution'],
+    'First Storey Toilet': settings.colors['First Storey Toilet'],
+    'First Storey Ablution': settings.colors['First Storey Ablution'],
   };
-
-   /**
-   * Function to validate graph settings.
-   * @returns True if graph settings are valid, false otherwise.
-   */
 
   const validateGraphSettings = () => {
     const sequenceNumbers = Object.values(pendingGraphSettings)
-      .map(setting => setting.sequence)
-      .filter(sequence => sequence !== 0); //filter out zeros (zeros correspond to undisplayed graphs)
+    .map(setting => setting.sequence)
+    .filter(sequence => sequence !== 0); //filter out zeros (zeros correspond to undisplayed graphs)
 
     if (pendingMediaSettings.display) { // add media settings sequence to be considered in rotation
       sequenceNumbers.push(pendingMediaSettings.sequence)
@@ -80,7 +70,7 @@ const Admin = () => {
     const uniqueSequenceNumbers = new Set(sequenceNumbers);
 
     // Check if a sequence number is chosen twice
-    if (sequenceNumbers.length !== uniqueSequenceNumbers.size) {
+    if (sequenceNumbers.length !== uniqueSequenceNumbers.size ) {
       setGraphSettingsError("Sequence numbers must be unique.");
       return false;
     }
@@ -113,13 +103,6 @@ const Admin = () => {
     return true;
   };
 
-  /**
-   * Function to handle graph settings change.
-   * @param chartType   The type of chart (e.g., 'pieChart', 'areaChart').
-   * @param field       The field within the chart settings to change.
-   * @param value       The new value to set.
-   */
-
   const handleGraphSettingsChange = (chartType: ChartType, field: string, value: number | boolean) => {
     setPendingGraphSettings({
       ...pendingGraphSettings,
@@ -138,7 +121,7 @@ const Admin = () => {
     } else {
       router.push('/login');
     }
-  }, [router]);
+  }, []);
 
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
@@ -148,13 +131,7 @@ const Admin = () => {
     }
   };
 
-  /**
-   * Function to handle color change.
-   * @param type    The type of color to change (e.g., 'incomerPower', 'solarPower').
-   * @param color   The new color value.
-   */
-
-  const handleChangeColor = (type: string, color: string) => {
+  const handleChangeColor = (type: ColorType, color: string) => {
     setPendingChanges({
       ...pendingChanges,
       colors: {
@@ -188,12 +165,6 @@ const Admin = () => {
       fetchAdmins();
     }
   }, [token]);
-
-  /**
-   * Function to add an administrator.
-   * @param username  The username of the administrator.
-   * @param password  The password of the administrator.
-   */
 
   const addAdmin = async (username: string, password: string) => {
     if (window.confirm(`Are you sure you want to add ${username} as an admin?`)) {
@@ -231,11 +202,6 @@ const Admin = () => {
     }
   };
 
-  /**
-   * Function to remove an administrator.
-   * @param id  The ID of the administrator to remove.
-   */
-
   const removeAdmin = async (id: number) => {
     if (window.confirm(`Are you sure you want to remove this admin?`)) {
 
@@ -261,10 +227,6 @@ const Admin = () => {
       }
     }
   };
-
-  /**
-   * Function to apply color changes.
-   */
 
   const applyColorChanges = () => {
     if (window.confirm("Are you sure you want to apply color changes?")) {
@@ -294,10 +256,6 @@ const Admin = () => {
     }
   };
 
-  /**
-   * Function to apply graph settings changes.
-   */
-
   const applyGraphSettingsChanges = () => {
     if (validateGraphSettings()) {
       if (window.confirm("Are you sure you want to apply graph settings changes?")) {
@@ -318,29 +276,11 @@ const Admin = () => {
 
   };
 
-  /**
-   * Function to handle media settings change.
-   * @param field   The field within the media settings to change.
-   * @param value   The new value to set.
-   */
-
   const handleMediaSettingsChange = (field: string, value: number | boolean) => {
     setPendingMediaSettings({
       ...pendingMediaSettings,
       [field]: value,
     });
-  };
-
-  const handleScroll = (event: React.MouseEvent, sectionId: string, offset = -80) => {
-    event.preventDefault();
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const position = element.offsetTop + offset;
-      window.scrollTo({
-        top: position,
-        behavior: 'smooth'
-      });
-    }
   };
 
   return (
@@ -352,9 +292,9 @@ const Admin = () => {
 
         <nav className='navContainer'>
           <ul style={{ paddingTop: '10px' }}>
-            <li><a href="#select-content-and-media" onClick={(e) => handleScroll(e, 'select-content-and-media')}>Select dashboard content</a></li>
-            <li><a href="#adjust-colours" onClick={(e) => handleScroll(e, 'adjust-colors')}>Adjust Colours</a></li>
-            <li><a href="#manage-admins" onClick={(e) => handleScroll(e, 'manage-admins')}>Manage Administrators</a></li>
+            <li><a href="#select-content-and-media">Select dashboard content</a></li>
+            <li><a href="#adjust-colours">Adjust Colours</a></li>
+            <li><a href="#manage-admins">Manage Administrators</a></li>
           </ul>
         </nav>
       </div>
@@ -380,14 +320,11 @@ const Admin = () => {
               settings={pendingGraphSettings}
             />
           ))}
-
-        </div>
-
-        <MediaSettingsComponent
+          <MediaSettingsComponent
           handleMediaSettingsChange={handleMediaSettingsChange}
           settings={pendingMediaSettings}
         />
-
+        </div>
       </div>
 
       <div id="adjust-colours" className='mb-5 adminBlock'>
@@ -406,7 +343,7 @@ const Admin = () => {
               <div key={type} className="defaultColorGridElement">
                 <span className='text-black mr-2'>{type}: </span>
                 <button
-                  onClick={() => handleChangeColor(type as string, color)}
+                  onClick={() => handleChangeColor(type as ColorType, color)}
                   className={`p-2`}
                   style={{ backgroundColor: color }}
                 >
@@ -417,20 +354,17 @@ const Admin = () => {
           </div>
           <h1 className='text-black font-bold'>Choose your graph colours:</h1>
           <div className='colorGrid'>
-            {(Object.keys(pendingChanges.colors) as Array<ColorType | string>).map((type) => {
-              return (
-                <ColorOptions
-                  key={type}
-                  type={type as ColorType}
-                  colors={colors}
-                  handleChangeColor={handleChangeColor}
-                  currentColor={(pendingChanges.colors as any)[type]}
-                />
-              );
-            })}
-
+          {(Object.keys(pendingChanges.colors) as Array<ColorType | string>).map((type) => (
+            <ColorOptions
+              key={type}
+              type={type as ColorType}
+              colors={colors}
+              handleChangeColor={handleChangeColor}
+              currentColor={(pendingChanges.colors as any)[type]}
+            />
+          ))}
           </div>
-
+          
         </div>
       </div>
 
@@ -438,7 +372,6 @@ const Admin = () => {
       <div id="manage-admins" className='mb-5 adminBlock'>
         <h2>Manage Administrators</h2>
         <ManageAdmin admins={admins} removeAdmin={removeAdmin} addAdmin={addAdmin} />
-
       </div>
 
       <button onClick={handleLogout} className='logoutButton'>Logout</button>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 import { StackedLineChartProps } from '../types/chartTypes';
 import { ConsolidatedData } from '../types/dataTypes';
@@ -7,7 +7,6 @@ import { formatWaterDate } from '../utils/DataUtils';
 
 import { useSettings } from '../contexts/SettingsContext';
 
-import { parse, format } from 'date-fns';
 /**
  * StackedLineChart displays a stacked line chart using Recharts library.
  *
@@ -16,47 +15,8 @@ import { parse, format } from 'date-fns';
  * @returns {JSX.Element}                   The StackedLineChart JSX.
  */
 
-
-export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, duration }) => {
+export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data }) => {
     const { settings } = useSettings();
-
-    if (!data || data.length === 0) {
-        return <div>No data available</div>;
-    }
-
-    // Convert your date and hour strings to Date objects
-    // Convert your data to have Date objects
-    const convertedData = data.map(item => {
-        const formattedDate = formatWaterDate(item.date);
-        const parsedDate = format(parse(formattedDate, 'd MMM yyyy', new Date()), 'yyyy-MM-dd');
-        const dateHour = new Date(parsedDate + 'T' + item.hour + ':00');
-        return {
-            ...item,
-            dateHour: dateHour,
-        };
-    });
-
-
-    // Sort data by dateHour
-    convertedData.sort((a, b) => a.dateHour.getTime() - b.dateHour.getTime());
-
-    // Identify the last timestamp
-    const lastTimestamp = new Date(convertedData[convertedData.length - 1].dateHour);
-
-    // Filter data based on duration and last timestamp
-    const filteredData = convertedData.filter(item => {
-        if (duration === 'day') {
-            return item.dateHour.getDate() === lastTimestamp.getDate() &&
-                item.dateHour.getMonth() === lastTimestamp.getMonth() &&
-                item.dateHour.getFullYear() === lastTimestamp.getFullYear();
-        } else if (duration === 'month') {
-            return item.dateHour.getMonth() === lastTimestamp.getMonth() &&
-                item.dateHour.getFullYear() === lastTimestamp.getFullYear();
-        } else if (duration === 'year') {
-            return item.dateHour.getFullYear() === lastTimestamp.getFullYear();
-        }
-        return true;
-    });
 
     // Extract unique meter descriptions and date-hour combinations
     const meterDescriptions = Array.from(new Set(data.map(item => item['Meter Description'])));
@@ -71,8 +31,8 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, durati
 
         // Calculate the sum of usage for each meter description
         meterDescriptions.forEach(desc => {
-            const sum = filteredData.filter(item => `${item.date} ${item.hour}` === dateHour && item['Meter Description'] === desc)
-                .reduce((acc, curr) => acc + (curr.difference_kl * 1000), 0);
+            const filteredData = data.filter(item => `${item.date} ${item.hour}` === dateHour && item['Meter Description'] === desc);
+            const sum = filteredData.reduce((acc, curr) => acc + (curr.difference_kl * 1000), 0); // Multiply by 1000 to convert to liters
             obj[desc] = sum;
         });
         return obj;
@@ -89,6 +49,7 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, durati
                     bottom: 20,
                 }}
             >
+                {/* <CartesianGrid strokeDasharray="3 3" /> */}
                 <XAxis
                     dataKey="dateHour"
                     type="category"

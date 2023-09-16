@@ -1,16 +1,28 @@
-import { DataType, TransformedDataType, AggregatedDataType } from "../types/dataTypes";
-import { format } from 'date-fns';
 
-export const getTickFormatter = (duration: string) => {
-    if (duration === 'day') {
-        return (tick: any) => format(new Date(tick), 'HH:mm');
-    } else if (duration === 'month') {
-        return (tick: any) => format(new Date(tick), 'dd MMM');
-    } else if (duration === 'year') {
-        return (tick: any) => format(new Date(tick), 'MMM yyyy');
-    }
-    return (tick: any) => tick;
-};
+// Represents the original data type for power-related information.
+
+interface DataType {
+    Timestamp: string;
+    'UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD': string;
+    'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': string;
+    'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': string;
+}
+
+// Represents the transformed data type for power-related information.
+
+interface TransformedDataType {
+    Timestamp: string;
+    'Load Power': string;
+    'Solar Power': string;
+    'Incomer Power': string;
+}
+
+// Represents the aggregated data type for power-related information.
+
+interface AggregatedDataType {
+    'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': number;
+    'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': number;
+}
 
 /**
  * Transforms the power data to a more manageable format.
@@ -23,8 +35,6 @@ export const transformPowerData = (powerData: DataType[]): TransformedDataType[]
         'Load Power': item['UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD'],
         'Solar Power': item['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR'],
         'Incomer Power': item['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER'],
-        'Irradiance': item['UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0'],
-        'Expected Power': (parseFloat(item['UCT - DSchool - Simulation - Expected power [kW]']) * 1000).toString() // Converted to number, then to Watts, and finally to string
     }));
 };
 
@@ -36,22 +46,17 @@ export const transformPowerData = (powerData: DataType[]): TransformedDataType[]
 export const aggregateData = (powerData: DataType[]): AggregatedDataType => {
     let totalSolar = 0;
     let totalIncomerPower = 0;
-    let totalIrradiance = 0;
 
     powerData.forEach((item) => {
         totalSolar += Number(item['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR']);
         totalIncomerPower += Number(item['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER']);
-        totalIrradiance += Number(item['UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0']);
     });
 
     return {
         'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': totalSolar,
         'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': totalIncomerPower,
-        'UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0': totalIrradiance
     };
 };
-
-
 
 /**
  * Formats a date string to a more readable format.

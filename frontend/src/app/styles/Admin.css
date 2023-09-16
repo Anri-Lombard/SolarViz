@@ -127,21 +127,38 @@ h2 {
     justify-content: space-between; /* Space between elements */
 }
 
-/* CSS for Labels in Admin Blocks */
-.adminBlock label {
-    display: block; /* Block-level element */
-    margin-bottom: 0.5rem; /* Bottom margin */
-    color: #292827; /* Text color */
-}
-
-/* CSS for Input Fields in Admin Blocks */
 .adminBlock input {
+    margin: 30px;
     padding: 0.5rem; /* Padding */
     max-width: 200px; /* Maximum width */
-    margin: 30px; /* Margin */
     border: 1px solid #292827; /* Border */
     border-radius: 5px; /* Rounded corners */
     caret-color: black; /* Caret (text cursor) color */
+}
+
+.submitForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.submitTextAndInput {
+    margin: 20px;
+    display: grid;
+    grid-template-columns: 30vh 40vh;
+}
+
+.submitTextAndInput input{
+    left:30px;
+    padding: 0.5rem; /* Padding */
+    max-width: 200px; /* Maximum width */
+    border: 1px solid #292827; /* Border */
+    border-radius: 5px; /* Rounded corners */
+    caret-color: black; /* Caret (text cursor) color */
+}
+
+/* CSS for Labels in Admin Blocks */
+.submitTextAndInput label {
+    color: #292827; /* Text color */
 }
 
 /* CSS for Buttons in Admin Blocks */
@@ -178,12 +195,15 @@ h2 {
 
 /* CSS for Grid Elements in Selection Blocks */
 .gridElement {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
     border-right: 1px solid #292827; /* Right border */
     border-radius: 0px; /* Rounded corners */
 }
 
 /* CSS for Input Fields in Selection Blocks */
-.selectionBlock input {
+.gridElement input {
     width: 60px; /* Width */
     padding: 0.5rem; /* Padding */
     margin-bottom: 1rem; /* Bottom margin */
@@ -191,7 +211,8 @@ h2 {
 
 /* CSS for Labels in Selection Blocks */
 .selectionBlock label {
-    display: flex; /* Use flexbox for layout */
+    display: grid; /* Use flexbox for layout */
+    grid-template-columns: 10fr 10fr;
     align-items: center; /* Align items vertically */
     justify-content: space-between; /* Space between elements */
 }
