@@ -35,6 +35,10 @@ jobs:
       run: |
         cd frontend
         npm install
+    - name: Start frontend server
+      run: |
+        cd frontend
+        npm start &
     - name: Cypress run
       run: |
         cd frontend
