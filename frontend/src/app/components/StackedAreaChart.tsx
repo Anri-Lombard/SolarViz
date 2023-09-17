@@ -21,7 +21,7 @@ export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors
     }));
 
     return (
-        <ResponsiveContainer height={600}>
+        <ResponsiveContainer height={500}>
             <AreaChart
                 data={convertedData}
                 margin={{
