@@ -39,6 +39,36 @@ describe('moreData Page', () => {
   it('should visit the moreData page', () => {
     cy.visit('http://localhost:3000/moreData');
   });
+
+  it('should display MoreDataDisplay component when data is available', () => {
+    // Intercept and stub the API requests to return mock data
+    cy.intercept('GET', 'http://localhost:8000/api/power_data/', { fixture: 'powerData.json'}).as('getPowerData');
+    cy.intercept('GET', 'http://localhost:8000/api/water_data/', { fixture: 'waterData.json'}).as('getWaterData');
+  
+    cy.visit('http://localhost:3000/moreData');
+    cy.wait(['@getPowerData', '@getWaterData']);
+  
+    // Ensure that the data has been loaded
+    cy.get('p').contains("Loading...").should('not.exist');
+
+    // Now check for the MoreDataDisplay component
+    cy.get('[data-testid=moreDataDisplay]').should('exist');
+  });
+
+  it('should display "Loading..." when data is not available', () => {
+    // Intercept and stub the API requests to return empty arrays (no data)
+    cy.intercept('GET', 'http://localhost:8000/api/power_data/', []).as('getPowerData');
+    cy.intercept('GET', 'http://localhost:8000/api/water_data/', []).as('getWaterData');
+
+    cy.visit('http://localhost:3000/moreData');
+    cy.wait(['@getPowerData', '@getWaterData']);
+
+    // Check for the "Loading..." message
+    cy.get('p').contains("Loading...").should('exist');
+
+    // Ensure that the MoreDataDisplay component does not exist
+    cy.get('[data-testid=moreDataDisplay]').should('not.exist');
+  });
 });
 
 describe('login Page', () => {
