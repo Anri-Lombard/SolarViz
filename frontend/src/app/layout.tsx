@@ -29,9 +29,11 @@ export default function RootLayout({
       <SettingsProvider>
         <AuthProvider>
           <DataProvider>
-            <Header />
-            <body className={inter.className}>{children}</body>
-            <Footer />
+            <body className={inter.className}>
+              <Header />
+              {children}
+              <Footer />
+            </body>
           </DataProvider>
         </AuthProvider>
       </SettingsProvider>
