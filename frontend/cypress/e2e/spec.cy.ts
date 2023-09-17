@@ -147,9 +147,35 @@ describe('Admin Page', () => {
 });
 
 
-describe('manual Page', () => {
-  it('should visit the manual page', () => {
+describe('Manual Page', () => {
+  beforeEach(() => {
     cy.visit('http://localhost:3000/manual');
   });
-}
-);
+
+  it('should visit the manual page', () => {
+    cy.url().should('include', '/manual');
+  });
+
+
+  it('should display the Table of Contents', () => {
+    cy.get('.tableOfContents').should('exist');
+    cy.get('.tableOfContents').contains('About');
+    cy.get('.tableOfContents').contains('More Data');
+    cy.get('.tableOfContents').contains('Administration');
+  });
+
+  it('should display the About section', () => {
+    cy.get('#about').should('exist');
+    cy.get('#about').contains('SolarViz: Powering Sustainability at UCT D-Skool');
+  });
+
+  it('should display the More Data section', () => {
+    cy.get('#moreData').should('exist');
+    cy.get('#moreData').contains('Overview');
+  });
+
+  it('should display the Administration section', () => {
+    cy.get('#administration').should('exist');
+    cy.get('#administration').contains('Selecting dashboard content');
+  });
+});
