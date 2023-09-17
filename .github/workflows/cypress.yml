@@ -10,18 +10,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install frontend dependencies
-        working-directory: frontend
-        run: npm install
+      - name: Install frontend dependencies and run Cypress
+        run: |
+          cd frontend
+          npm install
       - name: Cypress run
-        working-directory: frontend
-        uses: cypress-io/github-action@v6
-        with:
-          start: npm start
-          wait-on: 'http://localhost:3000'
-          record: true
-          parallel: true
+        run: |
+          cd frontend
+          npx cypress run
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-
-
