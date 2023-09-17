@@ -2,9 +2,6 @@ import { GraphSettingsProps } from '../types/dataTypes';
 import React, { useState, useEffect } from 'react';
 import '../styles/GraphSettings.css';
 import Image from 'next/image';
-import pie from '../images/piechart.png';
-import line from '../images/linechart.png';
-import area from '../images/areachart.png';
 
 /**
  * GraphSettingsComponent displays settings for a specific chart type.
@@ -34,9 +31,11 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
       <div className="graphHeading">
         <h3 className="font-bold text-l">{chartType}</h3>
         <Image
-          src={chartType === 'pieChart' ? pie : chartType === 'lineChart' ? line : area}
+          src={chartType === 'pieChart' ? "/images/piechart.png" : chartType === 'lineChart' ? "/images/linechart.png" : "/images/areachart.png"}
           alt="chartImage"
           className='chartImage'
+          width={100}
+          height={100}
         />
       </div>
       

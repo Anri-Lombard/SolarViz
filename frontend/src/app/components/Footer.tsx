@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import footerImage from '../images/darkBulb.png';
 import '../styles/Footer.css';
 
 /**
@@ -26,7 +25,7 @@ export const Footer: React.FC = () => {
     <footer className="footer">
 
       <div className='footerContainer'>
-        <Image src={footerImage} alt="Footer Image" className='footerImage' />
+        <Image src="/images/darkBulb.png" alt="Footer Image" className='footerImage' width={100} height={100} />
 
         <div
           onMouseEnter={() => setIsLogoHovered(true)}

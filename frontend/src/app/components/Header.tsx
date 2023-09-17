@@ -3,10 +3,6 @@
 // Importing dependencies and custom components
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import logoImage from '../images/logo.png';
-import lock from '../images/lock.png';
-import unlock from '../images/unlock.png';
-import logoPlain from '../images/logoPlain.png';
 import '../styles/Header.css';
 import Image from 'next/image';
 import { useAuth } from '../contexts/LoginContext';
@@ -57,11 +53,11 @@ const Header: React.FC = () => {
         onMouseLeave={() => setIsLogoHovered(false)}
         onClick={() => goToPage('/')} className="logoImage"
       >
-        <Image src={logoImage} alt="logo" style={{ opacity: logoOpacity }} />
+        <Image width={300} height={300} src="/images/logo.png" alt="logo" style={{ opacity: logoOpacity }} />
         {isLogoHovered && <div className="hoverText">Return to homepage</div>}
       </div>
 
-      {logoOpacity === 0 && <Image src={logoPlain} alt="Plain Logo" className='logoPlain' />}
+      {logoOpacity === 0 && <Image width={300} height={300} src="/images/logoPlain.png" alt="Plain Logo" className='logoPlain' />}
 
       <div className='menuButtonContainer'>
         <div
@@ -77,9 +73,9 @@ const Header: React.FC = () => {
         >
           Admin
           {isLoggedIn ? ( // Conditionally render the lock/unlock image
-            <Image src={unlock} alt="Unlock" className='lockImage' />
+            <Image width={100} height={300} src="/images/unlock.png" alt="Unlock" className='lockImage' />
           ) : (
-            <Image src={lock} alt="Lock" className='lockImage' />
+            <Image width={100} height={300} src="/images/lock.png" alt="Lock" className='lockImage' />
           )}
         </div>
       </div>
