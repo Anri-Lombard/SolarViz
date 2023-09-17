@@ -65,8 +65,8 @@ export type ConsolidatedData = {
  * Type for color settings.
  */
 export type ColorSettings = {
-    incomerPower: string;
-    solarPower: string;
+    'Incomer Power': string;
+    'Solar Power': string;
     'Secondary Storey Kitchen': string;
     'Second Storey Toilet': string;
     'Second Storey Ablution': string;
@@ -100,7 +100,9 @@ export interface Admin {
 
 // Type for color options.
 
-export type ColorType = 'incomerPower' | 'solarPower';
+export type ColorType = 'Incomer Power' | 'Solar Power' | 'Secondary Storey Kitchen' | 'Second Storey Toilet' |
+'Second Storey Ablution' | 'Ground Storey Toilet' | 'Ground Storey Hot Ablution' | 'Ground Storey Geyser' |
+'Ground Storey Cold Ablution' | 'First Storey Toilet' | 'First Storey Ablution'
 
 
 // Type for chart types.
@@ -111,9 +113,9 @@ export type ChartType = 'pieChart' | 'areaChart' | 'lineChart';
 // Props interface for the ColorOptions component.
 
 export type ColorOptionsProps = {
-    type: string,
+    type: ColorType,
     colors: string[],
-    handleChangeColor: (type: string, color: string) => void,
+    handleChangeColor: (type: ColorType, color: string) => void,
     currentColor: string
 };
 

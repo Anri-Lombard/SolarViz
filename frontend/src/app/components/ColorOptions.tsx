@@ -19,7 +19,7 @@ const ColorOptions: React.FC<ColorOptionsProps> = ({ type, colors, handleChangeC
     <div className="colorDropdown">
       <div
         className='p-2 m-1'
-        style={{ backgroundColor: currentColor, width: '30px', height: '30px' }}
+        style={{ backgroundColor: currentColor as string, width: '30px', height: '30px' }}
       ></div>
       <select
         value={currentColor}

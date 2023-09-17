@@ -3,8 +3,8 @@ from django.db import models
 # Singleton model to store global settings.
 # There will only be one instance of this model in the database.
 class GlobalSettings(models.Model):
-    incomerPower = models.CharField(max_length=20, default='#183d33')
-    solarPower = models.CharField(max_length=20, default='#b9544f')
+    incomer_power = models.CharField(max_length=20, default='#183d33')
+    solar_power = models.CharField(max_length=20, default='#b9544f')
     secondary_storey_kitchen = models.CharField(max_length=20, default='#00FF00')
     second_storey_toilet = models.CharField(max_length=20, default='#0000FF')
     second_storey_ablution = models.CharField(max_length=20, default='#009099')
