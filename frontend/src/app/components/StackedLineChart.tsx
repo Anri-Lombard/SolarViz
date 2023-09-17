@@ -43,6 +43,8 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, durati
     // Identify the last timestamp
     const lastTimestamp = new Date(convertedData[convertedData.length - 1].dateHour);
 
+    // console.log(lastTimestamp)
+
     // Filter data based on duration and last timestamp
     const filteredData = convertedData.filter(item => {
         if (duration === 'day') {
@@ -58,9 +60,10 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, durati
         return true;
     });
 
+
     // Extract unique meter descriptions and date-hour combinations
     const meterDescriptions = Array.from(new Set(data.map(item => item['Meter Description'])));
-    const dateHourCombinations = Array.from(new Set(data.map(item => `${item.date} ${item.hour}`)));
+    const dateHourCombinations = Array.from(new Set(filteredData.map(item => `${item.date} ${item.hour}`)));
 
     // Consolidate data for the chart
     const consolidatedData: ConsolidatedData[] = dateHourCombinations.map(dateHour => {

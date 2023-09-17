@@ -17,6 +17,13 @@ describe('login Page', () => {
 }
 );
 
+describe('admin Page', () => {
+  it('should visit the login page', () => {
+    cy.visit('http://localhost:3000/login/admin');
+  });
+}
+);
+
 describe('manual Page', () => {
   it('should visit the manual page', () => {
     cy.visit('http://localhost:3000/manual');
