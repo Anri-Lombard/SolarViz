@@ -49,7 +49,7 @@ describe('moreData Page', () => {
     cy.wait(['@getPowerData', '@getWaterData']);
   
     // Ensure that the data has been loaded
-    cy.get('p').contains("Loading...").should('not.exist');
+    cy.get('p').should('not.exist');
 
     // Now check for the MoreDataDisplay component
     cy.get('[data-testid=moreDataDisplay]').should('exist');
