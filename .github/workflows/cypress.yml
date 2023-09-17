@@ -1,7 +1,5 @@
 name: Cypress Tests
-
 on: [push]
-
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
@@ -9,40 +7,23 @@ jobs:
       fail-fast: false
       matrix:
         containers: [1, 2]
-    
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.11
-
-      - name: Install Django dependencies
-        working-directory: ./backend
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Start Django server
-        working-directory: ./backend
-        run: python manage.py runserver &
-
       - name: Install frontend dependencies
         working-directory: ./frontend
         run: npm install
-
-      - name: Start Next.js server
+      - name: Start the server
         working-directory: ./frontend
         run: npm run start &
-
       - name: Cypress run
         working-directory: ./frontend
         uses: cypress-io/github-action@v6
         with:
-          wait-on: 'http://localhost:3000,http://localhost:8000'
+          start: npm start
+          wait-on: 'http://localhost:3000'
           record: true
           parallel: true
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
