@@ -73,7 +73,7 @@ const ManageAdmin: React.FC<ManageAdminProps> = ({ admins, removeAdmin, addAdmin
               placeholder="Confirm password"
             />
           </label>
-          {!passwordsMatch && <div>Passwords should match</div>}
+          {!passwordsMatch && <div className='adminErrorMessage'>Passwords should match</div>}
         </div>
         <button type="submit">Add Admin</button>
       </form>

@@ -299,43 +299,42 @@ const Admin = () => {
         </nav>
       </div>
 
-      <div id="select-content-and-media" className='mb-5 adminBlock'>
+      <div id="select-content-and-media" className='adminBlock'>
         <h2> Select graphs to be displayed on the main dashboard</h2>
 
         <div
           onClick={applyGraphSettingsChanges}
-          className='applyGraphSettingsButtonContainer'
         >
-          <div className='applyGraphSettingsButton'>Apply Graph Settings</div>
+          <div className='applyButton'>Apply Graph Settings</div>
         </div>
 
-        <div className='selectionBlock'>
+        <div>
           {graphSettingsError && <div className="errorMessage">{graphSettingsError}</div>}
+          <div className='selectionBlock'>
+            {(['pieChart', 'areaChart', 'lineChart'] as ChartType[]).map((chartType) => (
+              <GraphSettingsComponent
+                key={chartType}
+                chartType={chartType}
+                handleGraphSettingsChange={handleGraphSettingsChange}
+                settings={pendingGraphSettings}
+              />
+            ))}
 
-          {(['pieChart', 'areaChart', 'lineChart'] as ChartType[]).map((chartType) => (
-            <GraphSettingsComponent
-              key={chartType}
-              chartType={chartType}
-              handleGraphSettingsChange={handleGraphSettingsChange}
-              settings={pendingGraphSettings}
-            />
-          ))}
-
-        <MediaSettingsComponent
-          handleMediaSettingsChange={handleMediaSettingsChange}
-          settings={pendingMediaSettings}
-        />
+          <MediaSettingsComponent
+            handleMediaSettingsChange={handleMediaSettingsChange}
+            settings={pendingMediaSettings}
+          />
+        </div>
 
         </div>
 
       </div>
 
-      <div id="adjust-colours" className='mb-5 adminBlock'>
+      <div id="adjust-colours" className='adminBlock'>
         <h2>Adjust colours</h2>
-        <div className='mb-5'>
+        <div>
           <div
             onClick={applyColorChanges}
-            className='applyButtonContainer'
           >
             <div className='applyButton'>Apply Color Changes</div>
           </div>
