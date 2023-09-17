@@ -46,7 +46,7 @@ jobs:
     - name: Cypress run
       run: |
         cd frontend
-        npx cypress run
+        npm run cypress:run
       env:
         CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
