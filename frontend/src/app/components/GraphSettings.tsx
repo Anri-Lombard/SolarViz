@@ -51,6 +51,7 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
             handleGraphSettingsChange(chartType, 'sequence', newValue);
           }}
           disabled={!settings[chartType].display} // Disable if 'Display' is unchecked
+          min={1}
         />
       </label>
       <label>
