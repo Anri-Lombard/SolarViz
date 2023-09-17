@@ -10,14 +10,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Navigate to frontend directory
-        run: cd frontend
       - name: Install frontend dependencies
+        working-directory: ./frontend
         run: npm install
+      - name: Start the server
+        working-directory: ./frontend
+        run: npm run start &
       - name: Cypress run
+        working-directory: ./frontend
         uses: cypress-io/github-action@v6
         with:
-          start: npm run cypress:run
+          start: npm start
           wait-on: 'http://localhost:3000'
           record: true
           parallel: true
