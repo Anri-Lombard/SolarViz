@@ -421,10 +421,10 @@ const Admin = () => {
               return (
                 <ColorOptions
                   key={type}
-                  type={type as ColorType}
+                  type={type as ColorType | string}
                   colors={colors}
                   handleChangeColor={handleChangeColor}
-                  currentColor={(pendingChanges.colors as any)[type]}
+                  currentColor={type === 'incomerPower' ? pendingChanges.colors.incomerPower : type === 'solarPower' ? pendingChanges.colors.solarPower : (pendingChanges.colors as any)[type]}
                 />
               );
             })}
