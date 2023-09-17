@@ -35,6 +35,10 @@ jobs:
       run: |
         cd frontend
         npm install
+    - name: Build frontend
+      run: |
+        cd frontend
+        npm run build
     - name: Start frontend server
       run: |
         cd frontend
@@ -45,3 +49,4 @@ jobs:
         npx cypress run
       env:
         CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
