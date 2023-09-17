@@ -11,10 +11,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install frontend dependencies
-        working-directory: ./frontend
+        working-directory: frontend
         run: npm install
       - name: Cypress run
-        working-directory: ./frontend
+        working-directory: frontend
         uses: cypress-io/github-action@v6
         with:
           start: npm start
