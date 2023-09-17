@@ -28,6 +28,7 @@ const ColorOptions: React.FC<ColorOptionsProps> = ({ type, colors, handleChangeC
       >
         {colors.map((color) => (
           <option
+            data-color={color}
             key={color}
             value={color}
             style={{ backgroundColor:'#292827', color: 'white'}}

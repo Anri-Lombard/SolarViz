@@ -75,15 +75,77 @@ describe('login Page', () => {
   it('should visit the login page', () => {
     cy.visit('http://localhost:3000/login');
   });
-}
-);
 
-describe('admin Page', () => {
-  it('should visit the login page', () => {
-    cy.visit('http://localhost:3000/login/admin');
+  it('should login successfully and redirect to admin page', () => {
+    cy.visit('http://localhost:3000/login');
+
+    // TODO: hide credentials
+    cy.get('input[placeholder="Username"]').type('anrilombard');
+    cy.get('input[placeholder="Password"]').type('anrispassword');
+    
+    cy.get('button.bg-green-700').click();
+    
+    // Wait for API response and check for token in local storage
+    cy.window().its('localStorage').invoke('getItem', 'token').should('exist');
+    
+    // Check for redirection
+    cy.url().should('include', '/login/admin');
+  });
+
+  it('should show error message for incorrect credentials', () => {
+    cy.visit('http://localhost:3000/login');
+    
+    cy.get('input[placeholder="Username"]').type('wrong_username');
+    cy.get('input[placeholder="Password"]').type('wrong_password');
+    
+    cy.get('button.bg-green-700').click();
+    
+    // Check for error message
+    cy.get('.text-red-500').contains('Incorrect username or password. Try again.').should('exist');
   });
 }
 );
+
+describe('Admin Page', () => {
+  before(() => {
+    // Simulate login and get the token
+    cy.request({
+      method: 'POST',
+      url: 'http://localhost:8000/api-token-auth/',
+      // TODO: remove credentials
+      body: {
+        username: 'anrilombard', // replace with the admin username
+        password: 'anrispassword' // replace with the admin password
+      },
+    }).then((response) => {
+      // Assuming the token is in the 'token' property of the response
+      const token = response.body.token;
+
+      // Save the token in local storage
+      window.localStorage.setItem('token', token);
+    });
+  });
+
+  it('should visit the admin page', () => {
+    cy.visit('http://localhost:3000/login/admin');
+
+    // Your assertions to make sure the page is correct and not redirected
+    // Example: Check for an element that should be visible only for admins
+    cy.get('[data-testid=adminPage]').should('exist');
+  });
+
+  it('should redirect to /login if not an admin', () => {
+    // Remove the token to simulate a non-admin user
+    window.localStorage.removeItem('token');
+
+    // Visit the admin page
+    cy.visit('http://localhost:3000/login/admin');
+
+    // Check that the URL was changed to /login
+    cy.url().should('include', '/login');
+  });
+});
+
 
 describe('manual Page', () => {
   it('should visit the manual page', () => {

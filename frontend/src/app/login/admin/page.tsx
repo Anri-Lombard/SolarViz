@@ -344,7 +344,7 @@ const Admin = () => {
   };
 
   return (
-    <div>
+    <div data-testid="adminPage">
 
       <div className='intro'>
         <p>Welcome to the administration page. Adjust the colour schemes of the graphs displayed,

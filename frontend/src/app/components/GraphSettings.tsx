@@ -43,6 +43,7 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
       <label>
         Sequence:
         <input
+          data-testid={chartType === 'pieChart' ? "pieChart-sequence" : chartType === 'lineChart' ? "lineChart-sequence" : "areaChart-sequence"}
           type="number"
           value={settings[chartType].display ? settings[chartType].sequence : 0}
           onChange={(e) => {
@@ -66,6 +67,7 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
       <label className='checkbox'>
         Display:
         <input
+          data-testid={chartType === 'pieChart' ? "pieChart-display" : chartType === 'lineChart' ? "lineChart-display" : "areaChart-display"}
           type="checkbox"
           checked={settings[chartType].display}
           onChange={(e) => handleGraphSettingsChange(chartType, 'display', e.target.checked)}
