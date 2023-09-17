@@ -186,6 +186,7 @@ h2 {
 
 /* CSS for Grid Elements in Selection Blocks */
 .gridElement {
+    margin-top: 10px;
     border-right: 1px solid #292827; /* Right border */
     border-radius: 0px; /* Rounded corners */
 }
@@ -194,7 +195,9 @@ h2 {
 .selectionBlock input {
     width: 60px; /* Width */
     padding: 0.5rem; /* Padding */
-    margin-bottom: 1rem; /* Bottom margin */
+    margin: 20px;
+    border: 1px solid #292827; /* Border */
+    border-radius: 5px; /* Rounded corners */
 }
 
 /* CSS for Labels in Selection Blocks */
