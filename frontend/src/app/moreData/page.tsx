@@ -36,7 +36,7 @@ export default function Home() {
 
   return (
     <div className="flex items-center justify-center h-screen">
-      {powerData && waterData ?
+      {(powerData && powerData.length > 0) && (waterData && waterData.length > 0) ?
         
         <MoreDataDisplay powerData={powerData} waterData={waterData} settings={settings} />
         : <p>Loading...</p>

@@ -12,7 +12,7 @@ import GraphSettingsComponent from '../../components/GraphSettings';
 import ManageAdmin from '../../components/ManageAdmins';
 import MediaSettingsComponent from '../../components/MediaSettingsComponent';
 
-import { Admin, ColorType, ChartType } from '../../types/dataTypes'
+import { Admin, ColorType, ChartType, ColorSettings } from '../../types/dataTypes'
 
 /**
  * Component for the administrator dashboard.
@@ -20,6 +20,7 @@ import { Admin, ColorType, ChartType } from '../../types/dataTypes'
 
 const Admin = () => {
   const { settings, setSettings } = useSettings();
+  // console.log(settings)
   const [pendingChanges, setPendingChanges] = useState({
     ...settings,
   });
@@ -50,8 +51,8 @@ const Admin = () => {
 
 
   const defaultColors = {
-    incomerPower: '#183D33',
-    solarPower: '#BD5545',
+    'Incomer Power': '#183D33',
+    'Solar Power': '#BD5545',
     'Secondary Storey Kitchen': '#00FF00',
     'Second Storey Toilet': '#0000FF',
     'Second Storey Ablution': '#009099',
@@ -63,10 +64,10 @@ const Admin = () => {
     'First Storey Ablution': '#808000',
   };
 
-   /**
-   * Function to validate graph settings.
-   * @returns True if graph settings are valid, false otherwise.
-   */
+  /**
+  * Function to validate graph settings.
+  * @returns True if graph settings are valid, false otherwise.
+  */
 
   const validateGraphSettings = () => {
     const sequenceNumbers = Object.values(pendingGraphSettings)
@@ -154,7 +155,7 @@ const Admin = () => {
    * @param color   The new color value.
    */
 
-  const handleChangeColor = (type: string, color: string) => {
+  const handleChangeColor = (type: ColorType, color: string) => {
     setPendingChanges({
       ...pendingChanges,
       colors: {
@@ -271,8 +272,8 @@ const Admin = () => {
       const newSettings = {
         ...settings,
         colors: {
-          incomerPower: pendingChanges.colors.incomerPower,
-          solarPower: pendingChanges.colors.solarPower,
+          'Incomer Power': pendingChanges.colors['Incomer Power'],
+          'Solar Power': pendingChanges.colors['Solar Power'],
           'Secondary Storey Kitchen': pendingChanges.colors['Secondary Storey Kitchen'],
           'Second Storey Toilet': pendingChanges.colors['Second Storey Toilet'],
           'Second Storey Ablution': pendingChanges.colors['Second Storey Ablution'],
@@ -285,7 +286,6 @@ const Admin = () => {
         }
       };
 
-      console.log(newSettings)
       if (token) {
         setSettings(newSettings, token); // Update global settings
       } else {
@@ -344,7 +344,7 @@ const Admin = () => {
   };
 
   return (
-    <div>
+    <div data-testid="adminPage">
 
       <div className='intro'>
         <p>Welcome to the administration page. Adjust the colour schemes of the graphs displayed,
@@ -406,7 +406,7 @@ const Admin = () => {
               <div key={type} className="defaultColorGridElement">
                 <span className='text-black mr-2'>{type}: </span>
                 <button
-                  onClick={() => handleChangeColor(type as string, color)}
+                  onClick={() => handleChangeColor(type as ColorType, color)}
                   className={`p-2`}
                   style={{ backgroundColor: color }}
                 >
@@ -417,17 +417,20 @@ const Admin = () => {
           </div>
           <h1 className='text-black font-bold'>Choose your graph colours:</h1>
           <div className='colorGrid'>
-            {(Object.keys(pendingChanges.colors) as Array<ColorType | string>).map((type) => {
+            {(Object.keys(pendingChanges.colors) as Array<ColorType>).map((type) => {
               return (
                 <ColorOptions
                   key={type}
-                  type={type as ColorType}
+                  type={type}
                   colors={colors}
                   handleChangeColor={handleChangeColor}
+                  // @ts-ignore
                   currentColor={(pendingChanges.colors as any)[type]}
+
                 />
               );
             })}
+
 
           </div>
 

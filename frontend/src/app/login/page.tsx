@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../contexts/LoginContext';
 import Image from 'next/image';
-import loginImage from '../images/d-skool.png';
 import '../styles/Login.css';
 
 /**
@@ -50,7 +49,7 @@ const LoginPage = () => {
 
   return (
     <div className='loginContent'>
-      <Image src={loginImage} alt = "Login Image" className='loginImage'/>
+      <Image height={600} width={600} src="/images/d-skool.png" alt = "Login Image" className='loginImage'/>
       <h2>Login as administrator</h2>
       {error && <div className="text-red-500 bm-3"
         >{error}

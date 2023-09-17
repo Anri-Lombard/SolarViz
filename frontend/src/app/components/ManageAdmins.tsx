@@ -20,12 +20,12 @@ const ManageAdmin: React.FC<ManageAdminProps> = ({ admins, removeAdmin, addAdmin
   const [newAdminPassword, setNewAdminPassword] = React.useState('');
 
   return (
-    <div>
+    <div className="adminList">
       <ul>
         {admins.map(admin => (
           <li key={admin.id}>
             {admin.username}
-            <button onClick={() => removeAdmin(admin.id)}>Remove</button>
+            <button data-testid="removeAdmin" onClick={() => removeAdmin(admin.id)}>Remove</button>
           </li>
         ))}
       </ul>
@@ -38,6 +38,7 @@ const ManageAdmin: React.FC<ManageAdminProps> = ({ admins, removeAdmin, addAdmin
         <label>
           Username:
           <input
+            data-testid="newAdmin-username"
             type="text"
             value={newAdminUsername}
             onChange={(e) => setNewAdminUsername(e.target.value)}
@@ -47,13 +48,14 @@ const ManageAdmin: React.FC<ManageAdminProps> = ({ admins, removeAdmin, addAdmin
         <label>
           Password:
           <input
+            data-testid="newAdmin-password"
             type="password"
             value={newAdminPassword}
             onChange={(e) => setNewAdminPassword(e.target.value)}
             placeholder="New admin password"
           />
         </label>
-        <button type="submit">Add Admin</button>
+        <button data-testid="addAdminButton" type="submit">Add Admin</button>
       </form>
     </div>
   );

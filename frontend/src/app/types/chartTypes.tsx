@@ -24,8 +24,8 @@ export interface PieChartComponentProps {
         'UCT - DSchool - Basics - Irradiance on module plane [W/m²] - G_M0': number;
     };
     colors: {
-        incomerPower: string;
-        solarPower: string;
+        "Incomer Power": string;
+        "Solar Power": string;
     };
     showIrradiance: boolean;
 }
@@ -36,8 +36,8 @@ export interface PieChartComponentProps {
 export interface StackedAreaChartProps {
     data: { Timestamp: string; 'Load Power': string; 'Solar Power': string; 'Incomer Power': string; 'Expected Power': string; }[];
     colors: {
-        incomerPower: string;
-        solarPower: string;
+        "Incomer Power": string;
+        "Solar Power": string;
     },
     selectedPowerType: string;
     showForecast: boolean;

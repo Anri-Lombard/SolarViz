@@ -103,8 +103,8 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
 
 
   return (
-    <div className='graphContainer'>
-      {aggregatedData && waterData && transformedData ? (
+    <div data-testid="moreDataDisplay" className='graphContainer'>
+      {aggregatedData && transformedData ? (
         <>
           <ChartWrapper
             title="Percentage Energy from Solar and Incomer"

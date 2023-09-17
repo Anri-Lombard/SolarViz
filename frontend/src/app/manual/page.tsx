@@ -4,10 +4,6 @@ import React from 'react';
 import '../styles/Manual.css';
 import Image from 'next/image';
 
-//image imports:
-import selectContent from '../images/screenshots/selectDashboardContent.png';
-import defaultColours from '../images/screenshots/defaultColours.png';
-import customColours from '../images/screenshots/customColours.png';
 
 /**
  * The Manual component displays documentation for SolarViz.
@@ -46,7 +42,7 @@ export default function Manual() {
           <div>
             <h2>SolarViz: Powering Sustainability at UCT D-Skool</h2>
             <p>
-              SolarViz is a cutting-edge dashboard developed to meticulously monitor and visualize the power and water consumption of the UCT D-Skool building. As a cornerstone of the university's sustainability initiatives, the D-Skool building is committed to upholding its 6-star green rating. SolarViz is instrumental in this endeavor, offering real-time analytics, historical data, and actionable insights to both the management and the residents.
+              SolarViz is a cutting-edge dashboard developed to meticulously monitor and visualize the power and water consumption of the UCT D-Skool building. As a cornerstone of the university&apos;s sustainability initiatives, the D-Skool building is committed to upholding its 6-star green rating. SolarViz is instrumental in this endeavor, offering real-time analytics, historical data, and actionable insights to both the management and the residents.
             </p>
 
             <h3>Key Features</h3>
@@ -58,12 +54,12 @@ export default function Manual() {
 
             <h3>Objective</h3>
             <p>
-              The primary objective of SolarViz is to foster a culture of transparency and accountability around sustainability within the UCT D-Skool building. By making power and water usage data easily accessible and understandable, SolarViz empowers residents and management to make informed decisions. This, in turn, aids in the continuous improvement of the building's sustainability metrics, ensuring the maintenance of its 6-star green rating.
+              The primary objective of SolarViz is to foster a culture of transparency and accountability around sustainability within the UCT D-Skool building. By making power and water usage data easily accessible and understandable, SolarViz empowers residents and management to make informed decisions. This, in turn, aids in the continuous improvement of the building&apos;s sustainability metrics, ensuring the maintenance of its 6-star green rating.
             </p>
 
             <h3>Who Can Benefit?</h3>
             <p>
-              SolarViz is designed for a wide range of users, including building management, residents, sustainability researchers, and even visitors who are interested in understanding the building's green initiatives. Its user-friendly interface and robust features make it a versatile tool for anyone invested in sustainability.
+              SolarViz is designed for a wide range of users, including building management, residents, sustainability researchers, and even visitors who are interested in understanding the building&apos;s green initiatives. Its user-friendly interface and robust features make it a versatile tool for anyone invested in sustainability.
             </p>
           </div>
         </div>
@@ -104,37 +100,37 @@ export default function Manual() {
         <div id='administration'>
           <h4>Administration</h4>
           <p className='mb-4'>
-            Here, you'll discover a range of powerful tools that empower you as an administrator. From selecting and customizing graphs
+            Here, you&apos;ll discover a range of powerful tools that empower you as an administrator. From selecting and customizing graphs
             to managing media, adjusting colours, and handling administrators, you have the ability to streamline and optimize your system with ease. 
           </p>
 
           <div className='selectContent'>
             <h3>Selecting dashboard content</h3>
-            <Image src={selectContent} alt = "selectContent"/>
+            <Image width={2000} height={2000} src="/images/screenshots/selectDashboardContent.png" alt = "selectContent"/>
             <ol>
-              <li><strong>Graph Display:</strong> Pick the graphs you want to see by checking their checkboxes. It's all about having the information that matters most to you.</li>
+              <li><strong>Graph Display:</strong> Pick the graphs you want to see by checking their checkboxes. It&apos;s all about having the information that matters most to you.</li>
               <li><strong>Graph Configuration:</strong> If you select a graph, you can customize it further. Set the sequence number to control its order and decide how long it stays on the screen by adjusting the duration.</li>
-              <li><strong>Sequence Number Validation:</strong> Keep your sequence numbers in order. If they're not consecutive, you will see an error message saying, "Sequence numbers must follow each other."</li>
-              <li><strong>Unique Sequence Numbers:</strong> Each graph needs its own special sequence number. Avoid duplicates to prevent an error message saying, "Sequence numbers must be unique."</li>
+              <li><strong>Sequence Number Validation:</strong> Keep your sequence numbers in order. If they&apos;re not consecutive, you will see an error message saying, &quot;Sequence numbers must follow each other.&quot;</li>
+              <li><strong>Unique Sequence Numbers:</strong> Each graph needs its own special sequence number. Avoid duplicates to prevent an error message saying, &quot;Sequence numbers must be unique.&quot;</li>
               <li><strong>Duration Requirement:</strong> Make sure each graph is visible for more than 10 seconds. This gives viewers enough time to absorb the information and grasp its meaning.</li>
               <li><strong>Selecting Media:</strong> This function works similarly to selecting graphs. You can also choose whether videos play with sound or without sound, giving you control over your media experience.</li>
-              <li>When you're ready to apply all the changes you've made to the graphs and media selections, simply click on the "Apply Changes" button. This will update your dashboard with the new configurations you've chosen.</li>
+              <li>When you&apos;re ready to apply all the changes you&apos;ve made to the graphs and media selections, simply click on the &quot;Apply Changes&quot; button. This will update your dashboard with the new configurations you&apos;ve chosen.</li>
             </ol>
           </div>
 
           <div className='adjustColours'>
             <h3>Adjusting colours</h3>
-            <Image src={defaultColours} alt = "defaultColours"/>
+            <Image width={1000} height={1000} src="/images/screenshots/defaultColours.png" alt = "defaultColours"/>
             <ol>
               <li><strong>Default Colours:</strong> In this section, the default colours for all graph variables are displayed.
                 If you wish to revert back to the default colours, simply click on one of the provided buttons.</li>
             </ol>
 
-            <Image src={customColours} alt = "customColours"/>
+            <Image width={1000} height={1000} src="/images/screenshots/customColours.png" alt = "customColours"/>
             <ol>
               <li><strong>Custom Colours:</strong> Select custom colours for each variable using the drop-down menus associated with each variable. As you make colour selections,
                 a preview of the chosen colour will be displayed next to the respective drop-down menu.</li>
-              <li>Once you are happy with the selection, click the "Apply Changes" button. This will implement the
+              <li>Once you are happy with the selection, click the &quot;Apply Changes&quot; button. This will implement the
                  new colour scheme for the graph variables.</li>
             </ol>
           </div>

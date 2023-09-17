@@ -78,8 +78,8 @@ export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors
                 />
                 <Legend layout="horizontal" verticalAlign="top" align="center" />
                 {selectedPowerType === 'All' || selectedPowerType === 'Load Power' ? <Area type="monotone" dataKey="Load Power" stackId="1" stroke="#000" fill="none" strokeWidth={2} /> : null}
-                {selectedPowerType === 'All' || selectedPowerType === 'Incomer Power' ? <Area type="monotone" dataKey="Incomer Power" stackId="2" stroke={colors.incomerPower} fill={colors.incomerPower} /> : null}
-                {selectedPowerType === 'All' || selectedPowerType === 'Solar Power' ? <Area type="monotone" dataKey="Solar Power" stackId="3" stroke={colors.solarPower} fill={colors.solarPower} /> : null}
+                {selectedPowerType === 'All' || selectedPowerType === 'Incomer Power' ? <Area type="monotone" dataKey="Incomer Power" stackId="2" stroke={colors["Incomer Power"]} fill={colors["Incomer Power"]} /> : null}
+                {selectedPowerType === 'All' || selectedPowerType === 'Solar Power' ? <Area type="monotone" dataKey="Solar Power" stackId="3" stroke={colors['Solar Power']} fill={colors['Solar Power']} /> : null}
                 {showForecast ? <Area type="monotone" dataKey="Expected Power" stackId="4" stroke="#999" fill="#fff" strokeWidth={2} /> : null}
             </AreaChart>
         </ResponsiveContainer>

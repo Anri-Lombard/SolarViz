@@ -42,8 +42,8 @@ export const metadata: Metadata = {
 export function SettingsProvider({ children }: SettingsProviderProps) {
     const [settings, setSettings] = useState<Settings>({
         colors: {
-            incomerPower: '#ff0000',
-            solarPower: '#00ff00',
+            'Incomer Power': '#ff0000',
+            'Solar Power': '#00ff00',
             'Secondary Storey Kitchen': '#0000ff',
             'Second Storey Toilet': '#ffff00',
             'Second Storey Ablution': '#00ffff',
@@ -84,6 +84,7 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
 
     // Function to update settings in the backend
     const updateSettings = (newSettings: Settings, token: string) => {
+        console.log(newSettings)
         fetch('http://localhost:8000/api/update_global_settings/', {
             method: 'POST',
             headers: {
