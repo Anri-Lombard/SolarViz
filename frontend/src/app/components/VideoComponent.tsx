@@ -38,7 +38,7 @@ export function VideoComponent({ playWithAudio, setVideoDuration, style }: { pla
   }, [style]);
 
   return (
-    <video width={400} height={400} ref={videoRef} controls muted={!playWithAudio} style={style}>
+    <video width={600} height={600} ref={videoRef} controls muted={!playWithAudio} style={style}>
       <source src="/Videos/video.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>

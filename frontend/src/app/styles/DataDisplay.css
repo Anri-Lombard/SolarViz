@@ -1,6 +1,7 @@
 /* CSS for Headings */
 .heading {
-  margin-top: 50px; /* Top margin */
+  margin-left: 5px;
+  margin-right: 5px;
   font-size: 20px; /* Font size */
   text-align: center; /* Center-align text */
   font-family: 'Verdana', sans-serif; /* Font family */

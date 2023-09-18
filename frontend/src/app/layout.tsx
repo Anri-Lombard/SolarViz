@@ -10,7 +10,6 @@ import { SettingsProvider } from './contexts/SettingsContext';
 import { AuthProvider } from './contexts/LoginContext';
 import { DataProvider } from './contexts/DataContext';
 
-
 // Initializes the Inter font with the 'latin' subset.
 
 const inter = Inter({ subsets: ['latin'] });

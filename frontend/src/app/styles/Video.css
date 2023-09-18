@@ -1,4 +1,4 @@
 /* CSS for Video Container */
 .videoContainer {
-    max-width: 20px; /* Maximum width for the video container */
+    width: 400vh; /* Maximum width for the video container */
 }
