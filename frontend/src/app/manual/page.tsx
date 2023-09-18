@@ -30,7 +30,7 @@ export default function Manual() {
   return (
     <div className='manualContainer'>
       <div className='tableOfContents'>
-        <h2 className='text-xl font-bold mb-4'>Table of Contents</h2>
+        <h2>Table of Contents</h2>
         <a href='#about' className='text-blue-500 hover:underline mb-2' onClick={(e) => handleScroll(e, 'about')}>About</a>
         <a href='#moreData' className='text-blue-500 hover:underline mb-2' onClick={(e) => handleScroll(e, 'moreData')}>More Data</a>
         <a href='#administration' className='text-blue-500 hover:underline mb-2' onClick={(e) => handleScroll(e, 'administration')}>Administration</a>

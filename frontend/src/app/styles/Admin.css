@@ -93,8 +93,12 @@ h2 {
 }
 
 .submitForm {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 8fr; /* Two equal columns */
+}
+
+.submitForm label {
+    margin-top: 30px;
 }
 
 /* CSS for Input Fields in Admin Blocks */
