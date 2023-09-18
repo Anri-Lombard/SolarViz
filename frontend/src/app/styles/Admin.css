@@ -92,19 +92,32 @@ h2 {
     font-weight: bold; 
 }
 
-.submitForm {
-    display: flex;
-    flex-direction: column;
+/* CSS for Admin Blocks */
+.adminBlock {
+    background-color: #f3e9cb; /* Background color */
+    padding: 30px; /* Padding */
+    border-radius: 10px; /* Rounded corners */
+    border: 2px solid #292827; /* Border */
+    border-width: 1px; /* Border width */
+    margin: 20px; /* Margin */
 }
 
-.submitTextAndInput {
-    margin: 20px;
-    display: grid;
-    grid-template-columns: 30vh 40vh;
+/* CSS for Lists in Admin Blocks */
+.adminBlock ul {
+    list-style-type: none; /* No list bullets */
+    padding: 0; /* No padding */
 }
 
-.submitTextAndInput input{
-    left:30px;
+/* CSS for List Items in Admin Blocks */
+.adminBlock li {
+    padding: 10px; /* Padding */
+    border-bottom: 1px solid #292827; /* Bottom border */
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between elements */
+}
+
+.adminBlock input {
+    margin: 30px;
     padding: 0.5rem; /* Padding */
     max-width: 200px; /* Maximum width */
     border: 1px solid #292827; /* Border */
@@ -112,10 +125,26 @@ h2 {
     caret-color: black; /* Caret (text cursor) color */
 }
 
-/* CSS for Labels in Admin Blocks */
-.submitTextAndInput label {
-    color: #292827; /* Text color */
+.submitForm {
+    display: flex;
+    flex-direction: column;
 }
+
+.submitTextAndInput {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 30vh 40vh;
+}
+
+.submitTextAndInput input{
+    margin-top: 0px;
+    padding: 0.5rem; /* Padding */
+    max-width: 200px; /* Maximum width */
+    border: 1px solid #292827; /* Border */
+    border-radius: 5px; /* Rounded corners */
+    caret-color: black; /* Caret (text cursor) color */
+}
+
 
 /* CSS for Buttons in Admin Blocks */
 .adminBlock button {
@@ -157,7 +186,7 @@ h2 {
 }
 
 /* CSS for Input Fields in Selection Blocks */
-.selectionBlock input {
+.gridElement input {
     width: 60px; /* Width */
     padding: 0.5rem; /* Padding */
     margin: 20px;
@@ -167,7 +196,8 @@ h2 {
 
 /* CSS for Labels in Selection Blocks */
 .selectionBlock label {
-    display: flex; /* Use flexbox for layout */
+    display: grid; /* Use flexbox for layout */
+    grid-template-columns: 10fr 10fr;
     align-items: center; /* Align items vertically */
     justify-content: space-between; /* Space between elements */
 }

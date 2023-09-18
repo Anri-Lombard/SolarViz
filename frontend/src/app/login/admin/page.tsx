@@ -40,8 +40,8 @@ const Admin = () => {
   const router = useRouter();
   const { logout } = useAuth(); // get login function
   const colors = [
-    'red', 'blue', 'green', 'yellow', 'purple', 'black', 'white', 'gray', 'cyan',
-    'magenta', 'maroon', 'navy', 'olive', 'teal', 'lime', 'gold', 'orange'
+    'red', 'blue', 'green', 'yellow', 'purple', 'black', 'white', 'gray',
+    'maroon', 'navy', 'olive', 'teal', 'lime', 'gold', 'orange'
   ];
 
   const defaultColors = {
@@ -319,7 +319,6 @@ const Admin = () => {
                 settings={pendingGraphSettings}
               />
             ))}
-
           <MediaSettingsComponent
             handleMediaSettingsChange={handleMediaSettingsChange}
             settings={pendingMediaSettings}

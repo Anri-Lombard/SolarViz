@@ -11,7 +11,7 @@ export default function Admin() {
   const { settings, setSettings } = useSettings();
   const [pendingChanges, setPendingChanges] = useState(settings);
 
-  const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'black', 'white', 'gray', 'cyan', 'magenta', 'maroon', 'navy', 'olive', 'teal', 'lime', 'aqua', 'fuchsia', 'silver', 'gold', 'orange']; 
+  const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'black', 'white', 'gray', 'cyan', 'magenta', 'maroon', 'navy', 'olive', 'teal', 'lime', 'silver', 'gold', 'orange']; 
 
   const defaultColors = {
     incomerPower: '#183d33',
