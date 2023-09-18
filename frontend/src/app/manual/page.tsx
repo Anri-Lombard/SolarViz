@@ -134,7 +134,7 @@ export default function Manual() {
 
               <div>
                 <h3>Selecting dashboard content</h3>
-                <Image height={300} width={300} src="/images/screenshots/selectDashboardContent.png" alt = "selectContent"/>
+                <Image height={300} width={800} src="/images/screenshots/selectDashboardContent.png" alt = "selectContent"/>
                 <ol>
                   <li><strong>Graph Display:</strong> Pick the graphs you want to see by checking their checkboxes. It&apos;s all about having the information that matters most to you.</li>
                   <li><strong>Graph Configuration:</strong> If you select a graph, you can customize it further. Set the sequence number to control its order and decide how long it stays on the screen by adjusting the duration.</li>
@@ -148,13 +148,13 @@ export default function Manual() {
 
               <div>
                 <h3>Adjusting colours</h3>
-                <Image height={300} width={300} src="/images/screenshots/defaultColours.png" alt = "defaultColours"/>
+                <Image height={300} width={800} src="/images/screenshots/defaultColours.png" alt = "defaultColours"/>
                 <ol>
                   <li><strong>Default Colours:</strong> In this section, the default colours for all graph variables are displayed.
                     If you wish to revert back to the default colours, simply click on one of the provided buttons.</li>
                 </ol>
 
-                <Image height={300} width={300} src="/images/screenshots/customColours.png" alt = "customColours"/>
+                <Image height={300} width={800} src="/images/screenshots/customColours.png" alt = "customColours"/>
                 <ol>
                   <li><strong>Custom Colours:</strong> Select custom colours for each variable using the drop-down menus associated with each variable. As you make colour selections,
                     a preview of the chosen colour will be displayed next to the respective drop-down menu.</li>
