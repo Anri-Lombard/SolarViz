@@ -177,5 +177,6 @@ describe('Manual Page', () => {
 
   it('should display the Administration section', () => {
     cy.get('#administration').should('exist');
+    cy.get('#administration').contains('Administration');
   });
 });
