@@ -84,3 +84,14 @@
 .selectContent img {
     width: 600px;
 }
+
+.icon {
+    width: 30px;
+    margin-right: 10px;
+}
+
+.icon-textContainer {
+    display: flex; /* Use flexbox to align items horizontally */
+    align-items: center; /* Center items vertically */
+    margin-bottom: 10px; /* Add space between list items */
+}

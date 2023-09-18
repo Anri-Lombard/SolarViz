@@ -45,6 +45,7 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({ handleMediaSetti
           }
         }
         disabled={!settings.display} // Disable if 'Display' is unchecked
+        min={1}
         />
       </label>
       <label>

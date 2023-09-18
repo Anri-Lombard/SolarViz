@@ -18,13 +18,12 @@ const ColorOptions: React.FC<ColorOptionsProps> = ({ type, colors, handleChangeC
     <h3 className='text-black font-bold '>{type} Colour</h3>
     <div className="colorDropdown">
       <div
-        className='p-2 m-1'
-        style={{ backgroundColor: currentColor as string, width: '30px', height: '30px' }}
+        style={{ backgroundColor: currentColor, width: '30px', height: '30px' }}
       ></div>
       <select
         value={currentColor}
         onChange={(e) => handleChangeColor(type, e.target.value)}
-        className="p-2 m-1"
+        className="p-2 m-0 mb-2"
       >
         {colors.map((color) => (
           <option

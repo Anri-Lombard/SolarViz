@@ -18,6 +18,21 @@ import { ManageAdminProps } from '../types/dataTypes';
 const ManageAdmin: React.FC<ManageAdminProps> = ({ admins, removeAdmin, addAdmin }) => {
   const [newAdminUsername, setNewAdminUsername] = React.useState('');
   const [newAdminPassword, setNewAdminPassword] = React.useState('');
+  const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [passwordsMatch, setPasswordsMatch] = React.useState(true);
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newAdminPassword === confirmPassword) {
+      setPasswordsMatch(true);
+      addAdmin(newAdminUsername, newAdminPassword);
+      setNewAdminUsername('');
+      setNewAdminPassword('');
+      setConfirmPassword('');
+    } else {
+      setPasswordsMatch(false);
+    }
+  };
 
   return (
     <div className="adminList">
@@ -29,33 +44,38 @@ const ManageAdmin: React.FC<ManageAdminProps> = ({ admins, removeAdmin, addAdmin
           </li>
         ))}
       </ul>
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        addAdmin(newAdminUsername, newAdminPassword);
-        setNewAdminUsername(''); // Clear the form
-        setNewAdminPassword(''); // Clear the form
-      }}>
-        <label>
-          Username:
-          <input
-            data-testid="newAdmin-username"
-            type="text"
-            value={newAdminUsername}
-            onChange={(e) => setNewAdminUsername(e.target.value)}
-            placeholder="New admin username"
-          />
-        </label>
-        <label>
-          Password:
-          <input
-            data-testid="newAdmin-password"
-            type="password"
-            value={newAdminPassword}
-            onChange={(e) => setNewAdminPassword(e.target.value)}
-            placeholder="New admin password"
-          />
-        </label>
-        <button data-testid="addAdminButton" type="submit">Add Admin</button>
+      <form onSubmit={handleFormSubmit}>
+        <div className='submitForm'>
+          <label className='submitTextAndInput'>
+            Username:
+            <input
+              type="text"
+              value={newAdminUsername}
+              onChange={(e) => setNewAdminUsername(e.target.value)}
+              placeholder="New admin username"
+            />
+          </label>
+          <label className='submitTextAndInput'>
+            Password:
+            <input
+              type="password"
+              value={newAdminPassword}
+              onChange={(e) => setNewAdminPassword(e.target.value)}
+              placeholder="New admin password"
+            />
+          </label>
+          <label className='submitTextAndInput'>
+            Confirm Password:
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm password"
+            />
+          </label>
+          {!passwordsMatch && <div className='adminErrorMessage'>Passwords should match</div>}
+        </div>
+        <button type="submit">Add Admin</button>
       </form>
     </div>
   );
