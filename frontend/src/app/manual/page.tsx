@@ -5,19 +5,6 @@ import '../styles/Manual.css';
 import Image from 'next/image';
 import { useAuth } from '../contexts/LoginContext';
 
-
-//image imports:
-import selectContent from '../images/screenshots/selectDashboardContent.png';
-import defaultColours from '../images/screenshots/defaultColours.png';
-import customColours from '../images/screenshots/customColours.png';
-import solarpanel from '../images/solarpanel.png';
-import media from '../images/media.png';
-import water from '../images/water.png';
-import pie from '../images/piechart.png';
-import line from '../images/linechart.png';
-import area from '../images/areachart.png';
-
-
 /**
  * The Manual component displays documentation for SolarViz.
  *
@@ -63,17 +50,17 @@ export default function Manual() {
             <h3>Key Features</h3>
             <ul>
               <div  className='icon-textContainer'>
-                <Image className="icon" src={solarpanel} alt = "solarPanel"/>
+                <Image className="icon" width={300} height={300} src="/images/solarpanel.png" alt = "solarPanel"/>
                 <li><strong>Power Visualization</strong>: The dashboard provides a granular view of power consumption, breaking it down into solar and grid contributions. Users can track these metrics over various time frames, and the dashboard also displays the percentage of solar power in the total energy mix.</li>
               </div>
 
               <div  className='icon-textContainer'>
-                <Image className="icon" src={water} alt = "waterDrop"/>
+                <Image className="icon" width={300} height={300} src="/images/water.png" alt = "waterDrop"/>
                 <li><strong>Water Data</strong>: SolarViz offers a detailed analysis of water consumption at different points within the building, such as the First Storey Ablution, Ground Storey Geyser, and Second Storey Toilet. Hourly water usage data helps in identifying patterns and implementing water-saving measures.</li>
               </div>
 
               <div className='icon-textContainer'>
-                <Image className="icon" src={media} alt = "media"/>
+                <Image className="icon" width={300} height={300} src="/images/media.png" alt = "media"/>
                 <li><strong>Advertisements and Videos</strong>: The dashboard is equipped with a multimedia section that features advertisements and instructional videos. These resources educate users on best practices for energy and water conservation.</li>
               </div>
               
@@ -110,17 +97,17 @@ export default function Manual() {
           </p>
           <ul>
           <div className='icon-textContainer'>
-            <Image className="icon" src={pie} alt = "pieChart"/>
+            <Image className="icon" height={300} width={300} src="/images/piechart.png" alt = "pieChart"/>
             <li><strong>Pie Chart:</strong> Shows the percentage of energy coming from solar and incomer sources.</li>
           </div>
 
           <div className='icon-textContainer'>
-            <Image className="icon" src={area} alt = "areaChart"/>
+            <Image className="icon" height={300} width={300} src="/images/areachart.png" alt = "areaChart"/>
             <li><strong>Stacked Area Chart:</strong> Displays power data over time, broken down by different metrics.</li>
           </div>
 
           <div className='icon-textContainer'>
-            <Image className="icon" src={line} alt = "lineChart"/>
+            <Image className="icon" height={300} width={300} src="/images/linechart.png" alt = "lineChart"/>
             <li><strong>Stacked Line Chart:</strong> Represents water data over time, segmented by meter description.</li>
           </div>
           </ul>
@@ -147,7 +134,7 @@ export default function Manual() {
 
               <div>
                 <h3>Selecting dashboard content</h3>
-                <Image src={selectContent} alt = "selectContent"/>
+                <Image height={300} width={300} src="/images/screenshots/selectDashboardContent.png" alt = "selectContent"/>
                 <ol>
                   <li><strong>Graph Display:</strong> Pick the graphs you want to see by checking their checkboxes. It&apos;s all about having the information that matters most to you.</li>
                   <li><strong>Graph Configuration:</strong> If you select a graph, you can customize it further. Set the sequence number to control its order and decide how long it stays on the screen by adjusting the duration.</li>
@@ -161,13 +148,13 @@ export default function Manual() {
 
               <div>
                 <h3>Adjusting colours</h3>
-                <Image src={defaultColours} alt = "defaultColours"/>
+                <Image height={300} width={300} src="/images/screenshots/defaultColours.png" alt = "defaultColours"/>
                 <ol>
                   <li><strong>Default Colours:</strong> In this section, the default colours for all graph variables are displayed.
                     If you wish to revert back to the default colours, simply click on one of the provided buttons.</li>
                 </ol>
 
-                <Image src={customColours} alt = "customColours"/>
+                <Image height={300} width={300} src="/images/screenshots/customColours.png" alt = "customColours"/>
                 <ol>
                   <li><strong>Custom Colours:</strong> Select custom colours for each variable using the drop-down menus associated with each variable. As you make colour selections,
                     a preview of the chosen colour will be displayed next to the respective drop-down menu.</li>
