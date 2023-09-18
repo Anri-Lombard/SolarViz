@@ -11,6 +11,7 @@
   background-color: #183d33; /* Background color */
   text-transform: uppercase; /* Uppercase text */
   caret-color: transparent; /* Transparent caret color (text cursor) */
+  z-index: 1;
 }
 
 /* Container for Menu Button */

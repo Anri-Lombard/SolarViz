@@ -38,8 +38,8 @@ def update_global_settings(request):
     data = request.data
     
     colors = data.get('colors', {})
-    settings.incomerPower = colors.get('incomerPower', settings.incomerPower)
-    settings.solarPower = colors.get('solarPower', settings.solarPower)
+    settings.incomer_power = colors.get('Incomer Power', settings.incomer_power)
+    settings.solar_power = colors.get('Solar Power', settings.solar_power)
     settings.secondary_storey_kitchen = colors.get('Secondary Storey Kitchen', settings.secondary_storey_kitchen)
     settings.second_storey_toilet = colors.get('Second Storey Toilet', settings.second_storey_toilet)
     settings.second_storey_ablution = colors.get('Second Storey Ablution', settings.second_storey_ablution)
@@ -81,8 +81,8 @@ def get_global_settings(request):
     settings = GlobalSettings.load()
     transformed_data = {
         'colors': {
-            'incomerPower': settings.incomerPower,
-            'solarPower': settings.solarPower,
+            'Incomer Power': settings.incomer_power,
+            'Solar Power': settings.solar_power,
             'Secondary Storey Kitchen': settings.secondary_storey_kitchen,
             'Second Storey Toilet': settings.second_storey_toilet,
             'Second Storey Ablution': settings.second_storey_ablution,
@@ -115,6 +115,7 @@ def get_global_settings(request):
         },
 
     }
+
     return Response(transformed_data, status=status.HTTP_200_OK)
 
 
@@ -152,7 +153,8 @@ def get_vcom_data():
 
 
 def power_data(request):
-    data = csv_to_json('data/UCT_Drawing_School_2023_08_01_2023_08_31.csv', delimiter=";")
+    # data = csv_to_json('data/UCT_Drawing_School_2023_08_01_2023_08_31.csv', delimiter=";")
+    data = csv_to_json('data/Export_2023_09_01_2023_09_13.csv', delimiter=";")
     
     # Replace negative values with 0
     for row in data:

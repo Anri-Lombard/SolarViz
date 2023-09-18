@@ -24,23 +24,23 @@ const ManageAdmin: React.FC<ManageAdminProps> = ({ admins, removeAdmin, addAdmin
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (newAdminPassword === confirmPassword) {
+      setPasswordsMatch(true);
       addAdmin(newAdminUsername, newAdminPassword);
       setNewAdminUsername('');
       setNewAdminPassword('');
       setConfirmPassword('');
-      setPasswordsMatch(true);
     } else {
       setPasswordsMatch(false);
     }
   };
 
   return (
-    <div>
+    <div className="adminList">
       <ul>
         {admins.map(admin => (
           <li key={admin.id}>
             {admin.username}
-            <button onClick={() => removeAdmin(admin.id)}>Remove</button>
+            <button data-testid="removeAdmin" onClick={() => removeAdmin(admin.id)}>Remove</button>
           </li>
         ))}
       </ul>

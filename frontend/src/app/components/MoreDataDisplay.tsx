@@ -6,9 +6,9 @@ import LoadingSpinner from './LoadingSpinner';
 import { PieChartComponent } from './PieChart';
 import { StackedAreaChart } from './StackedAreaChart';
 import { StackedLineChart } from './StackedLineChart';
-import { transformPowerData } from '../utils/DataUtils';
+import { aggregateData, transformPowerData } from '../utils/DataUtils';
 
-import { DataDisplayProps, ChartWrapperProps, WaterDataType, PowerType } from '../types/dataTypes';
+import { DataDisplayProps, ChartWrapperProps, WaterDataType, AggregatedDataType, TransformedDataType } from '../types/dataTypes';
 
 /**
  * MoreDataDisplay component displays additional data charts and filters.
@@ -22,24 +22,19 @@ import { DataDisplayProps, ChartWrapperProps, WaterDataType, PowerType } from '.
 
 export default function MoreDataDisplay({ powerData, waterData, settings }: DataDisplayProps) {
   const [transformedData, setTransformedData] = useState<
-    {
-      Timestamp: string;
-      'Load Power': string;
-      'Solar Power': string;
-      'Incomer Power': string;
-    }[] | null
+    TransformedDataType[] | null
   >(null);
 
-  const [duration, setDuration] = useState('day');
+  const [lineDuration, setLineDuration] = useState('day');
+  const [areaDuration, setAreaDuration] = useState('day');
   const [showIrradiance, setShowIrradiance] = useState(false);
   const [showForecast, setShowForecast] = useState(false);
   const [showTargetRange, setShowTargetRange] = useState(false);
-  const [selectedMetric, setSelectedMetric] = useState('Load Power');
   const [selectedMeterDescription, setSelectedMeterDescription] = useState('All');
   const [selectedPowerType, setSelectedPowerType] = useState('All');
-  const [showPerformanceMetrics, setShowPerformanceMetrics] = useState(false);
-  const [filteredWaterData, setFilteredWaterData] = useState<WaterDataType[] | null>(null);
-  const [stagedWaterData, setStagedWaterData] = useState<WaterDataType[] | null>(null);
+  const [aggregatedData, setAggregatedData] = useState<
+    AggregatedDataType | null
+  >(null);
 
 
   const [stagedSettings, setStagedSettings] = useState({
@@ -55,78 +50,88 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
     },
     lineChart: {
       selectedMeterDescription: 'All',
+      duration: 'day',
     },
   });
 
   const applyStagedSettings = (chartType: string) => {
     switch (chartType) {
       case 'pieChart':
-        setShowIrradiance(stagedSettings.pieChart.showIrradiance);
+        setStagedSettings({ ...stagedSettings, pieChart: { ...stagedSettings.pieChart, showIrradiance: showIrradiance } })
         break;
       case 'areaChart':
-        // setDuration(stagedSettings.areaChart.duration);
-        // setShowForecast(stagedSettings.areaChart.showForecast);
-        // setShowTargetRange(stagedSettings.areaChart.showTargetRange);
-        // setShowPerformanceMetrics(stagedSettings.areaChart.showPerformanceMetrics);
-        setStagedSettings({ ...stagedSettings, areaChart: { ...stagedSettings.areaChart, selectedPowerType: selectedPowerType } })
+        setStagedSettings(
+          {
+            ...stagedSettings, areaChart: {
+              ...stagedSettings.areaChart,
+              selectedPowerType: selectedPowerType,
+              showForecast: showForecast,
+              duration: areaDuration,
+            }
+          }
+        )
         break;
       case 'lineChart':
-        setStagedSettings({ ...stagedSettings, lineChart: { selectedMeterDescription: selectedMeterDescription } })
+        setStagedSettings({
+          ...stagedSettings, lineChart: {
+            selectedMeterDescription: selectedMeterDescription,
+            duration: lineDuration,
+          }
+        })
         break;
       default:
         break;
     }
   };
 
-  const aggregatedData = useMemo(() => {
-    if (!powerData || powerData.length === 0) return null;
-
+  useEffect(() => {
     // Transform the data here
     const tData = transformPowerData(powerData);
 
     // Set the transformed data
     setTransformedData(tData);
 
-    let totalSolar = 0;
-    let totalIncomerPower = 0;
-    powerData.forEach((item) => {
-      totalSolar += Number(item['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR']);
-      totalIncomerPower += Number(item['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER']);
-    });
-    return {
-      'UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR': totalSolar,
-      'UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER': totalIncomerPower,
-    };
-  }, [powerData]);
-  
+    // Aggregate data
+    const aData = aggregateData(powerData);
+
+    // Set aggregated data
+    setAggregatedData(aData);
+  }, [powerData, setTransformedData]);
+
+
 
 
 
   return (
-    <div className='graphContainer'>
-      {aggregatedData && waterData && transformedData ? (
+    <div data-testid="moreDataDisplay" className='graphContainer'>
+      {aggregatedData && transformedData ? (
         <>
           <ChartWrapper
             title="Percentage Energy from Solar and Incomer"
-            chart={<PieChartComponent data={aggregatedData} colors={settings.colors} />}
+            chart={<PieChartComponent data={aggregatedData} colors={settings.colors} showIrradiance={stagedSettings.pieChart.showIrradiance} />}
             filters={
               <>
                 <div>
                   <label>Show Irradiance: </label>
-                  <input type="checkbox" checked={stagedSettings.pieChart.showIrradiance} onChange={() => setStagedSettings({ ...stagedSettings, pieChart: { showIrradiance: !stagedSettings.pieChart.showIrradiance } })} />
+                  <input type="checkbox" checked={showIrradiance} onChange={() => setShowIrradiance(!showIrradiance)} />
                 </div>
                 <button className="applyButton" onClick={() => applyStagedSettings('pieChart')}>Apply</button>
               </>
             }
           />
           <ChartWrapper
-            title="Energy from Solar and Incomer"
-            chart={<StackedAreaChart data={transformedData} colors={settings.colors} selectedPowerType={stagedSettings.areaChart.selectedPowerType} />          }
+            title="Energy from Solar and Incomer for Chosen Duration"
+            chart={<StackedAreaChart
+              data={transformedData}
+              colors={settings.colors}
+              selectedPowerType={stagedSettings.areaChart.selectedPowerType}
+              showForecast={stagedSettings.areaChart.showForecast}
+              duration={stagedSettings.areaChart.duration} />}
             filters={
               <>
                 <div>
                   <label>Duration: </label>
-                  <select onChange={(e) => setDuration(e.target.value)} value={duration}>
+                  <select onChange={(e) => setAreaDuration(e.target.value)} value={areaDuration}>
                     <option value="day">Day</option>
                     <option value="month">Month</option>
                     <option value="year">Year</option>
@@ -154,10 +159,18 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
             }
           />
           <ChartWrapper
-            title="Daily Water Consumption Over July 2023 for Different Storeys"
-            chart={<StackedLineChart data={stagedSettings.lineChart.selectedMeterDescription === 'All' ? waterData : waterData?.filter(item => item['Meter Description'] === stagedSettings.lineChart.selectedMeterDescription)} />}
+            title="Daily Water Consumption for Chosen Storeys and  Duration"
+            chart={<StackedLineChart data={stagedSettings.lineChart.selectedMeterDescription === 'All' ? waterData : waterData?.filter(item => item['Meter Description'] === stagedSettings.lineChart.selectedMeterDescription)} duration={stagedSettings.lineChart.duration} />}
             filters={
               <>
+                <div>
+                  <label>Duration: </label>
+                  <select onChange={(e) => setLineDuration(e.target.value)} value={lineDuration}>
+                    <option value="day">Day</option>
+                    <option value="month">Month</option>
+                    <option value="year">Year</option>
+                  </select>
+                </div>
                 <div>
                   <label>Meter Description: </label>
                   <select onChange={(e) => setSelectedMeterDescription(e.target.value)} value={selectedMeterDescription}>

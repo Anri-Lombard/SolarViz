@@ -24,9 +24,9 @@ interface MediaSettingsProps {
 const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({ handleMediaSettingsChange, settings }) => {
 
   useEffect(() => {
-    // Listen for changes to settings.display
+    // Listen for changes to settings[chartType].display
     if (!settings.display) {
-      // If display is unchecked, reset audio to false
+      // If display is unchecked, reset sequence to 0
       handleMediaSettingsChange('audio', false);
     }
   }, [settings.display]);

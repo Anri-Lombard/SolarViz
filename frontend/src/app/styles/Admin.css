@@ -97,24 +97,14 @@ h2 {
     flex-direction: column;
 }
 
-.submitTextAndInput {
-    margin: 20px;
-    display: grid;
-    grid-template-columns: 30vh 40vh;
-}
-
-.submitTextAndInput input{
-    left:30px;
+/* CSS for Input Fields in Admin Blocks */
+.adminBlock input {
     padding: 0.5rem; /* Padding */
     max-width: 200px; /* Maximum width */
+    margin: 30px; /* Margin */
     border: 1px solid #292827; /* Border */
     border-radius: 5px; /* Rounded corners */
     caret-color: black; /* Caret (text cursor) color */
-}
-
-/* CSS for Labels in Admin Blocks */
-.submitTextAndInput label {
-    color: #292827; /* Text color */
 }
 
 /* CSS for Buttons in Admin Blocks */
