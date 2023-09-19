@@ -82,7 +82,7 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, durati
     });
 
     return (
-        <ResponsiveContainer height={500}>
+        <ResponsiveContainer data-testid="stackedLineChart" height={500}>
             <LineChart
                 data={consolidatedData}
                 margin={{

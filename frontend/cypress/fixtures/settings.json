@@ -1,0 +1,35 @@
+{
+    "colors": {
+        "First Storey Ablution": "#808000",
+        "First Storey Toilet": "#000080",
+        "Ground Storey Cold Ablution": "#008000",
+        "Ground Storey Geyser": "#800000",
+        "Ground Storey Hot Ablution": "#00FFFF",
+        "Ground Storey Toilet": "#FF00FF",
+        "Incomer Power": "#183d33",
+        "Second Storey Ablution": "#009099",
+        "Second Storey Toilet": "#0000FF",
+        "Secondary Storey Kitchen": "#00FF00",
+        "Solar Power": "#bd5545"
+    },
+    "areaChart" : {
+        "sequence": 1,
+        "duration": 10,
+        "display": true
+    },
+    "lineChart" : {
+        "sequence": 2,
+        "duration": 10,
+        "display": true
+    },
+    "pieChart" : {
+        "sequence": 3,
+        "duration": 10,
+        "display": true
+    },
+    "media" : {
+        "audio": false,
+        "display": true,
+        "sequence": 4
+    }
+}
