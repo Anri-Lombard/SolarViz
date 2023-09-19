@@ -1,5 +1,5 @@
 import { DataType, TransformedDataType, AggregatedDataType } from "../types/dataTypes";
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 export const getTickFormatter = (duration: string) => {
     if (duration === 'day') {
@@ -19,7 +19,7 @@ export const getTickFormatter = (duration: string) => {
  */
 export const transformPowerData = (powerData: DataType[]): TransformedDataType[] => {
     return powerData.map(item => ({
-        Timestamp: formatDate(item.Timestamp),
+        Timestamp: format(parseISO(item.Timestamp), 'yyyy-MM-dd HH:mm:ss'),
         'Load Power': item['UCT - DSchool - Basics - UCT - DSchool Load Power [W] - P_LOAD'],
         'Solar Power': item['UCT - DSchool - Basics - UCT - DSchool Solar [W] - P_SOLAR'],
         'Incomer Power': item['UCT - DSchool - Basics - UCT - DSchool Incomer Power [W] - P_INCOMER'],

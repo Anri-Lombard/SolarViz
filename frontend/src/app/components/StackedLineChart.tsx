@@ -61,7 +61,6 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, durati
         return true;
     });
 
-
     // Extract unique meter descriptions and date-hour combinations
     const meterDescriptions = Array.from(new Set(data.map(item => item['Meter Description'])));
     const dateHourCombinations = Array.from(new Set(filteredData.map(item => `${item.date} ${item.hour}`)));
@@ -97,6 +96,15 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, durati
                     dataKey="dateHour"
                     type="category"
                     label={{ value: 'Date and Hour', position: 'bottom' }}
+                    tickFormatter={(tickItem) => {
+                        if (duration === 'day') {
+                            // Extract only the hour part of the dateHour
+                            const dateHourParts = tickItem.split(' ');
+                            const hourPart = dateHourParts[dateHourParts.length - 1];
+                            return hourPart;  // Return only the hour
+                        }
+                        return tickItem;  // Return the full dateHour otherwise
+                    }}
                 />
                 <YAxis
                     label={{ value: 'Usage (L)', angle: -90, position: 'insideLeft', offset: -10 }}

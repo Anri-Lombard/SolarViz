@@ -8,6 +8,7 @@ import { StackedAreaChart } from './StackedAreaChart';
 import { StackedLineChart } from './StackedLineChart';
 import { aggregateData, transformPowerData } from '../utils/DataUtils';
 
+
 import { DataDisplayProps, ChartWrapperProps, WaterDataType, AggregatedDataType, TransformedDataType } from '../types/dataTypes';
 
 /**
@@ -85,6 +86,7 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
   };
 
   useEffect(() => {
+    console.log(powerData)
     // Transform the data here
     const tData = transformPowerData(powerData);
 
