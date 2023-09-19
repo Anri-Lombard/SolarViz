@@ -62,7 +62,7 @@ export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors
     // FIXME: X-axis
 
     return (
-        <ResponsiveContainer data-testid="stackedAreaChart" height={500}>
+        <ResponsiveContainer  height={500}>
             <AreaChart
                 data={filteredData}
                 margin={{

@@ -15,7 +15,7 @@ describe('DataDisplay Component', () => {
     cy.fixture('waterData.json').then((data) => {
       mockWaterData = data;
     });
-    cy.fixture('settings.json').then((data) => { // Replace with your actual settings fixture file
+    cy.fixture('settings.json').then((data) => {
       mockSettings = data;
     }).then(() => {
       // Mount the component with the loaded fixture data
@@ -29,11 +29,13 @@ describe('DataDisplay Component', () => {
   });
 
   it('should render StackedAreaChart when transformedData is available', () => {
+    cy.wait(mockSettings.pieChart.duration * 1000); // Wait for the duration specified in settings
     cy.get('[data-testid=stackedAreaChart]').should('exist');
     cy.get('.heading').should('contain', 'Energy from Solar Power and Incomer Power');
   });
 
   it('should render StackedLineChart when waterData is available', () => {
+    cy.wait((mockSettings.pieChart.duration + mockSettings.areaChart.duration) * 1000); // Wait for the duration specified in settings
     cy.get('[data-testid=stackedLineChart]').should('exist');
     cy.get('.heading').should('contain', 'Water Consumption on');
   });
