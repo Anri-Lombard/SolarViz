@@ -3,6 +3,8 @@ import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } f
 import { StackedAreaChartProps } from '../types/chartTypes';
 import { getTickFormatter } from '../utils/DataUtils';
 
+import { format, parseISO } from 'date-fns';
+
 import LoadingSpinner from './LoadingSpinner';
 
 /**
@@ -15,14 +17,16 @@ import LoadingSpinner from './LoadingSpinner';
  */
 export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors, selectedPowerType, showForecast, duration }) => {
     const tickFormatter = useMemo(() => getTickFormatter(duration), [duration]);
-    
+
     if (!data || data.length === 0) {
         return <LoadingSpinner />;
     }
-    
+
+    // console.log(data)
+
     // Convert power data to kWh assuming the data is already aggregated per hour
     const convertedData = data.map(item => ({
-        Timestamp: new Date(item.Timestamp),
+        Timestamp: format(new Date(item.Timestamp), 'yyyy-MM-dd HH:mm'),
         'Load Power': parseFloat(item['Load Power']) / 1000,
         'Solar Power': parseFloat(item['Solar Power']) / 1000,
         'Incomer Power': parseFloat(item['Incomer Power']) / 1000,
@@ -30,28 +34,33 @@ export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors
     }));
 
     // Sort data by Timestamp
-    convertedData.sort((a, b) => a.Timestamp.getTime() - b.Timestamp.getTime());
+    convertedData.sort((a, b) => new Date(a.Timestamp).getTime() - new Date(b.Timestamp).getTime());
 
     // Identify the last timestamp
     const lastTimestamp = new Date(convertedData[convertedData.length - 1].Timestamp);
 
     // Filter data based on duration and last timestamp
     const filteredData = convertedData.filter(item => {
+        const itemDate = new Date(item.Timestamp);
         if (duration === 'day') {
-            return item.Timestamp.getDate() === lastTimestamp.getDate() &&
-                   item.Timestamp.getMonth() === lastTimestamp.getMonth() &&
-                   item.Timestamp.getFullYear() === lastTimestamp.getFullYear();
+            return itemDate.getDate() === lastTimestamp.getDate() &&
+                itemDate.getMonth() === lastTimestamp.getMonth() &&
+                itemDate.getFullYear() === lastTimestamp.getFullYear();
         } else if (duration === 'month') {
-            return item.Timestamp.getMonth() === lastTimestamp.getMonth() &&
-                   item.Timestamp.getFullYear() === lastTimestamp.getFullYear();
+            return itemDate.getMonth() === lastTimestamp.getMonth() &&
+                itemDate.getFullYear() === lastTimestamp.getFullYear();
         } else if (duration === 'year') {
-            return item.Timestamp.getFullYear() === lastTimestamp.getFullYear();
+            return itemDate.getFullYear() === lastTimestamp.getFullYear();
         }
         return true;
     });
 
+    // console.log(filteredData)
+
+
+
     // FIXME: X-axis
-    
+
     return (
         <ResponsiveContainer height={500}>
             <AreaChart
@@ -64,10 +73,20 @@ export const StackedAreaChart: React.FC<StackedAreaChartProps> = ({ data, colors
                 }}
             >
                 <XAxis
-                    dataKey={(d) => d.Timestamp.getTime()}  // Convert Date to timestamp
-                    tickFormatter={tickFormatter}
+                    dataKey={(d) => d.Timestamp}  // Convert Date to timestamp
                     label={{ value: 'Date and Hour', position: 'bottom' }}
+                    tickFormatter={(tickItem) => {
+                        if (duration === 'day') {
+                            return format(new Date(tickItem), 'HH:mm');  // Return only the hour and minute
+                        } else if (duration === 'month') {
+                            return format(new Date(tickItem), 'MMM dd');  // Return only the month and day
+                        } else if (duration === 'year') {
+                            return format(new Date(tickItem), 'MMM yyyy');  // Return only the month and year
+                        }
+                        return tickItem;
+                    }}
                 />
+
                 <YAxis
                     label={{ value: 'Usage (kW)', angle: -90, position: 'insideLeft', offset: -10 }}
                 />
