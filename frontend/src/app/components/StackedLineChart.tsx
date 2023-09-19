@@ -26,9 +26,10 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, durati
 
     // Convert your date and hour strings to Date objects
     // Convert your data to have Date objects
+    // FIXME: fix this
     const convertedData = data.map(item => {
         const formattedDate = formatWaterDate(item.date);
-        const parsedDate = format(parse(formattedDate, 'd MMM, yyyy', new Date()), 'yyyy-MM-dd');
+        const parsedDate = format(parse(formattedDate, 'd MMM yyyy', new Date()), 'yyyy-MM-dd');
         const dateHour = new Date(parsedDate + 'T' + item.hour + ':00');
         return {
             ...item,
@@ -82,7 +83,7 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, durati
     });
 
     return (
-        <ResponsiveContainer height={500} width={500}>
+        <ResponsiveContainer height={500}>
             <LineChart
                 data={consolidatedData}
                 margin={{
