@@ -1,4 +1,3 @@
-import { mount } from '@cypress/react';
 import MoreDataDisplay from './MoreDataDisplay';
 
 describe('MoreDataDisplay Component', () => {
@@ -19,7 +18,7 @@ describe('MoreDataDisplay Component', () => {
       mockSettings = data;
     }).then(() => {
       // Mount the component with the loaded fixture data
-      mount(<MoreDataDisplay powerData={mockPowerData} waterData={mockWaterData} settings={mockSettings} />);
+      cy.mount(<MoreDataDisplay powerData={mockPowerData} waterData={mockWaterData} settings={mockSettings} />);
     });
   });
 
@@ -41,7 +40,7 @@ describe('MoreDataDisplay Component', () => {
 
   it('should display LoadingSpinner when data is not available', () => {
     // Remount the component with empty data to simulate "data not available" scenario
-    mount(<MoreDataDisplay powerData={[]} waterData={[]} settings={mockSettings} />);
+    cy.mount(<MoreDataDisplay powerData={[]} waterData={[]} settings={mockSettings} />);
     cy.get('[data-testid=loading-spinner]').should('exist');
   });
 

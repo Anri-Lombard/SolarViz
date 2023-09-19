@@ -30,7 +30,6 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.22.15",
-    "@cypress/react": "^8.0.0",
     "@jest/globals": "^29.6.4",
     "@jest/types": "^29.6.3",
     "@testing-library/jest-dom": "^6.1.3",
