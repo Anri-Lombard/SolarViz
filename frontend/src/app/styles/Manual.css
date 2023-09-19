@@ -33,6 +33,9 @@
     font-weight: bold; /* Make text bold */
 }
 
+.tableOfContents h2 {
+    text-align: left;
+}
 
 .content {
     margin-left: 200px; /* Left margin to accommodate the table of contents */
