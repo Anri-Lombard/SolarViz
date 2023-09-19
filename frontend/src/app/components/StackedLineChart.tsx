@@ -5,7 +5,7 @@ import { StackedLineChartProps } from '../types/chartTypes';
 import { ConsolidatedData } from '../types/dataTypes';
 import { formatWaterDate } from '../utils/DataUtils';
 
-import { useSettings } from '../contexts/SettingsContext';
+// import { useSettings } from '../contexts/SettingsContext';
 
 import { parse, format } from 'date-fns';
 /**
@@ -17,8 +17,7 @@ import { parse, format } from 'date-fns';
  */
 
 
-export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, duration }) => {
-    const { settings } = useSettings();
+export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, duration, settings }) => {
 
     if (!data || data.length === 0) {
         return <div>No data available</div>;
@@ -82,7 +81,7 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, durati
     });
 
     return (
-        <ResponsiveContainer height={500}>
+        <ResponsiveContainer data-testid="stackedLineChart" height={500}>
             <LineChart
                 data={consolidatedData}
                 margin={{

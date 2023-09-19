@@ -2,7 +2,7 @@
 // Typescript module for defining data types and props interfaces used in different chart components.
 
 
-import { WaterDataType } from './dataTypes';
+import { WaterDataType, Settings } from './dataTypes';
 
 
 // Enumeration of chart types.
@@ -50,4 +50,5 @@ export interface StackedAreaChartProps {
 export interface StackedLineChartProps {
     duration: string;
     data: WaterDataType[];
+    settings: Settings;
 }
