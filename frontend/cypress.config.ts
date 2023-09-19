@@ -7,6 +7,7 @@ export default defineConfig({
       framework: "next",
       bundler: "webpack",
     },
+    specPattern: "src/app/**/*.cy.tsx",
   },
   e2e: {
     setupNodeEvents(on, config) {
@@ -15,6 +16,8 @@ export default defineConfig({
   },
   // Specify the folder where screenshots will be saved
   screenshotsFolder: "./cypress/screenshots",
+  trashAssetsBeforeRuns: true,
   // Specify the folder where videos will be saved
-  videosFolder: "./cypress/videos"
+  videosFolder: "./cypress/videos",
+  defaultCommandTimeout: 10000,
 });

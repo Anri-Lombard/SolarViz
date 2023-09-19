@@ -1,4 +1,4 @@
-import MoreDataDisplay from './MoreDataDisplay';
+import MoreDataDisplay from './MoreDataDisplay'
 
 describe('MoreDataDisplay Component', () => {
 
