@@ -69,7 +69,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
         return aggregatedData ? (
           <div data-testid="pieChart">
             <h1 className="heading">
-              Percentage Energy from Solar and Incomer from {format(new Date(powerStartTime), 'MMMM dd, yyyy')} to {format(new Date(powerEndTime), 'MMMM dd, yyyy HH:mm')}
+              Percentage Energy from Solar and Incomer from {format(new Date(powerStartTime), 'MMMM dd, yyyy')} to {format(new Date(powerEndTime), 'MMMM dd, yyyy')}
             </h1>
             <PieChartComponent data={aggregatedData} colors={settings.colors} showIrradiance={false} />
           </div>
