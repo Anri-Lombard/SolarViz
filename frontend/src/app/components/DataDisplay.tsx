@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import '../styles/DataDisplay.css';
 import { VideoComponent } from './VideoComponent';
+import { format } from 'date-fns';
 
 // Custom components
 import LoadingSpinner from './LoadingSpinner';
@@ -68,7 +69,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
         return aggregatedData ? (
           <>
             <h1 className="heading">
-              Percentage Energy from Solar and Incomer from {powerStartTime} to {powerEndTime}
+              Percentage Energy from Solar and Incomer from {format(new Date(powerStartTime), 'MMMM dd, yyyy')} to {format(new Date(powerEndTime), 'MMMM dd, yyyy HH:mm')}
             </h1>
             <PieChartComponent data={aggregatedData} colors={settings.colors} showIrradiance={false} />
           </>
@@ -77,7 +78,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
         return transformedData ? (
           <>
             <h1 className="heading">
-              Energy from Solar Power and Incomer Power (grid) on {powerEndTime}
+              Energy from Solar Power and Incomer Power (grid) on {format(new Date(powerEndTime), 'MMMM dd, yyyy')}
             </h1>
             <StackedAreaChart data={transformedData} colors={settings.colors} selectedPowerType='All' showForecast={false} duration="day" />
           </>
@@ -86,7 +87,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
         return (
           <>
             <h1 className="heading">
-              Water Consumption on {waterEndTime} for Different Storeys
+              Water Consumption on {format(new Date(waterEndTime), 'MMMM dd, yyyy')} for Different Storeys
             </h1>
             <StackedLineChart data={waterData} duration="day"/>
           </>
