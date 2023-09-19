@@ -20,9 +20,9 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
   useEffect(() => {
     // Listen for changes to settings[chartType].display
     if (!settings[chartType].display) {
-      // If display is unchecked, reset sequence to 0
-      setSequenceValue(0);
-      handleGraphSettingsChange(chartType, 'sequence', 0);
+      // If display is unchecked, reset sequence to 1
+      setSequenceValue(1);
+      handleGraphSettingsChange(chartType, 'sequence', 1);
     }
   }, [settings[chartType].display]);
 
@@ -38,17 +38,17 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
           height={100}
         />
       </div>
-      
+
       <label>
         Sequence:
         <input
           data-testid={chartType === 'pieChart' ? "pieChart-sequence" : chartType === 'lineChart' ? "lineChart-sequence" : "areaChart-sequence"}
           type="number"
-          value={settings[chartType].display ? settings[chartType].sequence : 0}
+          value={settings[chartType].display ? settings[chartType].sequence : ''}
           onChange={(e) => {
-            const newValue = e.target.value !== '' ? parseInt(e.target.value) : 0;
-            setSequenceValue(newValue); //update local state
-            handleGraphSettingsChange(chartType, 'sequence', newValue);
+            const newValue = e.target.value !== '' ? parseInt(e.target.value) : 1;
+            setSequenceValue(1); //update local state
+            handleGraphSettingsChange(chartType, 'sequence', 1);
           }}
           disabled={!settings[chartType].display} // Disable if 'Display' is unchecked
           min={1}

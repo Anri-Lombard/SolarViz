@@ -48,6 +48,17 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({ handleMediaSetti
         min={1}
         />
       </label>
+      
+      <label className='checkbox'>
+        Play with Audio:
+        <input
+          type="checkbox"
+          checked={settings.audio}
+          onChange={(e) => handleMediaSettingsChange('audio', e.target.checked)}
+          disabled={!settings.display} // Disable if 'Display' is unchecked
+        />
+      </label>
+
       <label>
         Display:
         <input
@@ -56,15 +67,6 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({ handleMediaSetti
           onChange={(e) => 
             handleMediaSettingsChange('display', e.target.checked)
           }
-        />
-      </label>
-      <label className='checkbox'>
-        Play with Audio:
-        <input
-          type="checkbox"
-          checked={settings.audio}
-          onChange={(e) => handleMediaSettingsChange('audio', e.target.checked)}
-          disabled={!settings.display} // Disable if 'Display' is unchecked
         />
       </label>
     </div>
