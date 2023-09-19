@@ -1,0 +1,66 @@
+.dashboard {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.dashboard img {
+    border-radius: 3px;
+    max-width:40vh;
+    margin-bottom: 20px;
+}
+
+.leftMarginContainer {
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.middleContainer {
+    max-width: 40vw;
+    min-width: 30vw;
+}
+
+.rightMarginContainer {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.energySavingTipsContainer {
+    padding: 1vh 2vh;
+    color: #292827;
+    border-color: #292827;
+    border-width: 2px;
+    border-radius: 10px;
+    width:40vh;
+}
+
+.energySavingTipsContainer h1 {
+    font-size: large;
+    font-family: 'Verdana', sans-serif;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.energySavingTipsContainer h2 {
+    font-weight: bold;
+}
+
+.energySavingTipsContainer li {
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.energySavingTipsContainer .iconAndText {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+}
+
+.icon {
+    margin-right: 5px;
+    width:30px;
+    height: 30px;
+}

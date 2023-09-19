@@ -136,7 +136,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
     .filter(chart => chart.display);
 
   return (
-    <div className='graphContainer'>
+    <div>
       {transformedData && aggregatedData && waterData && powerData ? (
         renderChart(charts[currentChartIndex].type)
       ) : (
