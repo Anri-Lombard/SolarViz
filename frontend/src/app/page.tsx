@@ -3,6 +3,7 @@
 
 import React from 'react';
 import DataDisplay from './components/DataDisplay';
+import LoadingSpinner from './components/LoadingSpinner';
 
 import { useSettings } from './contexts/SettingsContext';
 import { useData } from './contexts/DataContext';
@@ -32,7 +33,7 @@ export default function Home() {
             <DataDisplay powerData={powerData} waterData={waterData} settings={settings} />
           </div>
         ) : (
-          <p>Loading...</p>
+          <LoadingSpinner />
         )}
       </div>
 

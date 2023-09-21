@@ -14,15 +14,25 @@ import { ManageAdminProps } from '../types/dataTypes';
  * @param {(username: string, password: string) => void} props.addAdmin   A function to add a new admin.
  * @returns {JSX.Element}                                                 The ManageAdmin component JSX.
  */
-
+// Wanda current password: wanda_solarviz_202x
 const ManageAdmin: React.FC<ManageAdminProps> = ({ admins, removeAdmin, addAdmin }) => {
   const [newAdminUsername, setNewAdminUsername] = React.useState('');
   const [newAdminPassword, setNewAdminPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
   const [passwordsMatch, setPasswordsMatch] = React.useState(true);
+  const [usernameTaken, setUsernameTaken] = React.useState(false);
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const isUsernameTaken = admins.some(admin => admin.username === newAdminUsername);
+    if (isUsernameTaken) {
+      setUsernameTaken(true);
+      return;
+    } else {
+      setUsernameTaken(false);
+    }
+
     if (newAdminPassword === confirmPassword) {
       setPasswordsMatch(true);
       addAdmin(newAdminUsername, newAdminPassword);
@@ -34,15 +44,19 @@ const ManageAdmin: React.FC<ManageAdminProps> = ({ admins, removeAdmin, addAdmin
     }
   };
 
+
   return (
     <div className="adminList">
       <ul>
         {admins.map(admin => (
           <li key={admin.id}>
             {admin.username}
-            <button data-testid="removeAdmin" onClick={() => removeAdmin(admin.id)}>Remove</button>
+            {admin.username !== "wanda_majikijela" && (
+              <button data-testid="removeAdmin" onClick={() => removeAdmin(admin.id)}>Remove</button>
+            )}
           </li>
         ))}
+
       </ul>
       <form onSubmit={handleFormSubmit}>
         <div className='submitForm'>
@@ -55,7 +69,7 @@ const ManageAdmin: React.FC<ManageAdminProps> = ({ admins, removeAdmin, addAdmin
             onChange={(e) => setNewAdminUsername(e.target.value)}
             placeholder="New admin username"
           />
-          
+
           <label>
             Password:
           </label>
@@ -65,7 +79,7 @@ const ManageAdmin: React.FC<ManageAdminProps> = ({ admins, removeAdmin, addAdmin
             onChange={(e) => setNewAdminPassword(e.target.value)}
             placeholder="New admin password"
           />
-          
+
           <label>
             Confirm Password:
           </label>
@@ -75,8 +89,9 @@ const ManageAdmin: React.FC<ManageAdminProps> = ({ admins, removeAdmin, addAdmin
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirm password"
           />
-          
+
           {!passwordsMatch && <div className='adminErrorMessage'>Passwords should match</div>}
+          {usernameTaken && <div className='adminErrorMessage'>Username already taken</div>}
         </div>
         <button type="submit">Add Admin</button>
       </form>

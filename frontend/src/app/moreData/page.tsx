@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import MoreDataDisplay from '../components/MoreDataDisplay';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 import { useSettings } from '../contexts/SettingsContext';
 
@@ -39,7 +40,7 @@ export default function Home() {
       {(powerData && powerData.length > 0) && (waterData && waterData.length > 0) ?
         
         <MoreDataDisplay powerData={powerData} waterData={waterData} settings={settings} />
-        : <p>Loading...</p>
+        : <LoadingSpinner />
       }
     </div>
   );
