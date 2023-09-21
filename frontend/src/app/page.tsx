@@ -19,8 +19,6 @@ export default function Home() {
   // Using the useSettings hook to get user settings
   const { settings } = useSettings();
 
-  console.log(settings)
-
   return (
     <div className="dashboard">
       <div className='leftMarginContainer'>

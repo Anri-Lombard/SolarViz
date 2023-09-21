@@ -154,7 +154,7 @@ def get_vcom_data():
 
 def power_data(request):
     # data = csv_to_json('data/UCT_Drawing_School_2023_08_01_2023_08_31.csv', delimiter=";")
-    data = csv_to_json('data/Export_2023_09_01_2023_09_13.csv', delimiter=";")
+    data = csv_to_json('data/Export_2023_01_01_2023_09_21.csv', delimiter=";")
     
     # Replace negative values with 0
     for row in data:
