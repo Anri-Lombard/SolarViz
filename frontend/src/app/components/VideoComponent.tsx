@@ -21,7 +21,7 @@ export function VideoComponent({ playWithAudio, setVideoDuration, style }: { pla
         setVideoDuration(video.duration);
       });
     }
-  }, []);
+  }, [setVideoDuration]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -32,8 +32,9 @@ export function VideoComponent({ playWithAudio, setVideoDuration, style }: { pla
     }
   }, [style]);
 
+  // TODO: user has to unmute to play
   return (
-    <video width={600} height={600} ref={videoRef} controls muted={!playWithAudio} style={style}>
+    <video width={600} height={600} ref={videoRef} controls muted={true} style={style}>
       <source src="/Videos/video.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>

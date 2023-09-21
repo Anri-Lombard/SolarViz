@@ -99,34 +99,6 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
     }
   };
 
-  useEffect(() => {
-    let timeoutId: any;
-
-
-    const updateChart = (index: number) => {
-      setCurrentChartIndex(index);
-      const nextIndex = (index + 1) % charts.length;
-      let nextDuration = charts[nextIndex].duration! * 1000;
-
-
-      if (charts[nextIndex].type === 'VIDEO' && videoDuration !== null) {
-        nextDuration = settings.media.display ? videoDuration * 1000 : 0;
-      }
-
-      timeoutId = setTimeout(() => {
-        updateChart(nextIndex);
-      }, nextDuration);
-    };
-
-
-    // Start the loop
-    updateChart(currentChartIndex);
-
-    return () => {
-      clearTimeout(timeoutId);  // Clear the timeout when the component unmounts
-    };
-  }, [settings, videoDuration]);
-
   const charts = [
     { type: ChartTypes.PIE, ...settings.pieChart },
     { type: ChartTypes.AREA, ...settings.areaChart },
@@ -135,6 +107,33 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
   ]
     .sort((a, b) => a.sequence - b.sequence)
     .filter(chart => chart.display);
+
+  useEffect(() => {
+    let timeoutId: any;
+
+
+    const updateChart = (index: number) => {
+      setCurrentChartIndex(index);
+      
+      const nextIndex = (index + 1) % charts.length;
+      let currentDuration = charts[index].duration! * 1000;
+
+
+    
+      timeoutId = setTimeout(() => {
+        updateChart(nextIndex);
+      }, currentDuration);
+    };
+    
+
+
+    // Start the loop
+    updateChart(currentChartIndex);
+
+    return () => {
+      clearTimeout(timeoutId);  // Clear the timeout when the component unmounts
+    };
+  }, [charts]);
 
   return (
     <div>
@@ -146,7 +145,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
       <VideoComponent
         playWithAudio={settings.media.audio}
         setVideoDuration={handleVideoDuration}
-        style={{ display: currentChartIndex === charts.findIndex(c => c.type === ChartTypes.VIDEO) ? 'block' : 'none' }}
+        style={{ display: charts[currentChartIndex].type === 'VIDEO' ? 'block' : 'none' }}
       />
     </div>
   );
