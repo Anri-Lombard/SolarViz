@@ -5,7 +5,7 @@ import { StackedLineChartProps } from '../types/chartTypes';
 import { ConsolidatedData } from '../types/dataTypes';
 import { formatWaterDate } from '../utils/DataUtils';
 
-import { useSettings } from '../contexts/SettingsContext';
+// import { useSettings } from '../contexts/SettingsContext';
 
 import { parse, format } from 'date-fns';
 /**
@@ -17,8 +17,7 @@ import { parse, format } from 'date-fns';
  */
 
 
-export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, duration }) => {
-    const { settings } = useSettings();
+export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, duration, settings }) => {
 
     if (!data || data.length === 0) {
         return <div>No data available</div>;
@@ -61,7 +60,6 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, durati
         return true;
     });
 
-
     // Extract unique meter descriptions and date-hour combinations
     const meterDescriptions = Array.from(new Set(data.map(item => item['Meter Description'])));
     const dateHourCombinations = Array.from(new Set(filteredData.map(item => `${item.date} ${item.hour}`)));
@@ -83,7 +81,7 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, durati
     });
 
     return (
-        <ResponsiveContainer height={500}>
+        <ResponsiveContainer data-testid="stackedLineChart" height={500}>
             <LineChart
                 data={consolidatedData}
                 margin={{
@@ -97,6 +95,15 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, durati
                     dataKey="dateHour"
                     type="category"
                     label={{ value: 'Date and Hour', position: 'bottom' }}
+                    tickFormatter={(tickItem) => {
+                        if (duration === 'day') {
+                            // Extract only the hour part of the dateHour
+                            const dateHourParts = tickItem.split(' ');
+                            const hourPart = dateHourParts[dateHourParts.length - 1];
+                            return hourPart;  // Return only the hour
+                        }
+                        return tickItem;  // Return the full dateHour otherwise
+                    }}
                 />
                 <YAxis
                     label={{ value: 'Usage (L)', angle: -90, position: 'insideLeft', offset: -10 }}

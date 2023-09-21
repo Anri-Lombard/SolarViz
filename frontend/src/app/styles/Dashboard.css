@@ -6,7 +6,7 @@
 
 .dashboard img {
     border-radius: 3px;
-    max-width:40vh;
+    max-width:25vw;
     margin-bottom: 20px;
 }
 
@@ -28,22 +28,24 @@
 }
 
 .energySavingTipsContainer {
-    padding: 1vh 2vh;
+    padding: 1em 2em;
     color: #292827;
     border-color: #292827;
     border-width: 2px;
     border-radius: 10px;
-    width:40vh;
+    width:20em;
 }
 
 .energySavingTipsContainer h1 {
     font-size: large;
     font-family: 'Verdana', sans-serif;
+    font-size: 1.5em;
     text-transform: uppercase;
     margin-bottom: 5px;
 }
 
 .energySavingTipsContainer h2 {
+    font-size: medium;
     font-weight: bold;
 }
 
@@ -61,6 +63,6 @@
 
 .icon {
     margin-right: 5px;
-    width:30px;
+    width: 30px;
     height: 30px;
 }

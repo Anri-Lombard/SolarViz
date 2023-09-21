@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import '../styles/DataDisplay.css';
 import { VideoComponent } from './VideoComponent';
+import { format } from 'date-fns';
 
 // Custom components
 import LoadingSpinner from './LoadingSpinner';
@@ -66,30 +67,30 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
     switch (chartType) {
       case ChartTypes.PIE:
         return aggregatedData ? (
-          <>
+          <div data-testid="pieChart">
             <h1 className="heading">
-              Percentage Energy from Solar and Incomer from {powerStartTime} to {powerEndTime}
+              Percentage Energy from Solar and Incomer from {format(new Date(powerStartTime), 'MMMM dd, yyyy')} to {format(new Date(powerEndTime), 'MMMM dd, yyyy')}
             </h1>
             <PieChartComponent data={aggregatedData} colors={settings.colors} showIrradiance={false} />
-          </>
+          </div>
         ) : null;
       case ChartTypes.AREA:
         return transformedData ? (
-          <>
+          <div data-testid="stackedAreaChart">
             <h1 className="heading">
-              Energy from Solar Power and Incomer Power (grid) on {powerEndTime}
+              Energy from Solar Power and Incomer Power (grid) on {format(new Date(powerEndTime), 'MMMM dd, yyyy')}
             </h1>
             <StackedAreaChart data={transformedData} colors={settings.colors} selectedPowerType='All' showForecast={false} duration="day" />
-          </>
+          </div>
         ) : null;
       case ChartTypes.LINE:
         return (
-          <>
+          <div data-testid="stackedLineChart">
             <h1 className="heading">
-              Water Consumption on {waterEndTime} for Different Storeys
+              Water Consumption on {format(new Date(waterEndTime), 'MMMM dd, yyyy')} for Different Storeys
             </h1>
-            <StackedLineChart data={waterData} duration="day"/>
-          </>
+            <StackedLineChart data={waterData} duration="day" settings={settings} />
+          </div>
         );
       // case ChartTypes.VIDEO:
       //   return <VideoComponent playWithAudio={settings.media.audio} setVideoDuration={handleVideoDuration} />;
