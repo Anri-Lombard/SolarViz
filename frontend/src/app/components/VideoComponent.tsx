@@ -35,7 +35,7 @@ export function VideoComponent({ playWithAudio, setVideoDuration, style }: { pla
   // TODO: user has to unmute to play
   return (
     <video width={600} height={600} ref={videoRef} controls muted={true} style={style}>
-      <source src="/Videos/video.mp4" type="video/mp4" />
+      <source src="/Videos/video.mp4" type="cat/mp4" />
       Your browser does not support the video tag.
     </video>
   );
