@@ -154,7 +154,7 @@ def get_vcom_data():
 
 def power_data(request):
     # data = csv_to_json('data/UCT_Drawing_School_2023_08_01_2023_08_31.csv', delimiter=";")
-    data = csv_to_json('data/Export_2023_09_01_2023_09_13.csv', delimiter=";")
+    data = csv_to_json('data/Export_2023_01_01_2023_09_21.csv', delimiter=";")
     
     # Replace negative values with 0
     for row in data:
@@ -202,7 +202,7 @@ def water_data(request):
         '8SEN0121077869': 'UCT D-School - First Storey - Ablution',
     }
 
-    csv_data = csv_to_json('data/University of Cape Town (UCT - School of Design) 01 Aug to 06 Aug 2023 Report Data.csv') 
+    csv_data = csv_to_json('data/University of Cape Town (UCT - School of Design) 15 Sep to 21 Sep 2023 Report Data.csv') 
     
     # Initialize a dictionary to hold the transformed data
     transformed_data = defaultdict(list)

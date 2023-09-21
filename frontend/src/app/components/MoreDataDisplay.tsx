@@ -86,7 +86,6 @@ export default function MoreDataDisplay({ powerData, waterData, settings }: Data
   };
 
   useEffect(() => {
-    console.log(powerData)
     // Transform the data here
     const tData = transformPowerData(powerData);
 
