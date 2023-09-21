@@ -202,7 +202,7 @@ def water_data(request):
         '8SEN0121077869': 'UCT D-School - First Storey - Ablution',
     }
 
-    csv_data = csv_to_json('data/University of Cape Town (UCT - School of Design) 01 Aug to 06 Aug 2023 Report Data.csv') 
+    csv_data = csv_to_json('data/University of Cape Town (UCT - School of Design) 15 Sep to 21 Sep 2023 Report Data.csv') 
     
     # Initialize a dictionary to hold the transformed data
     transformed_data = defaultdict(list)
