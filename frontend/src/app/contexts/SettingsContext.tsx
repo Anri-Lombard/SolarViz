@@ -84,7 +84,6 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
 
     // Function to update settings in the backend
     const updateSettings = (newSettings: Settings, token: string) => {
-        console.log(newSettings)
         fetch('http://localhost:8000/api/update_global_settings/', {
             method: 'POST',
             headers: {
