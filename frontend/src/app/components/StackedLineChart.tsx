@@ -23,14 +23,19 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, durati
         return <div>No data available</div>;
     }
 
-    function parseCustomDate(dateString: string) {
+    function parseCustomDate(dateString: string): Date {
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
         
         const [day, monthStr, year] = dateString.split(' ');
         const month = monthNames.indexOf(monthStr) + 1;  // +1 because months are 0-indexed in JavaScript
     
-        return new Date(year, month - 1, day);  // months are 0-indexed in JavaScript Date
+        // Convert day and year to numbers
+        const dayNumber = parseInt(day, 10);
+        const yearNumber = parseInt(year, 10);
+    
+        return new Date(yearNumber, month - 1, dayNumber);  // months are 0-indexed in JavaScript Date
     }
+    
     
 
     // Convert your date and hour strings to Date objects
