@@ -35,7 +35,7 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
           height={100}
         />
       </div>
-``
+
       <label>
         Sequence:
         <input

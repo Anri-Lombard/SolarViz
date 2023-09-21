@@ -140,6 +140,7 @@ export default function Manual() {
                   <li><strong>Graph Configuration:</strong> If you select a graph, you can customize it further. Set the sequence number to control its order and decide how long it stays on the screen by adjusting the duration.</li>
                   <li><strong>Sequence Number Validation:</strong> Keep your sequence numbers in order. If they&apos;re not consecutive, you will see an error message saying, &quot;Sequence numbers must follow each other.&quot;</li>
                   <li><strong>Unique Sequence Numbers:</strong> Each graph needs its own special sequence number. Avoid duplicates to prevent an error message saying, &quot;Sequence numbers must be unique.&quot;</li>
+                  <li>Note that if multiple graphs have sequence numbers of 0, they will fall into the default rotation.</li>
                   <li><strong>Duration Requirement:</strong> Make sure each graph is visible for more than 10 seconds. This gives viewers enough time to absorb the information and grasp its meaning.</li>
                   <li><strong>Selecting Media:</strong> This function works similarly to selecting graphs. You can also choose whether videos play with sound or without sound, giving you control over your media experience.</li>
                   <li>When you&apos;re ready to apply all the changes you&apos;ve made to the graphs and media selections, simply click on the &quot;Apply Changes&quot; button. This will update your dashboard with the new configurations you&apos;ve chosen.</li>
