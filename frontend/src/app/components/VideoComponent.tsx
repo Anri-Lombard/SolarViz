@@ -19,11 +19,6 @@ export function VideoComponent({ playWithAudio, setVideoDuration, style }: { pla
       // Listen for the 'loadedmetadata' event to get video duration
       video.addEventListener('loadedmetadata', () => {
         setVideoDuration(video.duration);
-
-        // Play the video (with muted if playWithAudio is false)
-        video.play().catch((error) => {
-          console.error("Video play failed:", error);
-        });
       });
     }
   }, []);
@@ -44,3 +39,4 @@ export function VideoComponent({ playWithAudio, setVideoDuration, style }: { pla
     </video>
   );
 }
+
