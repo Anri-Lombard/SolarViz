@@ -26,8 +26,9 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({ handleMediaSetti
   useEffect(() => {
     // Listen for changes to settings[chartType].display
     if (!settings.display) {
-      // If display is unchecked, reset sequence to 0
+      // If display is unchecked, reset sequence to 0 and audio to false
       handleMediaSettingsChange('audio', false);
+      handleMediaSettingsChange('sequence', 0);
     }
   }, [settings.display]);
 
@@ -38,10 +39,9 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({ handleMediaSetti
         Sequence:
         <input
           type="number"
-          value={settings.display ? settings.sequence : ''}
+          value={settings.sequence}
           onChange={(e) => {
-            const newValue = e.target.value !== '' ? parseInt(e.target.value) : null;
-            handleMediaSettingsChange('sequence', newValue);
+            handleMediaSettingsChange('sequence', e.target.value);
           }
         }
         disabled={!settings.display} // Disable if 'Display' is unchecked

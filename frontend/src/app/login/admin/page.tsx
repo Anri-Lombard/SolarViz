@@ -72,7 +72,7 @@ const Admin = () => {
   const validateGraphSettings = () => {
     const sequenceNumbers = Object.values(pendingGraphSettings)
       .map(setting => setting.sequence)
-      .filter(sequence => sequence !== 0); //filter out zeros (zeros correspond to undisplayed graphs)
+      .filter(sequence => sequence !== 0); //filter out undisplayed graphs
 
     if (pendingMediaSettings.display) { // add media settings sequence to be considered in rotation
       sequenceNumbers.push(pendingMediaSettings.sequence)
