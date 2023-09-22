@@ -15,8 +15,6 @@ import Image from 'next/image';
 
 const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handleGraphSettingsChange, settings }) => {
 
-  //const [sequenceValue, setSequenceValue] = useState(settings[chartType].sequence); //for managing sequence value changes when display is disabled
-  console.log(settings);
   return (
     <div className="gridElement">
       <div className="graphHeading">
@@ -36,15 +34,15 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
           data-testid={chartType === 'pieChart' ? "pieChart-sequence" : chartType === 'lineChart' ? "lineChart-sequence" : "areaChart-sequence"}
           type="number"
           value={settings[chartType].sequence}
-          // onChange={(e) => {
-          //   console.log(e.target.value);
-          //   if (settings[chartType].display) {
-          //     handleGraphSettingsChange(chartType, 'sequence', parseInt(e.target.value));
-          //   }
-          //   else {
-          //     handleGraphSettingsChange(chartType, 'sequence', 0);
-          //   }
-          // }}
+          onChange={(e) => {
+            console.log(e.target.value);
+            if (settings[chartType].display) {
+              handleGraphSettingsChange(chartType, 'sequence', parseInt(e.target.value));
+            }
+            else {
+              handleGraphSettingsChange(chartType, 'sequence', 0);
+            }
+          }}
           disabled={!settings[chartType].display} // Disable if 'Display' is unchecked
           min={1}
         />
@@ -66,24 +64,17 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
           type="checkbox"
           checked={settings[chartType].display}
           onChange={(e) => {
+            
             // If 'Display' is unchecked, reset sequence to 0
-            let newSeq = 0;
             if (!e.target.checked) {
               //setSequenceValue(0);
-              console.log("here");
-              //handleGraphSettingsChange(chartType, 'sequence', 0);
-              console.log("there");
+              handleGraphSettingsChange(chartType, 'sequence', 0);
             } else {
               // If 'Display' is checked, set sequence to 1
               //setSequenceValue(1);
-              newSeq=1;
-              //handleGraphSettingsChange(chartType, 'sequence', 1);
+              handleGraphSettingsChange(chartType, 'sequence', settings[chartType].sequence);
             }
-            console.log("A");
-            handleGraphSettingsChange(chartType, 'sequence', newSeq);
-            console.log("B");
             handleGraphSettingsChange(chartType, 'display', e.target.checked);
-            console.log("C");
           }}
         />
       </label>

@@ -122,6 +122,7 @@ const Admin = () => {
    */
 
   const handleGraphSettingsChange = (chartType: ChartType, field: string, value: number | boolean) => {
+    // todo: FETCH SETTING
     setPendingGraphSettings({
       ...pendingGraphSettings,
       [chartType]: {
@@ -325,6 +326,7 @@ const Admin = () => {
    */
 
   const handleMediaSettingsChange = (field: string, value: number | boolean) => {
+    //TODO FETCH
     setPendingMediaSettings({
       ...pendingMediaSettings,
       [field]: value,
@@ -430,7 +432,6 @@ const Admin = () => {
               );
             })}
 
-
           </div>
 
         </div>
@@ -440,7 +441,6 @@ const Admin = () => {
       <div id="manage-admins" className='mb-5 adminBlock'>
         <h2>Manage Administrators</h2>
         <ManageAdmin admins={admins} removeAdmin={removeAdmin} addAdmin={addAdmin} />
-
       </div>
 
       <button onClick={handleLogout} className='logoutButton'>Logout</button>
