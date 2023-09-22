@@ -14,9 +14,10 @@ import '../styles/Login.css';
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error,setError] = useState('');// state for error message
+  const [error, setError] = useState('');// state for error message
   const router = useRouter();
   const { login } = useAuth(); // get login function
+
 
   /**
    * Function to handle the login process.
@@ -47,28 +48,38 @@ const LoginPage = () => {
     }
   };
 
+  const handleForgotPassword = () => {
+    setError('Please contact the d-skool building manager to change your password.');
+  };  
+
+
   return (
     <div className='loginContent'>
-      <Image height={600} width={600} src="/images/d-skool.png" alt = "Login Image" className='loginImage'/>
+      <Image height={600} width={600} src="/images/d-skool.png" alt="Login Image" className='loginImage' />
       <h2>Login as administrator</h2>
-      {error && <div className="text-red-500 bm-3"
-        >{error}
-      </div>}
 
       <input
-        type="text" 
-        placeholder="Username" 
-        onChange={(e) => setUsername(e.target.value)} 
+        type="text"
+        placeholder="Username"
+        onChange={(e) => setUsername(e.target.value)}
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline caret-black" />
 
-      <input type="password" 
-        placeholder="Password" 
+      <input type="password"
+        placeholder="Password"
         onChange={(e) => setPassword(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="mt-5 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline caret-black" 
+        className="mt-5 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline caret-black"
       />
-      
+
       <button onClick={handleLogin} className="mt-5 bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mx-auto block">Login</button>
+
+      <button onClick={handleForgotPassword} className="mt-3 bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mx-auto block">Forgot password?</button>
+
+
+      {error && <div className="text-red-500 m-3"
+      >{error}
+      </div>}
+
     </div>
   );
 };

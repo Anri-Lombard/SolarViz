@@ -19,14 +19,9 @@ export function VideoComponent({ playWithAudio, setVideoDuration, style }: { pla
       // Listen for the 'loadedmetadata' event to get video duration
       video.addEventListener('loadedmetadata', () => {
         setVideoDuration(video.duration);
-
-        // Play the video (with muted if playWithAudio is false)
-        video.play().catch((error) => {
-          console.error("Video play failed:", error);
-        });
       });
     }
-  }, []);
+  }, [setVideoDuration]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -37,10 +32,12 @@ export function VideoComponent({ playWithAudio, setVideoDuration, style }: { pla
     }
   }, [style]);
 
+  // TODO: user has to unmute to play
   return (
-    <video width={600} height={600} ref={videoRef} controls muted={!playWithAudio} style={style}>
-      <source src="/Videos/video.mp4" type="video/mp4" />
+    <video width={600} height={800} ref={videoRef} controls muted={true} style={style}>
+      <source src="/Videos/d-skool.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
   );
 }
+
