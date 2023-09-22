@@ -31,7 +31,10 @@ export const PieChartComponent: React.FC<PieChartComponentProps> = ({ data, colo
 
     return (
         <div data-testid="pieChart" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <PieChart width={500} height={500}>
+            <PieChart
+                width={window.innerWidth >= 768 ? 600 : 300} // Adjust the width for smaller screens
+                height={window.innerWidth >= 768 ? 500 : 300} // Adjust the height for smaller screens
+            >
                 <Pie
                     dataKey="value"
                     isAnimationActive={true}

@@ -102,6 +102,20 @@
 
 /* Media query for smaller screens */
 @media (max-width: 768px) {
+
+  /* adjusting the graphs: */
+  .heading {
+    font-size: medium;
+  }
+
+  .recharts-pie-label-text {
+    font-size: small; /* Adjust the font size for labels */
+  }
+
+  .recharts-legend-item-text {
+    font-size: small;
+  }
+
   .energySavingTipsContainer {
       width: 100%; /* Take up the full width on smaller screens */
       font-size: 0.6em; /* Adjust font size for smaller screens */
