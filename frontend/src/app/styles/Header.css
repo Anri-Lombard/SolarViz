@@ -66,19 +66,36 @@
   z-index: 1;
 }
 
-/* Hover Text */
-.hoverText {
-  position: absolute; /* Absolute positioning */
-  top: 40px; /* Position from the top */
-  right: 10px; /* Position from the right */
-  color: #292827; /* Text color */
-  background-color: #fff4d9; /* Background color */
-  border-radius: 10px; /* Rounded corners */
-  font-size: small; /* Font size */
+.header .hoverText {
+  color: black;
+  left:20px;
+  top: 25px;
 }
 
 .logoPlain {
   position: absolute;
   width: 120px;
   margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+  /* Adjust styles for smaller screens */
+  
+  .menuButton {
+    padding: 1vh 1.5vh; /* Adjust padding for smaller screens */
+  }
+
+  .logoImage {
+    max-width: 20vh; /* Adjust max width for smaller screens */
+    max-height: 15vh; /* Adjust max height for smaller screens */
+  }
+
+  .header .hoverText {
+    top: 20px;
+  }
+
+  .logoPlain {
+    width: 80px; /* Adjust width for smaller screens */
+    margin-left: 5px; /* Adjust margin-left for smaller screens */
+  }
 }

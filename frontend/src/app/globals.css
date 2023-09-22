@@ -68,10 +68,17 @@ html {
     scroll-behavior: smooth; /* Smooth scrolling behavior */
 }
 
-/* Hover Text Styles */
+/* Hover text with specific styling */
 .hoverText {
-    position: absolute; /* Absolute positioning */
+    position: absolute;
+    top: 4px; /* Position from the top */
+    right: 50px; /* Position from the right */
     color: #292827; /* Text color */
     background-color: white; /* Background color */
     border-radius: 2px; /* Rounded corners */
+    padding: 0.5vh 1vh; /* Padding */
+    font-size: small; /* Font size */
+    width: fit-content; /* Adjust width to content */
+    white-space: nowrap; /* Prevent line breaks */
+    z-index: 1; /* Stack above other elements */
 }

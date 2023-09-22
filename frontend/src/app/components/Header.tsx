@@ -51,9 +51,9 @@ const Header: React.FC = () => {
       <div
         onMouseEnter={() => setIsLogoHovered(true)}
         onMouseLeave={() => setIsLogoHovered(false)}
-        onClick={() => goToPage('/')} className="logoImage"
+        onClick={() => goToPage('/')} 
       >
-        <Image width={300} height={300} src="/images/logo.png" alt="logo" style={{ opacity: logoOpacity }} />
+        <Image className="logoImage" width={300} height={300} src="/images/logo.png" alt="logo" style={{ opacity: logoOpacity }} />
         {isLogoHovered && <div className="hoverText">Return to homepage</div>}
       </div>
 

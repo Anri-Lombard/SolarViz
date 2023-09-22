@@ -9,7 +9,7 @@ import { useSettings } from './contexts/SettingsContext';
 import { useData } from './contexts/DataContext';
 
 import Image from 'next/image';
-import './styles/Dashboard.css';
+import './styles/DataDisplay.css';
 
 // Home component for the application.
 

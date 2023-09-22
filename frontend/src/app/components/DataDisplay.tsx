@@ -142,11 +142,17 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
       ) : (
         <LoadingSpinner />
       )}
-      <VideoComponent
+
+      <VideoComponent 
         playWithAudio={settings.media.audio}
         setVideoDuration={handleVideoDuration}
-        style={{ display: charts[currentChartIndex].type === 'VIDEO' ? 'block' : 'none' }}
+        style={{ 
+          display: charts[currentChartIndex].type === 'VIDEO' ? 'block' : 'none', 
+          border: '2px solid black', // Border properties
+          borderRadius: '10px', // Border radius property
+        }}
       />
+      
     </div>
   );
 
