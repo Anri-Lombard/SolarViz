@@ -64,7 +64,6 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({
     }
   }, [settings.display])
 
-  console.log(settings)
   return (
     <div className="gridElement">
       <h3 className="font-bold text-l">Media Settings</h3>
@@ -72,7 +71,7 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({
         Sequence:
         <input
           type="number"
-          value={settings.display ? settings.sequence : ''}
+          value={settings.sequence}
           onChange={(e) => {
             const newValue = e.target.value !== '' ? parseInt(e.target.value) : null;
             handleMediaSettingsChange('sequence', newValue);
