@@ -14,6 +14,8 @@ import { transformPowerData, aggregateData, formatDate } from '../utils/DataUtil
 import { ChartTypes } from '../types/chartTypes'
 import { DataDisplayProps, TransformedDataType } from '../types/dataTypes'
 
+import { useData } from '../contexts/DataContext';
+
 /**
  * DataDisplay component displays various charts and data visualizations based on power and water data.
  *
@@ -34,6 +36,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
   const [waterStartTime, setWaterStartTime] = useState("0");
   const [waterEndTime, setWaterEndTime] = useState("0");
   const [videoDuration, setVideoDuration] = useState<number | null>(null);
+  const { selectedVideo } = useData();
 
   const aggregatedData = useMemo(() => {
     if (!powerData || powerData.length === 0) return null;
@@ -98,6 +101,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
         return null;
     }
   };
+  
 
   const charts = [
     { type: ChartTypes.PIE, ...settings.pieChart },
@@ -143,6 +147,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
         <LoadingSpinner />
       )}
       <VideoComponent
+        videoUrl={selectedVideo}
         playWithAudio={settings.media.audio}
         setVideoDuration={handleVideoDuration}
         style={{ display: charts[currentChartIndex].type === 'VIDEO' ? 'block' : 'none' }}

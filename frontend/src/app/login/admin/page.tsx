@@ -5,6 +5,7 @@ import withAdminAuth from '../../components/WithAdminAuth';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSettings } from '../../contexts/SettingsContext';
+import { useData } from '../../contexts/DataContext';
 import { useAuth } from '../../contexts/LoginContext';
 import '../../styles/Admin.css';
 import ColorOptions from '../../components/ColorOptions';
@@ -20,6 +21,13 @@ import { Admin, ColorType, ChartType, ColorSettings } from '../../types/dataType
 
 const Admin = () => {
   const { settings, setSettings } = useSettings();
+  const {
+    videoList,
+    selectedVideo,
+    setSelectedVideo,
+    uploadVideo,
+    videoUrl,
+  } = useData();
   // console.log(settings)
   const [pendingChanges, setPendingChanges] = useState({
     ...settings,
@@ -380,11 +388,15 @@ const Admin = () => {
               />
             ))}
 
-          <MediaSettingsComponent
-            handleMediaSettingsChange={handleMediaSettingsChange}
-            settings={pendingMediaSettings}
-          />
-        </div>
+            <MediaSettingsComponent
+              handleMediaSettingsChange={handleMediaSettingsChange}
+              settings={pendingMediaSettings}
+              videoList={videoList}
+              selectedVideo={selectedVideo}
+              setSelectedVideo={setSelectedVideo}
+              uploadVideo={uploadVideo}
+            />
+          </div>
 
         </div>
 

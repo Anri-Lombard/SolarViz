@@ -33,13 +33,17 @@ export default function Home() {
             <DataDisplay powerData={powerData} waterData={waterData} settings={settings} />
           </div>
         ) : (
-          <LoadingSpinner/>
+          // <LoadingSpinner />
+          <p>Loading...</p>
+          // <div>
+          //   <LoadingSpinner />
+          // </div>
         )}
       </div>
 
       <div className='rightMarginContainer'>
         <Image src="/images/storeysPicture.png" alt="D-skool Storeys" width={300} height={300}/>
-        <div className='energySavingTipsContainer'>
+        <div className='energySavingTipsContainer animate-wiggle'>
           <h1>Energy Saving Tips:</h1>
           <ol>
             <li>
