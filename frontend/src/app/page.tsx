@@ -33,7 +33,11 @@ export default function Home() {
             <DataDisplay powerData={powerData} waterData={waterData} settings={settings} />
           </div>
         ) : (
-          <LoadingSpinner />
+          // <LoadingSpinner />
+          <p>Loading...</p>
+          // <div>
+          //   <LoadingSpinner />
+          // </div>
         )}
       </div>
 

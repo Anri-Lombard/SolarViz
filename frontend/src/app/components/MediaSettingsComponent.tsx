@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface MediaSettingsProps {
 
@@ -10,8 +10,8 @@ interface MediaSettingsProps {
    */
 
   handleMediaSettingsChange: (field: string, value: any) => void;
-  
-  
+
+
   // The media settings object.
 
   settings: {
@@ -19,18 +19,42 @@ interface MediaSettingsProps {
     display: boolean;
     audio: boolean;
   };
+  uploadVideo: (file: File) => void;
+  videoList: {
+    id: string;
+    url: string;
+  }[] | null;
+  selectedVideo: string | null;
+  setSelectedVideo: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({ handleMediaSettingsChange, settings }) => {
+const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({
+  handleMediaSettingsChange,
+  settings,
+  videoList,
+  uploadVideo,
+  selectedVideo,
+  setSelectedVideo,
+}) => {
 
-  useEffect(() => {
-    // Listen for changes to settings[chartType].display
-    if (!settings.display) {
-      // If display is unchecked, reset sequence to 0
-      handleMediaSettingsChange('audio', false);
+  const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (videoList!.map((video) => video.url.split('/').pop()).includes(file!.name)) {
+      window.alert('Video with same name already uploaded');
+      return;
+    } else {
+      if (window.confirm(`Upload ${e.target.files?.[0].name}?`)){
+        if (file) {
+          await uploadVideo(file);
+        }
+      }
     }
-  }, [settings.display]);
+  };
 
+  const handleVideoSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (window.confirm(`Select ${e.target.value.split('/').pop()} to play on dashboard?`))
+    setSelectedVideo(e.target.value);
+  };
   return (
     <div className="gridElement">
       <h3 className="font-bold text-l">Media Settings</h3>
@@ -43,9 +67,9 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({ handleMediaSetti
             const newValue = e.target.value !== '' ? parseInt(e.target.value) : null;
             handleMediaSettingsChange('sequence', newValue);
           }
-        }
-        disabled={!settings.display} // Disable if 'Display' is unchecked
-        min={1}
+          }
+          disabled={!settings.display} // Disable if 'Display' is unchecked
+          min={1}
         />
       </label>
       <label>
@@ -53,10 +77,28 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({ handleMediaSetti
         <input
           type="checkbox"
           checked={settings.display}
-          onChange={(e) => 
+          onChange={(e) =>
             handleMediaSettingsChange('display', e.target.checked)
           }
         />
+      </label>
+      <label>
+        Select Video:
+        <select value={selectedVideo || ''} onChange={handleVideoSelection}>
+          {videoList ? videoList.map((video) => (
+            <option key={video.id} value={video.url}>
+              {video.url.split('/').pop()}
+            </option>
+          )) : (
+            <p>No Videos Uploaded</p>
+          )}
+        </select>
+      </label>
+      <label>
+        Upload Video:
+        <input type="file" accept="video/*" onChange={
+            handleVideoUpload
+          } />
       </label>
     </div>
   );

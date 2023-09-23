@@ -40,7 +40,7 @@ export default function Home() {
       {(powerData && powerData.length > 0) && (waterData && waterData.length > 0) ?
         
         <MoreDataDisplay powerData={powerData} waterData={waterData} settings={settings} />
-        : <LoadingSpinner />
+        : <p>Loading...</p>
       }
     </div>
   );
