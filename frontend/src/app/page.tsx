@@ -43,7 +43,7 @@ export default function Home() {
 
       <div className='rightMarginContainer'>
         <Image src="/images/storeysPicture.png" alt="D-skool Storeys" width={300} height={300}/>
-        <div className='energySavingTipsContainer'>
+        <div className='energySavingTipsContainer animate-wiggle'>
           <h1>Energy Saving Tips:</h1>
           <ol>
             <li>
