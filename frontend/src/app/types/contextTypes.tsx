@@ -9,7 +9,10 @@ export interface DataContextProps {
     powerData: DataType[];
     waterData: WaterDataType[];
     videoUrl: string | null;
-    videoList: string[];
+    videoList: {
+        id: string;
+        url: string;
+    }[] | null;
     uploadVideo: (file: File) => void;
     selectedVideo: string | null;
     setSelectedVideo: React.Dispatch<React.SetStateAction<string | null>>;

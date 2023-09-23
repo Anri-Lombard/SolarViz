@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
+const BASE_URL = 'http://localhost:8000';
+
 /**
  * VideoComponent displays a video player.
  *
@@ -12,6 +14,8 @@ import React, { useEffect, useRef } from 'react';
 
 export function VideoComponent({ videoUrl, playWithAudio, setVideoDuration, style }: { videoUrl: string | null, playWithAudio: boolean, setVideoDuration: Function, style: React.CSSProperties }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  console.log("videoUrl", videoUrl);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -37,7 +41,7 @@ export function VideoComponent({ videoUrl, playWithAudio, setVideoDuration, styl
     <div style={style}>
       {videoUrl ? (
         <video width={600} height={800} ref={videoRef} controls autoPlay muted={true}>
-          <source src={videoUrl} type="video/mp4" />
+          <source src={BASE_URL + videoUrl} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       ) : (

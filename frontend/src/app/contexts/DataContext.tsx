@@ -8,7 +8,7 @@ export const DataContext = createContext<DataContextProps>({
   powerData: [],
   waterData: [],
   videoUrl: null,
-  videoList: [],
+  videoList: null,
   selectedVideo: null,
   uploadVideo: () => { throw new Error('uploadVideo function must be overridden'); },
   setSelectedVideo: () => { throw new Error('setSelectedVideo function must be overridden'); },
@@ -19,7 +19,7 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [powerData, setPowerData] = useState<DataType[]>([]);
   const [waterData, setWaterData] = useState<WaterDataType[]>([]);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
-  const [videoList, setVideoList] = useState<string[]>([]);
+  const [videoList, setVideoList] = useState<any[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
   useEffect(() => {
@@ -45,14 +45,29 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     fetch('http://localhost:8000/api/list_uploaded_videos/')
       .then((response) => response.json())
       .then((data) => {
-        console.log("Returned video list data:", data);
-        if (data.length > 0) {
-          setVideoList(data)
-        } else {
-          setVideoList(["No videos uploaded"])
+        if (data.video_list.length > 0) {
+          setSelectedVideo(data.video_list[0].url)
+          setVideoList(data.video_list)
         }
       })
       .catch((error) => console.error('Error fetching video list:', error));
+  }, []);
+
+  // Function to handle video deletion (for future implementation)
+  const deleteVideo = useCallback(async (videoId: string) => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/delete_uploaded_video/${videoId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Video deletion failed');
+      }
+
+      setVideoList((prevList) => prevList.filter((video) => video.id !== videoId));
+    } catch (error) {
+      console.error('Error deleting video:', error);
+    }
   }, []);
 
   // Function to handle video upload

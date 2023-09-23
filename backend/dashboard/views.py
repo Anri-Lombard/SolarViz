@@ -18,11 +18,20 @@ import json
 import base64
 import requests
 
+@api_view(['DELETE'])
+def delete_uploaded_video(request, video_id):
+    try:
+        video = UploadedVideo.objects.get(id=video_id)
+        video.delete()
+        return JsonResponse({'message': 'Video deleted successfully'}, status=status.HTTP_200_OK)
+    except UploadedVideo.DoesNotExist:
+        return JsonResponse({'error': 'Video not found'}, status=status.HTTP_404_NOT_FOUND)
+
 @api_view(['GET'])
 def list_uploaded_videos(request):
     videos = UploadedVideo.objects.all()
     video_list = [{'id': video.id, 'url': video.video_file.url} for video in videos]
-    return JsonResponse(video_list, safe=False)
+    return JsonResponse({'video_list': video_list}, safe=False)
 
 @api_view(['POST'])
 def upload_video(request):

@@ -36,6 +36,7 @@ urlpatterns = [
     path('api/upload_video/', views.upload_video, name='upload_video'),
     path('api/get_uploaded_video/', views.get_uploaded_video, name='get_uploaded_video'),
     path('api/list_uploaded_videos/', views.list_uploaded_videos, name='list_uploaded_videos'),
+    path('api/delete_uploaded_video/<int:video_id>', views.delete_uploaded_video, name='delete_uploaded_video'),
 ]
 
 
