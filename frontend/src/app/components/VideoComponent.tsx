@@ -15,8 +15,6 @@ const BASE_URL = 'http://localhost:8000';
 export function VideoComponent({ videoUrl, playWithAudio, setVideoDuration, style }: { videoUrl: string | null, playWithAudio: boolean, setVideoDuration: Function, style: React.CSSProperties }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  console.log("videoUrl", videoUrl);
-
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
