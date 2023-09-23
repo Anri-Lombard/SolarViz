@@ -8,6 +8,11 @@ import { DataType, WaterDataType, Settings } from "./dataTypes";
 export interface DataContextProps {
     powerData: DataType[];
     waterData: WaterDataType[];
+    videoUrl: string | null;
+    videoList: string[];
+    uploadVideo: (file: File) => void;
+    selectedVideo: string | null;
+    setSelectedVideo: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 // Interface representing the authentication context.

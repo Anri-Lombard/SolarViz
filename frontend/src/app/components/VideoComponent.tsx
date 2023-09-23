@@ -10,7 +10,7 @@ import React, { useEffect, useRef } from 'react';
  * @returns {JSX.Element}                     The VideoComponent JSX.
  */
 
-export function VideoComponent({ playWithAudio, setVideoDuration, style }: { playWithAudio: boolean, setVideoDuration: Function, style: React.CSSProperties }) {
+export function VideoComponent({ videoUrl, playWithAudio, setVideoDuration, style }: { videoUrl: string | null, playWithAudio: boolean, setVideoDuration: Function, style: React.CSSProperties }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -34,10 +34,16 @@ export function VideoComponent({ playWithAudio, setVideoDuration, style }: { pla
 
   // TODO: user has to unmute to play
   return (
-    <video width={600} height={800} ref={videoRef} controls muted={true} style={style}>
-      <source src="/Videos/d-skool.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
+    <div style={style}>
+      {videoUrl ? (
+        <video width={600} height={800} ref={videoRef} controls autoPlay muted={true}>
+          <source src={videoUrl} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      ) : (
+        <p>No video selected</p>
+      )}
+    </div>
   );
 }
 

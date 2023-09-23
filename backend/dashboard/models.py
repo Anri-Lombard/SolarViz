@@ -1,5 +1,9 @@
 from django.db import models
 
+class UploadedVideo(models.Model):
+    video_file = models.FileField(upload_to='videos/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
 # Singleton model to store global settings.
 # There will only be one instance of this model in the database.
 class GlobalSettings(models.Model):

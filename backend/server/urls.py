@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from dashboard import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 from dashboard.views import CustomAuthToken
 
@@ -31,4 +33,11 @@ urlpatterns = [
     path('api/water_data/', views.water_data, name='water_data'),
     path('api/get_global_settings/', views.get_global_settings, name='get_global_settings'),
     path('api/update_global_settings/', views.update_global_settings, name='update_global_settings'),
+    path('api/upload_video/', views.upload_video, name='upload_video'),
+    path('api/get_uploaded_video/', views.get_uploaded_video, name='get_uploaded_video'),
+    path('api/list_uploaded_videos/', views.list_uploaded_videos, name='list_uploaded_videos'),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

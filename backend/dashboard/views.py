@@ -8,6 +8,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 from .models import GlobalSettings
+from .models import UploadedVideo
 
 from collections import defaultdict
 from datetime import datetime
@@ -16,6 +17,32 @@ import csv
 import json
 import base64
 import requests
+
+@api_view(['GET'])
+def list_uploaded_videos(request):
+    videos = UploadedVideo.objects.all()
+    video_list = [{'id': video.id, 'url': video.video_file.url} for video in videos]
+    return JsonResponse(video_list, safe=False)
+
+@api_view(['POST'])
+def upload_video(request):
+    if 'file' not in request.data:
+        return Response({'error': 'No file uploaded'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    video_file = request.data['file']
+    uploaded_video = UploadedVideo(video_file=video_file)
+    uploaded_video.save()
+
+    return Response({'file_url': uploaded_video.video_file.url}, status=status.HTTP_201_CREATED)
+
+@api_view(['GET'])
+def get_uploaded_video(request):
+    try:
+        # Retrieve the latest uploaded video
+        uploaded_video = UploadedVideo.objects.latest('id')
+        return Response({'file_url': uploaded_video.video_file.url}, status=status.HTTP_200_OK)
+    except UploadedVideo.DoesNotExist:
+        return Response({'error': 'No video has been uploaded'}, status=status.HTTP_404_NOT_FOUND)
 
 # Custom login view for token-based authentication
 class CustomAuthToken(ObtainAuthToken):
