@@ -103,21 +103,26 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({
       </label>
       <label>
         Select Video:
-        <select value={selectedVideo || ''} onChange={handleVideoSelection}>
-          {videoList ? videoList.map((video) => (
-            <option key={video.id} value={video.url}>
-              {video.url.split('/').pop()}
-            </option>
-          )) : (
-            <p>No Videos Uploaded</p>
-          )}
-        </select>
+        <div className='selectVideo'>
+          <select value={selectedVideo || ''} onChange={handleVideoSelection}>
+            {videoList ? videoList.map((video) => (
+              <option key={video.id} value={video.url}>
+                {video.url.split('/').pop()}
+              </option>
+            )) : (
+              <p>No Videos Uploaded</p>
+            )}
+          </select>
+        </div>
       </label>
       <label>
         Upload Video:
-        <input type="file" accept="video/*" onChange={
-          handleVideoUpload
-        } />
+        <div className='upload'>
+          <input type="file" accept="video/*" onChange={
+            handleVideoUpload
+          } />
+        </div>
+        
       </label>
     </div>
   );
