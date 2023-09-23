@@ -13,31 +13,33 @@ import { ColorOptionsProps } from '../types/dataTypes';
  * @returns {JSX.Element}                                                   The ColorOptions component JSX.
  */
 
-const ColorOptions: React.FC<ColorOptionsProps> = ({ type, colors, handleChangeColor, currentColor }) => (
-  <div className="colorGridElement">
-    <h3 className='text-black font-bold '>{type} Colour</h3>
-    <div className="colorDropdown">
-      <div
-        style={{ backgroundColor: currentColor, width: '30px', height: '30px' }}
-      ></div>
-      <select
-        value={currentColor}
-        onChange={(e) => handleChangeColor(type, e.target.value)}
-        className="p-2 m-0 mb-2"
-      >
-        {colors.map((color) => (
-          <option
-            data-color={color}
-            key={color}
-            value={color}
-            style={{ backgroundColor:'#292827', color: 'white'}}
-          >
-            {color.charAt(0).toUpperCase() + color.slice(1)}
-          </option>
-        ))}
-      </select>
+const ColorOptions: React.FC<ColorOptionsProps> = ({ type, colors, handleChangeColor, currentColor }) => {
+  return (
+    <div className="colorGridElement">
+      <h3 className='text-black font-bold '>{type} Colour</h3>
+      <div className="colorDropdown">
+        <div
+          style={{ backgroundColor: currentColor, width: '30px', height: '30px' }}
+        ></div>
+        <select
+          value={currentColor}
+          onChange={(e) => handleChangeColor(type, e.target.value)}
+          className="p-2 m-0 mb-2"
+        >
+          {colors.map((color) => (
+            <option
+              data-color={color}
+              key={color}
+              value={color}
+              style={{ backgroundColor: '#292827', color: 'white' }}
+            >
+              {color.charAt(0).toUpperCase() + color.slice(1)}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
-  </div>
-);
+  )
+};
 
 export default ColorOptions;

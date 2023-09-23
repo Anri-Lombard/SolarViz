@@ -43,7 +43,7 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({
       window.alert('Video with same name already uploaded');
       return;
     } else {
-      if (window.confirm(`Upload ${e.target.files?.[0].name}?`)){
+      if (window.confirm(`Upload ${e.target.files?.[0].name}?`)) {
         if (file) {
           await uploadVideo(file);
         }
@@ -53,8 +53,18 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({
 
   const handleVideoSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (window.confirm(`Select ${e.target.value.split('/').pop()} to play on dashboard?`))
-    setSelectedVideo(e.target.value);
+      setSelectedVideo(e.target.value);
   };
+
+  useEffect(() => {
+    if (!settings.display) {
+      handleMediaSettingsChange('sequence', 0);
+    } else {
+      handleMediaSettingsChange('sequence', settings.sequence == 0 ? 1 : settings.sequence);
+    }
+  }, [settings.display])
+
+  console.log(settings)
   return (
     <div className="gridElement">
       <h3 className="font-bold text-l">Media Settings</h3>
@@ -97,8 +107,8 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({
       <label>
         Upload Video:
         <input type="file" accept="video/*" onChange={
-            handleVideoUpload
-          } />
+          handleVideoUpload
+        } />
       </label>
     </div>
   );

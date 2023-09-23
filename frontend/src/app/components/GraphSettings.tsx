@@ -22,12 +22,15 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
       setSequenceValue(0);
       handleGraphSettingsChange(chartType, 'sequence', 0);
     } else {
-      setSequenceValue(1);
-      handleGraphSettingsChange(chartType, 'sequence', 1);
+      if (settings[chartType].sequence === 0){
+        setSequenceValue(1);
+        handleGraphSettingsChange(chartType, 'sequence', 1);
+      } else {
+        setSequenceValue(settings[chartType].sequence);
+      }
     }
   }, [settings[chartType].display])
 
-  console.log(settings)
   return (
     <div className="gridElement">
       <div className="graphHeading">
@@ -48,7 +51,6 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
           type="number"
           value={sequenceValue}
           onChange={(e) => {
-            console.log("Sequence changed")
             let newValue = e.target.value !== '' ? parseInt(e.target.value) : 1;
             if (newValue < 1) newValue = 1;  // Ensure value is not less than 1
             setSequenceValue(newValue); //update local state
@@ -75,7 +77,6 @@ const GraphSettingsComponent: React.FC<GraphSettingsProps> = ({ chartType, handl
           type="checkbox"
           checked={settings[chartType].display}
           onChange={(e) => {
-            console.log("Display changed")
             // If 'Display' is unchecked, reset sequence to 0
             let sequenceValue = 1;
             if (!e.target.checked) {

@@ -101,6 +101,7 @@ export default function DataDisplay({ powerData, waterData, settings }: DataDisp
         return null;
     }
   };
+  
 
   const charts = [
     { type: ChartTypes.PIE, ...settings.pieChart },
