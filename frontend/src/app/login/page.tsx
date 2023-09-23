@@ -73,7 +73,7 @@ const LoginPage = () => {
 
       <button onClick={handleLogin} className="mt-5 bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mx-auto block">Login</button>
 
-      <button onClick={handleForgotPassword} className="mt-3 bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mx-auto block">Forgot password?</button>
+      <button onClick={handleForgotPassword} className="hover:underline hover:border-black p-2">Forgot password?</button>
 
 
       {error && <div className="text-red-500 m-3"
