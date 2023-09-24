@@ -71,9 +71,8 @@ const LoginPage = () => {
         className="mt-5 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline caret-black"
       />
 
-      <button onClick={handleLogin} className="mt-5 bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mx-auto block">Login</button>
-
-      <button onClick={handleForgotPassword} className="mt-3 bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mx-auto block">Forgot password?</button>
+      <button onClick={handleLogin} className="loginButton">Login</button>
+      <button onClick={handleForgotPassword} className="py-2 px-2 hover:underline">Forgot password?</button>
 
 
       {error && <div className="text-red-500 m-3"
