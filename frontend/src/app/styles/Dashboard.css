@@ -8,7 +8,7 @@
 
 .dashboard img {
     border-radius: 3px; /* Adds a slight border radius to the images */
-    max-width: 25vw; /* Sets a maximum width of 25% of the viewport width for the images */
+    max-width: 19vw; /* Sets a maximum width of 25% of the viewport width for the images */
     margin-bottom: 20px; /* Adds a bottom margin of 20 pixels to separate images */
 }
 
@@ -35,7 +35,7 @@
 /* CSS for energy saving tips feature */
 
 .energySavingTipsContainer {
-    max-width: 25vw; /* Sets a maximum width of 25% of the viewport width */
+    max-width: 19vw; /* Sets a maximum width of 25% of the viewport width */
     padding: 1em 2em; /* Adds padding (1em top/bottom, 2em left/right) */
     color: #292827; /* Text color */
     border-color: #292827; /* Border color */
