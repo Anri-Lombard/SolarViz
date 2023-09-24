@@ -16,3 +16,25 @@ h2 {
     width: 30%; /* Width of the login image */
     margin: 0 auto; /* Center horizontally within the container */
 }
+
+.loginButton {
+    margin: 0 auto; /* horizontal centering */
+    margin-top: 1.25rem; /* Margin top 5 units */
+    background-color: #183d33; /* Background color green-700 */
+    color: #fff; /* Text color white */
+    font-weight: bold; /* Font weight bold */
+    padding-top: 0.5rem; /* Padding 2 units on the y-axis */
+    padding-bottom: 0.5rem;
+    padding-left: 1rem; /* Padding 4 units on the x-axis */
+    padding-right: 1rem;
+    border-radius: 0.25rem; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    display: block; /* Display as a block element */
+    outline: none; /* Remove focus outline */
+  }
+  
+  .loginButton:hover {
+    background-color: #065f6f; /* Background color green-900 on hover */
+    box-shadow: none; /* Remove focus shadow on hover */
+  }
+  
