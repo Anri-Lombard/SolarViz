@@ -6,3 +6,12 @@
   text-align: center; /* Center-align text */
   font-family: 'Verdana', sans-serif; /* Font family */
 }
+
+
+
+@media (max-width: 768px) {
+  .heading {
+    font-size: small;
+  }
+
+}
