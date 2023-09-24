@@ -66,3 +66,33 @@
     width: 30px;
     height: 30px;
 }
+
+/* Media Query for smaller screens */
+@media (max-width: 768px) {
+    .rightMarginContainer {
+        margin-left: 10px; /* Adjust the margin for smaller screens */
+    }
+
+    .energySavingTipsContainer {
+        width: 100%; /* Make the container full-width on smaller screens */
+        padding: 1em; /* Adjust padding as needed */
+    }
+
+    .energySavingTipsContainer h1 {
+        font-size: 1em; /* Adjust font size for smaller screens */
+    }
+
+    .energySavingTipsContainer li {
+        margin-bottom: 2px;
+        font-size: small;
+    }
+
+    .energySavingTipsContainer h2 {
+        font-size: small;
+    }
+
+    .icon {
+        width: 20px; /* Adjust icon size for smaller screens */
+        height: 20px;
+    }
+}
