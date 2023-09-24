@@ -14,4 +14,11 @@
     font-size: small;
   }
 
+  .recharts-pie-label-text {
+    font-size: small; /* Adjust the font size for labels */
+  }
+
+  .recharts-legend-item-text {
+    font-size: small;
+  }
 }

@@ -28,6 +28,7 @@
 }
 
 .energySavingTipsContainer {
+    max-width:25vw;
     padding: 1em 2em;
     color: #292827;
     border-color: #292827;
@@ -69,8 +70,15 @@
 
 /* Media Query for smaller screens */
 @media (max-width: 768px) {
+
+    .leftMarginContainer {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
     .rightMarginContainer {
         margin-left: 10px; /* Adjust the margin for smaller screens */
+        margin-right: 10px;
     }
 
     .energySavingTipsContainer {
@@ -89,6 +97,10 @@
 
     .energySavingTipsContainer h2 {
         font-size: small;
+    }
+
+    .energySavingTipsContainer .iconAndText {
+        margin-top: 0px;
     }
 
     .icon {
