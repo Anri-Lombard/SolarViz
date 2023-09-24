@@ -63,4 +63,4 @@ Contributions are welcome! For major changes, please open an issue first to disc
 
 ## License
 
-SolarViz is licensed under the [MIT License](../LICENSE).
+SolarViz is licensed under the [MIT License](./LICENSE).
