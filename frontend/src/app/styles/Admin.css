@@ -159,6 +159,15 @@ h2 {
     border-radius: 5px; /* Rounded corners */
 }
 
+.upload input {
+    border: none;
+    width: auto;
+}
+
+.selectVideo {
+    margin-right: 40px;
+}
+
 /* CSS for Labels in Selection Blocks */
 .selectionBlock label {
     display: flex; /* Use flexbox for layout */
