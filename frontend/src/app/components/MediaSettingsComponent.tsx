@@ -81,7 +81,8 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({
         />
       </label>
       
-      <label className='checkbox'>
+      {/* Deprecated since audio cannot be played on browser */}
+      {/* <label className='checkbox'>
         Play with Audio:
         <input
           type="checkbox"
@@ -89,7 +90,7 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({
           onChange={(e) => handleMediaSettingsChange('audio', e.target.checked)}
           disabled={!settings.display} // Disable if 'Display' is unchecked
         />
-      </label>
+      </label> */}
 
       <label>
         Display:
