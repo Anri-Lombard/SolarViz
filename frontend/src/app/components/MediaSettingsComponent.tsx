@@ -73,14 +73,24 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({
           type="number"
           value={settings.sequence}
           onChange={(e) => {
-            const newValue = e.target.value !== '' ? parseInt(e.target.value) : null;
-            handleMediaSettingsChange('sequence', newValue);
+            handleMediaSettingsChange('sequence', e.target.value);
           }
           }
           disabled={!settings.display} // Disable if 'Display' is unchecked
           min={1}
         />
       </label>
+      
+      <label className='checkbox'>
+        Play with Audio:
+        <input
+          type="checkbox"
+          checked={settings.audio}
+          onChange={(e) => handleMediaSettingsChange('audio', e.target.checked)}
+          disabled={!settings.display} // Disable if 'Display' is unchecked
+        />
+      </label>
+
       <label>
         Display:
         <input
@@ -93,21 +103,26 @@ const MediaSettingsComponent: React.FC<MediaSettingsProps> = ({
       </label>
       <label>
         Select Video:
-        <select value={selectedVideo || ''} onChange={handleVideoSelection}>
-          {videoList ? videoList.map((video) => (
-            <option key={video.id} value={video.url}>
-              {video.url.split('/').pop()}
-            </option>
-          )) : (
-            <p>No Videos Uploaded</p>
-          )}
-        </select>
+        <div className='selectVideo'>
+          <select value={selectedVideo || ''} onChange={handleVideoSelection}>
+            {videoList ? videoList.map((video) => (
+              <option key={video.id} value={video.url}>
+                {video.url.split('/').pop()}
+              </option>
+            )) : (
+              <p>No Videos Uploaded</p>
+            )}
+          </select>
+        </div>
       </label>
       <label>
         Upload Video:
-        <input type="file" accept="video/*" onChange={
-          handleVideoUpload
-        } />
+        <div className='upload'>
+          <input type="file" accept="video/*" onChange={
+            handleVideoUpload
+          } />
+        </div>
+        
       </label>
     </div>
   );
