@@ -17,12 +17,8 @@
   width: 120px; /* Width of the spinner */
   height: 120px; /* Height of the spinner */
   animation: spin 2s linear infinite; /* Apply the spin animation */
-}
-
-/* Container for Spinner */
-.spinner-container {
-  display: flex; /* Use flexbox for layout */
-  justify-content: center; /* Center content horizontally */
-  align-items: center; /* Center content vertically */
-  height: 100vh; /* Full viewport height */
+  position: fixed; /* Position the spinner relative to the viewport */
+  top: 45%; /* Move the spinner 50% down from the top of the viewport */
+  left: 45%; /* Move the spinner 50% from the left of the viewport */
+  z-index: 2; /* Ensure the spinner appears above other content */
 }
