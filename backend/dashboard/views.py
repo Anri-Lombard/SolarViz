@@ -42,7 +42,7 @@ def upload_video(request):
     uploaded_video = UploadedVideo(video_file=video_file)
     uploaded_video.save()
 
-    return Response({'file_url': uploaded_video.video_file.url}, status=status.HTTP_201_CREATED)
+    return Response({'id': uploaded_video.id, 'url': uploaded_video.video_file.url}, status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
 def get_uploaded_video(request):

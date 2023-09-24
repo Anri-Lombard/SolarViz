@@ -86,8 +86,7 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       }
 
       const data = await response.json();
-      setVideoUrl(data.file_url);
-      setVideoList(prevList => [...prevList, data.file_url]); // Update the video list
+      setVideoList(prevList => [...prevList, data]); // Update the video list
     } catch (error) {
       console.error('Error uploading video:', error);
     }

@@ -161,7 +161,8 @@ h2 {
 
 .upload input {
     border: none;
-    width: auto;
+    width: 15rem;
+    font-size: small;
 }
 
 .selectVideo {
