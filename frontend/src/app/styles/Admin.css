@@ -1,3 +1,32 @@
+/* CSS for Intro Text */
+.intro {
+    font-size: medium; /* Font size */
+    padding-top: 100px; /* Top padding */
+    padding-bottom: 20px; /* Bottom padding */
+    margin: 40px; /* Margin */
+    text-align: center;
+}
+
+.intro .navContainer {
+    text-align: left;
+    display: inline-block;
+}
+
+.intro a {
+    color: #183d33; /* Link text color */
+    cursor: pointer; /* Change cursor to hand */
+    padding: 5px; /* Add some padding for a better hover effect */
+    border-radius: 3px; /* Rounded corners for background */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.intro a:hover {
+    text-decoration: underline; 
+    color: #292827; 
+    font-weight: bold; 
+}
+
+
 /* CSS for Admin Blocks */
 .adminBlock {
     display: flex;
@@ -10,13 +39,11 @@
     margin: 20px; /* Margin */
 }
 
-/* CSS for Lists in Admin Blocks */
 .adminBlock ul {
     list-style-type: none; /* No list bullets */
     padding: 0; /* No padding */
 }
 
-/* CSS for List Items in Admin Blocks */
 .adminBlock li {
     padding: 10px; /* Padding */
     border-bottom: 1px solid #292827; /* Bottom border */
@@ -24,15 +51,77 @@
     justify-content: space-between; /* Space between elements */
 }
 
-/* CSS for Error Messages */
-.errorMessage {
-    float: right;
-    margin-top: 20px;
-    color: red; /* Text color */
-    font-weight: bold; /* Bold font */
+.adminBlock input {
+    padding: 0.5rem; /* Padding */
+    max-width: 200px; /* Maximum width */
+    margin: 30px; /* Margin */
+    border: 1px solid #292827; /* Border */
+    border-radius: 5px; /* Rounded corners */
+    caret-color: black; /* Caret (text cursor) color */
 }
 
-/* CSS for Apply Button */
+.adminBlock button {
+    background-color: #292827; /* Background color */
+    color: hsl(45, 63%, 87%); /* Text color */
+    padding: 10px 20px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Cursor type */
+    text-transform: uppercase; /* Uppercase text */
+    font-size: small; /* Font size */
+    border-color: #292827; /* Border color */
+    border-width: 2px; /* Border width */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.adminBlock button:hover {
+    color: #292827; /* Text color on hover */
+    background-color: #f3e9cb; /* Background color on hover */
+}
+
+
+/* CSS for Selection Blocks */
+.selectionBlock {
+    padding: 20px; /* Padding */
+    border-radius: 10px; /* Rounded corners */
+    border: 2px solid #292827; /* Border */
+    margin-top: 60px; /* Top margin */
+    border-width: 0px; /* Border width */
+    display: grid; /* Use grid layout */
+    grid-template-columns: repeat(3, minmax(100px, 1fr)); /* Dynamic columns */
+    grid-column-gap: 20px; /* Gap between columns */
+}
+
+.selectionBlock input {
+    width: 60px; /* Width */
+    padding: 0.5rem; /* Padding */
+    margin: 20px;
+    border: 1px solid #292827; /* Border */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.selectionBlock label {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Align items vertically */
+    justify-content: space-between; /* Space between elements */
+}
+
+.gridElement {
+    margin-top: 10px;
+    border-right: 1px solid #292827; /* Right border */
+    border-radius: 0px; /* Rounded corners */
+}
+
+.upload input {
+    border: none; /* overwrite inherited border */
+    width: 15rem;
+    font-size: small;
+}
+
+.selectVideo {
+    margin-right: 40px;
+}
+
+/* CSS for apply buttons in all admin blocks */
 .applyButton {
     position: relative;
     float: right;
@@ -48,13 +137,71 @@
     font-size: small; /* Font size */
 }
 
-/* Hover effect for Apply Button */
 .applyButton:hover {
     color: #f3e9cb; /* Text color on hover */
     background-color: #292827; /* Background color on hover */
 }
 
-/* CSS for h2 Headings */
+/* CSS for Error Messages */
+.errorMessage {
+    float: right;
+    margin-top: 20px;
+    color: red; /* Text color */
+    font-weight: bold; /* Bold font */
+}
+
+/* CSS for Color Grid */
+.colorGrid {
+    border-radius: 10px; /* Rounded corners for the grid */
+    border: 2px solid #292827; /* Border with color #292827 */
+    margin-top: 60px; /* Top margin of 60px */
+    border-width: 0px; /* Border width set to 0px (initially) */
+    display: grid; /* Use grid layout */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid columns */
+    grid-column-gap: 20px; /* Gap between grid columns */
+    font-size: 14px; /* Font size of 14 pixels */
+}
+
+.colorGridElement {
+    height:120px; /* Set a fixed height of 120 pixels */
+    display: flex; /* Use flexbox for layout */
+    justify-content: flex-start; /* Align content to the start of the flex container */
+    position: relative; /* Positioning relative to its normal position in the document flow */
+}
+
+.colorGridElement h3 {
+    margin-top: 10px; /* Add 10 pixels of top margin to the h3 element */
+}
+
+.colorGridElement .colorDropdown {
+    position: absolute; /* Positioning relative to the nearest positioned ancestor */
+    bottom: 0; /* Positioned at the bottom of the parent element */
+    padding: 10px; /* Padding around the color dropdown */
+    display: flex; /* Use flexbox for layout */
+}
+
+.defaultColorGridElement {
+    height:120px; /* Set a fixed height of 120 pixels */
+    display: flex; /* Use flexbox for layout */
+    justify-content: flex-start; /* Align content to the start of the flex container */
+    position: relative; /* Positioning relative to its normal position in the document flow */
+}
+
+.defaultColorGridElement button {
+    position: absolute; /* Positioning relative to the nearest positioned ancestor */
+    max-width: 100px; /* Set a maximum width for the button */
+    height: 60px; /* Set a fixed height of 60 pixels for the button */
+    right: 0; /* Positioned at the right edge of the parent element */
+}
+
+.defaultColorGridElement span {
+    margin-right: 100px; /* Add a right margin of 100 pixels to the span element */
+    position: absolute; /* Positioning relative to its normal position in the document flow */
+    left:0; /* Positioned at the left edge of the parent element */
+    word-wrap: break-word; /* Allow words to break and wrap within the span element */
+}
+
+/* CSS for general admin h2 Headings */
 h2 {
     font-size: x-large; /* Font size */
     font-weight: bold; /* Bold font */
@@ -63,35 +210,8 @@ h2 {
     text-align: center; /* Center-align text */
 }
 
-/* CSS for Intro Text */
-.intro {
-    font-size: medium; /* Font size */
-    padding-top: 100px; /* Top padding */
-    padding-bottom: 20px; /* Bottom padding */
-    margin: 40px; /* Margin */
-    text-align: center;
-}
 
-.intro .navContainer {
-    text-align: left;
-    display: inline-block;
-}
-
-/* CSS for Links in Intro Text */
-.intro a {
-    color: #183d33; /* Link text color */
-    cursor: pointer; /* Change cursor to hand */
-    padding: 5px; /* Add some padding for a better hover effect */
-    border-radius: 3px; /* Rounded corners for background */
-    transition: all 0.3s ease; /* Smooth transition for hover effects */
-}
-
-.intro a:hover {
-    text-decoration: underline; 
-    color: #292827; 
-    font-weight: bold; 
-}
-
+/* CSS for manging administrators section */
 .submitForm {
     display: grid;
     grid-template-columns: 1fr 8fr; /* Two equal columns */
@@ -99,81 +219,6 @@ h2 {
 
 .submitForm label {
     margin-top: 30px;
-}
-
-/* CSS for Input Fields in Admin Blocks */
-.adminBlock input {
-    padding: 0.5rem; /* Padding */
-    max-width: 200px; /* Maximum width */
-    margin: 30px; /* Margin */
-    border: 1px solid #292827; /* Border */
-    border-radius: 5px; /* Rounded corners */
-    caret-color: black; /* Caret (text cursor) color */
-}
-
-/* CSS for Buttons in Admin Blocks */
-.adminBlock button {
-    background-color: #292827; /* Background color */
-    color: hsl(45, 63%, 87%); /* Text color */
-    padding: 10px 20px; /* Padding */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Cursor type */
-    text-transform: uppercase; /* Uppercase text */
-    font-size: small; /* Font size */
-    border-color: #292827; /* Border color */
-    border-width: 2px; /* Border width */
-    border-radius: 5px; /* Rounded corners */
-}
-
-/* Hover effect for Buttons in Admin Blocks */
-.adminBlock button:hover {
-    color: #292827; /* Text color on hover */
-    background-color: #f3e9cb; /* Background color on hover */
-}
-
-/* CSS for Selection Blocks */
-.selectionBlock {
-    padding: 20px; /* Padding */
-    border-radius: 10px; /* Rounded corners */
-    border: 2px solid #292827; /* Border */
-    margin-top: 60px; /* Top margin */
-    border-width: 0px; /* Border width */
-    display: grid; /* Use grid layout */
-    grid-template-columns: repeat(3, minmax(100px, 1fr)); /* Dynamic columns */
-    grid-column-gap: 20px; /* Gap between columns */
-}
-
-/* CSS for Grid Elements in Selection Blocks */
-.gridElement {
-    margin-top: 10px;
-    border-right: 1px solid #292827; /* Right border */
-    border-radius: 0px; /* Rounded corners */
-}
-
-/* CSS for Input Fields in Selection Blocks */
-.selectionBlock input {
-    width: 60px; /* Width */
-    padding: 0.5rem; /* Padding */
-    margin: 20px;
-    border: 1px solid #292827; /* Border */
-    border-radius: 5px; /* Rounded corners */
-}
-
-.upload input {
-    border: none;
-    width: 15rem;
-    font-size: small;
-}
-
-.selectVideo {
-    margin-right: 40px;
-}
-
-/* CSS for Labels in Selection Blocks */
-.selectionBlock label {
-    display: flex; /* Use flexbox for layout */
-    align-items: center; /* Align items vertically */
-    justify-content: space-between; /* Space between elements */
 }
 
 .adminErrorMessage {
@@ -199,58 +244,7 @@ h2 {
     font-size: small; /* Font size */
 }
 
-/* Hover effect for Logout Button */
 .logoutButton:hover {
     color: #f3e9cb; /* Text color on hover */
     background-color: #292827; /* Background color on hover */
-}
-
-.colorGrid {
-    border-radius: 10px;
-    border: 2px solid #292827;
-    margin-top: 60px;
-    border-width: 0px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-column-gap: 20px;
-    font-size: 14px;
-}
-
-.colorGridElement {
-    height:120px;
-    display: flex;
-    justify-content: flex-start;
-    position: relative;
-}
-
-.colorGridElement h3 {
-    margin-top: 10px;
-}
-
-.colorGridElement .colorDropdown {
-    position: absolute;
-    bottom: 0;
-    padding: 10px;
-    display: flex;
-}
-
-.defaultColorGridElement {
-    height:120px;
-    display: flex;
-    justify-content: flex-start;
-    position: relative;
-}
-
-.defaultColorGridElement button {
-    position: absolute;
-    max-width: 100px;
-    height: 60px;
-    right: 0;
-}
-
-.defaultColorGridElement span {
-    margin-right: 100px;
-    position: absolute;
-    left:0;
-    word-wrap: break-word;
 }

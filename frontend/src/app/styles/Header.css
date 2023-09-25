@@ -77,8 +77,10 @@
   font-size: small; /* Font size */
 }
 
+
+/* the logo that appears when main logo is fully transparent  */
 .logoPlain {
-  position: absolute;
-  width: 120px;
-  margin-left: 10px;
+  position: absolute; /* Position the logo absolutely within its container */
+  width: 120px; /* Set a specific width for the logo */
+  margin-left: 10px; /* Add left margin to create spacing between the logo and other elements */
 }

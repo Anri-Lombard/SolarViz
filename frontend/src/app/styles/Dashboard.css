@@ -1,68 +1,117 @@
+/* CSS for entire dashboard setup */
+
 .dashboard {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: row;
+    margin-top: 20px; /* Adds a top margin of 20 pixels */
+    display: flex; /* Uses flexbox for layout */
+    flex-direction: row; /* Arranges child elements in a row */
 }
 
 .dashboard img {
-    border-radius: 3px;
-    max-width:25vw;
-    margin-bottom: 20px;
+    border-radius: 3px; /* Adds a slight border radius to the images */
+    max-width: 19vw; /* Sets a maximum width of 25% of the viewport width for the images */
+    margin-bottom: 20px; /* Adds a bottom margin of 20 pixels to separate images */
 }
 
+
+/* CSS for 3 columns on dashboard */
+
 .leftMarginContainer {
-    margin-right: 20px;
-    display: flex;
-    flex-direction: column;
+    margin-right: 20px; /* Adds a right margin of 20 pixels */
+    display: flex; /* Uses flexbox for layout */
+    flex-direction: column; /* Arranges child elements in a column */
 }
 
 .middleContainer {
-    max-width: 40vw;
-    min-width: 30vw;
+    max-width: 40vw; /* Sets a maximum width of 40% of the viewport width */
+    min-width: 30vw; /* Sets a minimum width of 30% of the viewport width */
 }
 
 .rightMarginContainer {
-    margin-left: 20px;
-    display: flex;
-    flex-direction: column;
+    margin-left: 20px; /* Adds a left margin of 20 pixels */
+    display: flex; /* Uses flexbox for layout */
+    flex-direction: column; /* Arranges child elements in a column */
 }
 
+/* CSS for energy saving tips feature */
+
 .energySavingTipsContainer {
-    padding: 1em 2em;
-    color: #292827;
-    border-color: #292827;
-    border-width: 2px;
-    border-radius: 10px;
-    width:20em;
+    max-width: 19vw; /* Sets a maximum width of 25% of the viewport width */
+    padding: 1em 2em; /* Adds padding (1em top/bottom, 2em left/right) */
+    color: #292827; /* Text color */
+    border-color: #292827; /* Border color */
+    border-width: 2px; /* Border width */
+    border-radius: 10px; /* Rounded corners */
+    width: 20em; /* Fixed width of 20em */
 }
 
 .energySavingTipsContainer h1 {
-    font-size: large;
-    font-family: 'Verdana', sans-serif;
-    font-size: 1.5em;
-    text-transform: uppercase;
-    margin-bottom: 5px;
+    font-family: 'Verdana', sans-serif; /* Font family */
+    font-size: 1.2em; /* Font size of 1.2em */
+    text-transform: uppercase; /* Text transformed to uppercase */
+    margin-bottom: 5px; /* Bottom margin of 5 pixels */
 }
 
 .energySavingTipsContainer h2 {
-    font-size: medium;
-    font-weight: bold;
+    font-size: medium; /* Font size set to medium */
+    font-weight: bold; /* Bold font weight */
 }
 
 .energySavingTipsContainer li {
-    margin-bottom: 5px;
-    display: flex;
-    flex-direction: column;
+    margin-bottom: 5px; /* Bottom margin of 5 pixels */
+    display: flex; /* Uses flexbox for layout */
+    flex-direction: column; /* Arranges child elements in a column */
 }
 
 .energySavingTipsContainer .iconAndText {
-    margin-top: 5px;
-    display: flex;
-    flex-direction: row;
+    margin-top: 5px; /* Top margin of 5 pixels */
+    display: flex; /* Uses flexbox for layout */
+    flex-direction: row; /* Arranges child elements in a row */
 }
 
 .icon {
-    margin-right: 5px;
-    width: 30px;
-    height: 30px;
+    margin-right: 5px; /* Right margin of 5 pixels */
+    width: 30px; /* Width of 30 pixels */
+    height: 30px; /* Height of 30 pixels */
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 768px) {
+
+    .leftMarginContainer {
+        margin-left: 10px; /* Left margin of 10 pixels */
+        margin-right: 10px; /* Right margin of 10 pixels */
+    }
+
+    .rightMarginContainer {
+        margin-left: 10px; /* Adjust the margin for smaller screens */
+        margin-right: 10px; /* Right margin of 10 pixels */
+    }
+
+    .energySavingTipsContainer {
+        width: 100%; /* Make the container full-width on smaller screens */
+        padding: 1em; /* Adjust padding as needed */
+    }
+
+    .energySavingTipsContainer h1 {
+        font-size: 0.8em; /* Adjust font size for smaller screens to 0.8em */
+    }
+
+    .energySavingTipsContainer li {
+        margin-bottom: 2px; /* Bottom margin of 2 pixels */
+        font-size: 0.6em; /* Adjust font size for smaller screens to 0.6em */
+    }
+
+    .energySavingTipsContainer h2 {
+        font-size: 1em; /* Font size set to 1em */
+    }
+
+    .energySavingTipsContainer .iconAndText {
+        margin-top: 2px; /* Top margin of 2 pixels */
+    }
+
+    .icon {
+        width: 20px; /* Adjust icon size for smaller screens to 20px */
+        height: 20px; /* Adjust icon height for smaller screens to 20px */
+    }
+
 }
