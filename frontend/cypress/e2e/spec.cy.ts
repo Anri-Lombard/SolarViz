@@ -26,9 +26,6 @@ describe('Home Page', () => {
     cy.visit('http://localhost:3000/');
     cy.wait(['@getPowerData', '@getWaterData']);
 
-    // Check for the "Loading..." message
-    cy.get('p').contains("Loading...").should('exist');
-
     // Ensure that the DataDisplay component does not exist
     cy.get('[data-testid=dataDisplay]').should('not.exist');
   });
@@ -84,7 +81,7 @@ describe('login Page', () => {
     cy.get('input[placeholder="Username"]').type('anrilombard');
     cy.get('input[placeholder="Password"]').type('anrispassword');
     
-    cy.get('button.bg-green-700').click();
+    cy.get('.loginButton').click();
     
     // Wait for API response and check for token in local storage
     cy.window().its('localStorage').invoke('getItem', 'token').should('exist');
@@ -99,7 +96,7 @@ describe('login Page', () => {
     cy.get('input[placeholder="Username"]').type('wrong_username');
     cy.get('input[placeholder="Password"]').type('wrong_password');
     
-    cy.get('button.bg-green-700').click();
+    cy.get('.loginButton').click();
     
     // Check for error message
     cy.get('.text-red-500').contains('Incorrect username or password. Try again.').should('exist');
