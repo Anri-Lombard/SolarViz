@@ -1,23 +1,23 @@
-/* CSS for Headings */
+/* Style for general headings */
 .heading {
   margin-left: 5px;
   margin-right: 5px;
-  font-size: 20px; /* Font size */
-  text-align: center; /* Center-align text */
-  font-family: 'Verdana', sans-serif; /* Font family */
+  font-size: 20px; /* Font size for general headings */
+  text-align: center; /* Center-align text for general headings */
+  font-family: 'Verdana', sans-serif; /* Font family for general headings */
 }
 
-
+/* Media query for smaller screens (max-width: 768px) */
 @media (max-width: 768px) {
   .heading {
-    font-size: small;
+    font-size: small; /* Smaller font size for headings on smaller screens */
   }
 
   .recharts-pie-label-text {
-    font-size: small; /* Adjust the font size for labels */
+    font-size: small; /* Adjust the font size for labels on pie charts */
   }
 
   .recharts-legend-item-text {
-    font-size: small;
+    font-size: small; /* Adjust the font size for text in legends on smaller screens */
   }
 }

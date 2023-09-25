@@ -1,9 +1,9 @@
 .graphHeading {
-    display: flex;
-    justify-content: space-between;
+    display: flex; /* Use a flexbox container for layout */
+    justify-content: space-between; /* Space elements evenly between the container's edges */
 }
 
 .chartImage {
-    width:40px;
-    margin-right: 20px;
+    width: 40px; /* Set a specific width for the image */
+    margin-right: 20px; /* Add right margin to create spacing between the image and other elements */
 }

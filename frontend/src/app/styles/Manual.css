@@ -1,4 +1,4 @@
-/* CSS for Manual Container */
+/* CSS for entire content of manual*/
 .manualContainer {
     display: flex; /* Use flexbox for layout */
     color: black; /* Text color */
@@ -15,7 +15,6 @@
     border-right: 1px solid #ccc; /* Right border */
 }
 
-/* Table of Contents Links */
 .tableOfContents a {
     display: block; /* Block-level element */
     margin-bottom: 10px; /* Bottom margin */
@@ -37,60 +36,56 @@
     text-align: left;
 }
 
+
+/* manual content alongside table of contents */
 .content {
     margin-left: 200px; /* Left margin to accommodate the table of contents */
     flex-grow: 1; /* Allow content to grow within the flex container */
     padding: 20px; /* Padding */
 }
 
-/* Content Paragraphs */
 .content p {
     margin-top: 20px; /* Top margin for paragraphs */
 }
 
-/* Content Level 1 Headings */
 .content h1 {
-    margin-top: 20px;
+    margin-top: 20px; /* Top margin for paragraphs */
 }
 
-/* Content Level 2 Headings */
 .content h2 {
-    margin-top: 20px;
-    font-size: large;
-    text-align: left;
+    margin-top: 20px; /* Add top margin  */
+    font-size: large; /* Set a larger font size for h2 elements */
+    text-align: left; /* Left-align text within h2 elements */
 }
 
-/* Content Level 3 Headings */
 .content h3 {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font-size: large;
+    margin-top: 20px; /* Add top margin to separate h3 from preceding content */
+    margin-bottom: 20px; /* Add bottom margin to separate h3 from subsequent content */
+    font-size: large; /* Set a larger font size for h3 elements */
 }
 
-/* Content Level 4 Headings */
 .content h4 {
     font-size: x-large; /* Font size for h4 headings */
     font-weight: bold; /* Bold font for h4 headings */
     margin-top: 20px;
 }
 
-/* Content List Items */
 .content li {
     margin-top: 20px; /* Top margin for list items */
     margin-bottom: 20px; /* Bottom margin for list items */
 }
 
 .contribution a {
-    display: block;
+    display: block; /* Display anchor links as block-level elements */
 }
 
 .selectContent img {
-    width: 600px;
+    width: 600px; /* Set a specific width for images within selectContent */
 }
 
 .icon {
-    width: 30px;
-    margin-right: 10px;
+    width: 30px; /* Set a specific width for icons */
+    margin-right: 10px; /* Add right margin to create spacing between icons and other elements */
 }
 
 .icon-textContainer {
