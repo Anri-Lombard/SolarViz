@@ -81,7 +81,7 @@ describe('login Page', () => {
     cy.get('input[placeholder="Username"]').type('anrilombard');
     cy.get('input[placeholder="Password"]').type('anrispassword');
     
-    cy.get('loginButton').click();
+    cy.get('.loginButton').click();
     
     // Wait for API response and check for token in local storage
     cy.window().its('localStorage').invoke('getItem', 'token').should('exist');
