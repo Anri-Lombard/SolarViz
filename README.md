@@ -1,10 +1,10 @@
 # SolarViz
 
-SolarViz is a sophisticated web-based dashboard designed to visualize and monitor energy consumption and generation in real-time. Developed in collaboration with the Building Manager of the Hasso Plattner School of Design Thinking Afrika (d-school Afrika), SolarViz aims to promote energy efficiency and sustainability in one of South Africa's first 6-star green-rated education buildings.
+SolarViz is a sophisticated web-based dashboard designed to visualize and monitor energy consumption and generation in real time. Developed in collaboration with the Building Manager of the Hasso Plattner School of Design Thinking Afrika (d-school Afrika), SolarViz aims to promote energy efficiency and sustainability in one of South Africa's first 6-star green-rated education buildings.
 
 ## Status of Project
 
-Currently only the frontend is deployed to production; we need the backend Django server and database to be deployed as well, which would most likely happen once the building manager purhases the correct APIs and decides to invest in services for the backend and database.
+Currently, only the frontend is deployed to production; we need the backend Django server and database to be deployed as well, which would most likely happen once the building manager purchases the correct APIs and decides to invest in services for the backend and database.
 
 ## Project Overview
 
