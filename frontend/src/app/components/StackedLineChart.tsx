@@ -96,7 +96,10 @@ export const StackedLineChart: React.FC<StackedLineChartProps> = ({ data, durati
     });
 
     return (
-        <ResponsiveContainer data-testid="stackedLineChart" height={500}>
+        <ResponsiveContainer data-testid="stackedLineChart"
+            width={window.innerWidth >= 768 ? 600 : 300} // Adjust the width for smaller screens
+            height={window.innerWidth >= 768 ? 500 : 300} // Adjust the height for smaller screens
+        >
             <LineChart
                 data={consolidatedData}
                 margin={{
